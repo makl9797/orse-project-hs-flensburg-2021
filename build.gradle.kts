@@ -5,7 +5,12 @@ val serializationVersion = "1.2.1"
 val ktorVersion = "1.6.1"
 val logbackVersion = "1.2.3"
 val kmongoVersion = "4.2.7"
-val reactWrappersVersion = "17.0.2-pre.214-kotlin-1.5.20"
+val reactVersion = "17.0.2"
+val reactWrappersVersion = "$reactVersion-pre.214-kotlin-1.5.20"
+val styledVersion = "5.3.0"
+val styledWrappersVersion = "$styledVersion-pre.216-kotlin-1.5.20"
+val reactGridVersion = "1.2.5"
+
 
 plugins {
     kotlin("multiplatform") version "1.5.20"
@@ -19,8 +24,8 @@ version = "1.0-SNAPSHOT"
 repositories {
     jcenter()
     mavenCentral()
-    maven { url = uri("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven") }
-    maven("https://dl.bintray.com/kotlin/kotlin-eap")
+   /* maven { url = uri("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven") }
+    maven("https://dl.bintray.com/kotlin/kotlin-eap")*/
 }
 
 kotlin {
@@ -33,13 +38,13 @@ kotlin {
         }
         withJava()
     }
-    js(LEGACY) {
-        binaries.executable()
+    js {
         browser {
             commonWebpackConfig {
                 cssSupport.enabled = true
             }
         }
+        binaries.executable()
     }
     sourceSets {
         val commonMain by getting {
@@ -73,6 +78,15 @@ kotlin {
 
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react:$reactWrappersVersion")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom:$reactWrappersVersion")
+                implementation(npm("react", reactVersion))
+                implementation(npm("react-dom", reactVersion))
+
+                implementation(npm("react-grid-layout", reactGridVersion))
+
+                implementation("org.jetbrains.kotlin-wrappers:kotlin-styled:$styledWrappersVersion")
+                implementation(npm("styled-components", styledVersion))
+
+
             }
         }
     }
