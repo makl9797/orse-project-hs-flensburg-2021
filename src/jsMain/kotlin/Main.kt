@@ -1,11 +1,13 @@
-import react.dom.render
+import dev.fritz2.dom.html.render
 import kotlinx.browser.document
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+
+@ExperimentalCoroutinesApi
 @ExperimentalJsExport
 fun main() {
-    render(document.getElementById("root")) {
-        child(App::class) {
-
-        }
+    document.bgColor = "#293133"
+    render("#root") {
+        app()
     }
 }
