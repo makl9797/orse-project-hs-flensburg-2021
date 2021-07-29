@@ -55,6 +55,8 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("dev.fritz2:core:0.11")
+                // https://mvnrepository.com/artifact/dev.fritz2/components
+                implementation("dev.fritz2:components:0.11.1")
 
             }
         }
@@ -80,9 +82,6 @@ kotlin {
                 implementation("io.ktor:ktor-client-js:$ktorVersion")
                 implementation("io.ktor:ktor-client-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-                // https://mvnrepository.com/artifact/dev.fritz2/components
-                implementation("dev.fritz2:components:0.11.1")
-
 
                 // Wrappers
                 implementation(project.dependencies.enforcedPlatform(kWrapper("wrappers-bom:${kotlinWrappersVersion}")))
