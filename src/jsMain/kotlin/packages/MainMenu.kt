@@ -15,7 +15,7 @@ fun RenderContext.mainMenu(): Div {
                 color { primary.main }
 
             }
-            color { primary.mainContrast }
+            color { secondary.main }
         }) {
             placement { bottom }
             alignment { end }

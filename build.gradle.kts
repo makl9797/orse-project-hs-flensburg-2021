@@ -13,20 +13,21 @@ fun kWrapper(target: String): String =
 //npm
 val reactVersion = "17.0.2"
 val styledVersion = "5.3.0"
+val dragulaVersion = "3.7.3"
 
 
 plugins {
     kotlin("multiplatform") version "1.5.20"
+    id("dev.fritz2.fritz2-gradle") version "0.11.1"
     application
     kotlin("plugin.serialization") version "1.5.20"
-    id("dev.fritz2.fritz2-gradle") version "0.11"
+
 }
 
 group = "de.flensburg.orse.project"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    jcenter()
     mavenCentral()
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 }
@@ -34,7 +35,7 @@ repositories {
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
+            kotlinOptions.jvmTarget = "15"
         }
         testRuns["test"].executionTask.configure {
             useJUnit()
@@ -57,6 +58,8 @@ kotlin {
                 implementation("dev.fritz2:core:0.11")
                 // https://mvnrepository.com/artifact/dev.fritz2/components
                 implementation("dev.fritz2:components:0.11.1")
+
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
 
             }
         }
@@ -94,6 +97,8 @@ kotlin {
 
                 implementation(kWrapper("styled"))
                 implementation(npm("styled-components", styledVersion))
+
+                implementation(npm("dragula", dragulaVersion))
 
             }
         }
