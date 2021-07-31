@@ -13,7 +13,6 @@ fun kWrapper(target: String): String =
 //npm
 val reactVersion = "17.0.2"
 val styledVersion = "5.3.0"
-val dragulaVersion = "3.7.3"
 
 
 plugins {
@@ -97,8 +96,6 @@ kotlin {
 
                 implementation(kWrapper("styled"))
                 implementation(npm("styled-components", styledVersion))
-
-                implementation(npm("dragula", dragulaVersion))
 
             }
         }
