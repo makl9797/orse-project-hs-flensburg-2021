@@ -9,7 +9,8 @@ data class ExampleAppointment(
     val person: String = "",
     val date: String = "",
     val time: String = "",
-    val details: String = ""
+    val details: String = "",
+    val price: Double = 0.0
 )
 
 

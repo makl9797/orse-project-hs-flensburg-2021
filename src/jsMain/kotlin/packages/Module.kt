@@ -7,17 +7,20 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @ExperimentalJsExport
-fun RenderContext.module(id: String, width: Int, height: Int, content: Div.() -> Unit): Div {
+fun RenderContext.module(id: String, content: Div.() -> Unit): Div {
 
     return div({
-        width { "${width}vh" }
-        height { "${height}vh" }
-        padding { normal }
+        minWidth { "max-content" }
+        minHeight { "20vh" }
         border {
             width { thin }
             color { secondary.main }
         }
-        overflow { auto }
+        flex {
+            grow { "1" }
+        }
+        overflowY { auto }
+        overflowX { hidden }
         css("resize: both")
     }, id = id) {
         content()

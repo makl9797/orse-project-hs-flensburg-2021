@@ -12,19 +12,18 @@ import models.L
 @ExperimentalCoroutinesApi
 @ExperimentalJsExport
 fun RenderContext.appointmentTable(id: String) {
+
     val exampleAppointments = listOf(
-        ExampleAppointment(0, "Termin1", "Person1", "01.01.2022", "12:00", "Detailinformationen1"),
-        ExampleAppointment(1, "Termin2", "Person2", "01.01.2022", "12:00", "Detailinformationen2"),
-        ExampleAppointment(1, "Termin2", "Person2", "01.01.2022", "12:00", "Detailinformationen2"),
-        ExampleAppointment(1, "Termin2", "Person2", "01.01.2022", "12:00", "Detailinformationen2"),
-        ExampleAppointment(1, "Termin2", "Person2", "01.01.2022", "12:00", "Detailinformationen2"),
-        ExampleAppointment(1, "Termin2", "Person2", "01.01.2022", "12:00", "Detailinformationen2"),
-        ExampleAppointment(1, "Termin2", "Person2", "01.01.2022", "12:00", "Detailinformationen2")
+        ExampleAppointment(0, "Termin1", "Person1", "01.01.2022", "12:00", "Detailinformationen1", 0.0),
+        ExampleAppointment(1, "Termin2", "Person2", "01.01.2022", "12:00", "Detailinformationen2", 0.0),
+        ExampleAppointment(1, "Termin2", "Person2", "01.01.2022", "12:00", "Detailinformationen2", 0.0),
+        ExampleAppointment(1, "Termin2", "Person2", "01.01.2022", "12:00", "Detailinformationen2", 0.0),
+        ExampleAppointment(1, "Termin2", "Person2", "01.01.2022", "12:00", "Detailinformationen2", 0.0),
+        ExampleAppointment(1, "Termin2", "Person2", "01.01.2022", "12:00", "Detailinformationen2", 0.0),
+        ExampleAppointment(1, "Termin2", "Person2", "01.01.2022", "12:00", "Detailinformationen2", 0.0)
     )
 
     return dataTable(
-        {
-        },
         id = id,
         rows = storeOf(exampleAppointments),
         rowIdProvider = ExampleAppointment::id
@@ -33,10 +32,10 @@ fun RenderContext.appointmentTable(id: String) {
             column(title = "Id") { lens(L.ExampleAppointment.id.asString()) }
             column(title = "Titel") { lens(L.ExampleAppointment.title) }
             column(title = "Person") { lens(L.ExampleAppointment.person) }
-            column(title = "Datum") { lens(L.ExampleAppointment.date) }
-            column(title = "Zeit") { lens(L.ExampleAppointment.time) }
-            column(title = "Details") { lens(L.ExampleAppointment.details) }
+            /* column(title = "Datum") { lens(L.ExampleAppointment.date) }
+             column(title = "Zeit") { lens(L.ExampleAppointment.time) }
+             column(title = "Details") { lens(L.ExampleAppointment.details) }
+             column(title = "Preis") { lens(L.ExampleAppointment.price.asString()) }*/
         }
     }
-
 }
