@@ -1,6 +1,4 @@
 import com.benasher44.uuid.Uuid
-import com.mongodb.ConnectionString
-import com.mongodb.MongoClientSettings
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -10,16 +8,15 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import models.Customer
-import models.Person
-import org.litote.kmongo.*
+import models.*
 import services.DatabaseService
+import java.sql.Timestamp
 
+val databaseService = DatabaseService()
 
 fun main() {
-    embeddedServer(Netty, port = 8080, host = "127.0.0.1") {
 
-        val databaseService = DatabaseService()
+    embeddedServer(Netty, port = 8080, host = "127.0.0.1") {
 
         routing {
             install(ContentNegotiation) {
@@ -34,19 +31,65 @@ fun main() {
             install(Compression) {
                 gzip()
             }
-
-            get("/") {
-
-            }
-            post("/") {
-                call.respond(HttpStatusCode.OK)
-            }
             static("/") {
                 resources("")
             }
         }
+
+        routing {
+            getAppointmentById()
+            createAppointment()
+            createCustomer()
+            getCustomerById()
+            postRoot()
+            getRoot()
+        }
     }.start(wait = true)
 }
+
+
+fun Route.getAppointmentById() {
+    get("/appointment/{id}") {
+        call.respond(HttpStatusCode.OK)
+    }
+}
+
+fun Route.createAppointment() {
+    post("/appointment") {
+        databaseService.getCollectionOfAppointment().insertOne(Appointment(Uuid.randomUUID(), System.currentTimeMillis(), call.parameters["info"].toString()))
+        call.respond(HttpStatusCode.OK)
+    }
+}
+
+fun Route.createCustomer() {
+    post("/user") {
+        call.respond(HttpStatusCode.OK)
+    }
+}
+
+fun Route.getCustomerById() {
+    post("/user/{id}") {
+        call.respond(HttpStatusCode.OK)
+    }
+}
+
+fun Route.getRoot() {
+    get("/") {
+        call.respond(HttpStatusCode.OK)
+    }
+}
+
+fun Route.postRoot() {
+    post("/") {
+        call.respond(HttpStatusCode.OK)
+    }
+}
+
+
+
+
+
+
 
 
 
