@@ -10,7 +10,8 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import models.*
 import services.DatabaseService
-import java.sql.Timestamp
+import kotlin.reflect.jvm.internal.impl.builtins.StandardNames.FqNames.string
+
 
 val databaseService = DatabaseService()
 
@@ -58,9 +59,15 @@ fun Route.createAppointment() {
     post("/appointment") {
         val date = call.parameters["date"]
         if (date != null) {
-            databaseService.getCollectionOfAppointment()
-                .insertOne(Appointment(Uuid.randomUUID(), date.toLong(), call.parameters["info"].toString()))
-            call.respond(HttpStatusCode.OK)
+            try {
+                val longValue = date.toLong()
+                databaseService.getCollectionOfAppointment()
+                    .insertOne(Appointment(Uuid.randomUUID(), longValue, call.parameters["info"].toString()))
+                call.respond(HttpStatusCode.Created)
+            } catch (e: NumberFormatException) {
+                call.respondText("It seems as if the date field does not hold a valid value")
+            }
+
         }
     }
 }
