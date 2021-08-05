@@ -6,6 +6,7 @@ val ktorVersion = "1.6.1"
 val kotlinWrappersVersion = "0.0.1-pre.216-kotlin-1.5.20"
 val logbackVersion = "1.2.3"
 val kmongoVersion = "4.2.7"
+val draggableVersion = "1.0.0-beta.8"
 
 fun kWrapper(target: String): String =
     "org.jetbrains.kotlin-wrappers:kotlin-$target"
@@ -17,6 +18,7 @@ val styledVersion = "5.3.0"
 
 plugins {
     kotlin("multiplatform") version "1.5.20"
+    id("dev.fritz2.fritz2-gradle") version "0.11.1"
     application
     kotlin("plugin.serialization") version "1.5.20"
     id("dev.fritz2.fritz2-gradle") version "0.11"
@@ -26,7 +28,6 @@ group = "de.flensburg.orse.project"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    jcenter()
     mavenCentral()
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 }
@@ -34,7 +35,7 @@ repositories {
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
+            kotlinOptions.jvmTarget = "15"
         }
         testRuns["test"].executionTask.configure {
             useJUnit()
@@ -55,6 +56,10 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("dev.fritz2:core:0.11")
+                // https://mvnrepository.com/artifact/dev.fritz2/components
+                implementation("dev.fritz2:components:0.11.1")
+
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
 
             }
         }
@@ -96,6 +101,17 @@ kotlin {
                 implementation(kWrapper("styled"))
                 implementation(npm("styled-components", styledVersion))
 
+                // Wrappers
+                implementation(project.dependencies.enforcedPlatform(kWrapper("wrappers-bom:${kotlinWrappersVersion}")))
+
+                implementation(kWrapper("react"))
+                implementation(npm("react", reactVersion))
+
+                implementation(kWrapper("react-dom"))
+                implementation(npm("react-dom", reactVersion))
+
+                implementation(kWrapper("styled"))
+                implementation(npm("styled-components", styledVersion))
             }
         }
     }
