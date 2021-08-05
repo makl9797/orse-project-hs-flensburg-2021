@@ -20,7 +20,3 @@ fun RenderContext.navbar() {
     }
 
 }
-
-enum class Modus {
-    EDIT, WORK
-}

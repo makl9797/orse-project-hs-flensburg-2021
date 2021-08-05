@@ -98,8 +98,6 @@ kotlin {
                 implementation(kWrapper("styled"))
                 implementation(npm("styled-components", styledVersion))
 
-                implementation(npm("@shopify/draggable", draggableVersion))
-
             }
         }
     }

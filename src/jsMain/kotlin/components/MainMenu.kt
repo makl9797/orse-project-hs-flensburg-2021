@@ -24,13 +24,21 @@ fun RenderContext.mainMenu(): Div {
                     entry {
                         icon { grid }
                         text("Module Anpassen")
+                        events {
+                            
+                        }
                     }
                     entry {
                         icon { settings }
                         text("Einstellungen")
+                        events {
+
+                        }
                     }
                 }
             }
         }
     }
 }
+
+
