@@ -6,6 +6,7 @@ val ktorVersion = "1.6.1"
 val kotlinWrappersVersion = "0.0.1-pre.216-kotlin-1.5.20"
 val logbackVersion = "1.2.3"
 val kmongoVersion = "4.2.7"
+val draggableVersion = "1.0.0-beta.8"
 
 fun kWrapper(target: String): String =
     "org.jetbrains.kotlin-wrappers:kotlin-$target"
@@ -96,6 +97,8 @@ kotlin {
 
                 implementation(kWrapper("styled"))
                 implementation(npm("styled-components", styledVersion))
+
+                implementation(npm("@shopify/draggable", draggableVersion))
 
             }
         }
