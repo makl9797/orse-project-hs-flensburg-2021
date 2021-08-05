@@ -1,4 +1,4 @@
-package packages
+package modules.wrapper
 
 import dev.fritz2.binding.Handler
 import dev.fritz2.binding.RootStore

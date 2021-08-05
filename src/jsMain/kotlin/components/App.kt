@@ -1,11 +1,13 @@
-package packages
+package components
 
 import dev.fritz2.components.box
 import dev.fritz2.components.gridBox
 import dev.fritz2.dom.html.Div
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
+import dev.fritz2.styling.params.OverflowXValues
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import modules.wrapper.moduleContainer
 
 
 @ExperimentalCoroutinesApi
@@ -28,7 +30,15 @@ fun RenderContext.app(): Div {
                 navbar()
             }
 
-            moduleContainer("modules")
+            moduleContainer({
+                wrap { wrap }
+                grid {
+                    row {
+                        start { "2" }
+                    }
+                }
+                overflowX { OverflowXValues.hidden }
+            }, "modules")
 
         }
     }

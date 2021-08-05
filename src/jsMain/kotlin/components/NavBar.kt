@@ -1,4 +1,4 @@
-package packages
+package components
 
 import dev.fritz2.components.navBar
 import dev.fritz2.dom.html.RenderContext
@@ -19,4 +19,8 @@ fun RenderContext.navbar() {
         }
     }
 
+}
+
+enum class Modus {
+    EDIT, WORK
 }

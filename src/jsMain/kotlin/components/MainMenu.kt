@@ -1,4 +1,4 @@
-package packages
+package components
 
 import dev.fritz2.components.dropdown
 import dev.fritz2.components.menu

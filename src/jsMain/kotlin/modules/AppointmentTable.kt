@@ -1,4 +1,4 @@
-package packages
+package modules
 
 import dev.fritz2.binding.storeOf
 import dev.fritz2.components.dataTable
@@ -32,10 +32,10 @@ fun RenderContext.appointmentTable(id: String) {
             column(title = "Id") { lens(L.ExampleAppointment.id.asString()) }
             column(title = "Titel") { lens(L.ExampleAppointment.title) }
             column(title = "Person") { lens(L.ExampleAppointment.person) }
-            /* column(title = "Datum") { lens(L.ExampleAppointment.date) }
-             column(title = "Zeit") { lens(L.ExampleAppointment.time) }
-             column(title = "Details") { lens(L.ExampleAppointment.details) }
-             column(title = "Preis") { lens(L.ExampleAppointment.price.asString()) }*/
+            column(title = "Datum") { lens(L.ExampleAppointment.date) }
+            column(title = "Zeit") { lens(L.ExampleAppointment.time) }
+            column(title = "Details") { lens(L.ExampleAppointment.details) }
+            column(title = "Preis") { lens(L.ExampleAppointment.price.asString()) }
         }
     }
 }

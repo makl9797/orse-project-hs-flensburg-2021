@@ -1,7 +1,6 @@
-package modules
+package react
 
 import kotlinx.css.*
-import react.*
 import react.dom.h3
 import styled.css
 import styled.styledDiv
