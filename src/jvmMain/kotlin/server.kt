@@ -10,25 +10,16 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import models.Customer
 import models.Person
 import org.litote.kmongo.*
-import java.util.*
+import services.DatabaseService
 
 
 fun main() {
-    val connectionString =
-        ConnectionString("mongodb+srv://prowhiz:0co8nr3Z29Wv5XbQ@orsecluster.ops2n.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-    val settings = MongoClientSettings.builder()
-        .applyConnectionString(connectionString)
-        .build()
-
-
-    val client = KMongo.createClient(settings)
-    val database = client.getDatabase("orsedatabase")
-    val col = database.getCollection<Person>()
-
-
     embeddedServer(Netty, port = 8080, host = "127.0.0.1") {
+
+        val databaseService = DatabaseService()
 
         routing {
             install(ContentNegotiation) {
@@ -48,7 +39,6 @@ fun main() {
 
             }
             post("/") {
-                col.insertOne(Person("firstname","lastname", Uuid.randomUUID()))
                 call.respond(HttpStatusCode.OK)
             }
             static("/") {
