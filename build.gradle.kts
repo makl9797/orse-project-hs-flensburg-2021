@@ -21,7 +21,7 @@ plugins {
     id("dev.fritz2.fritz2-gradle") version "0.11.1"
     application
     kotlin("plugin.serialization") version "1.5.20"
-
+    id("dev.fritz2.fritz2-gradle") version "0.11"
 }
 
 group = "de.flensburg.orse.project"
@@ -85,6 +85,9 @@ kotlin {
                 implementation("io.ktor:ktor-client-js:$ktorVersion")
                 implementation("io.ktor:ktor-client-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+                // https://mvnrepository.com/artifact/dev.fritz2/components
+                implementation("dev.fritz2:components:0.11.1")
+
 
                 // Wrappers
                 implementation(project.dependencies.enforcedPlatform(kWrapper("wrappers-bom:${kotlinWrappersVersion}")))
@@ -98,6 +101,17 @@ kotlin {
                 implementation(kWrapper("styled"))
                 implementation(npm("styled-components", styledVersion))
 
+                // Wrappers
+                implementation(project.dependencies.enforcedPlatform(kWrapper("wrappers-bom:${kotlinWrappersVersion}")))
+
+                implementation(kWrapper("react"))
+                implementation(npm("react", reactVersion))
+
+                implementation(kWrapper("react-dom"))
+                implementation(npm("react-dom", reactVersion))
+
+                implementation(kWrapper("styled"))
+                implementation(npm("styled-components", styledVersion))
             }
         }
     }
