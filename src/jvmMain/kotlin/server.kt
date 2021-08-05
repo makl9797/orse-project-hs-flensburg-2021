@@ -56,8 +56,12 @@ fun Route.getAppointmentById() {
 
 fun Route.createAppointment() {
     post("/appointment") {
-        databaseService.getCollectionOfAppointment().insertOne(Appointment(Uuid.randomUUID(), System.currentTimeMillis(), call.parameters["info"].toString()))
-        call.respond(HttpStatusCode.OK)
+        val date = call.parameters["date"]
+        if (date != null) {
+            databaseService.getCollectionOfAppointment()
+                .insertOne(Appointment(Uuid.randomUUID(), date.toLong(), call.parameters["info"].toString()))
+            call.respond(HttpStatusCode.OK)
+        }
     }
 }
 
