@@ -6,7 +6,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @ExperimentalJsExport
-fun RenderContext.navbar() {
+fun RenderContext.navbar(editMode: Boolean) {
     return navBar({
         background { color { secondary.main } }
         color { secondary.mainContrast }

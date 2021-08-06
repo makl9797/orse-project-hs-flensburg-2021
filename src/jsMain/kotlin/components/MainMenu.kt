@@ -25,7 +25,7 @@ fun RenderContext.mainMenu(): Div {
                         icon { grid }
                         text("Module Anpassen")
                         events {
-                            
+                            clicks handledBy appStore.switchMode
                         }
                     }
                     entry {
