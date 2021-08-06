@@ -13,7 +13,7 @@ import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 
 
-fun Route.AppointmentRoutes() {
+fun Route.appointmentRoutes() {
     get("/appointment") {
         val id = call.parameters["id"]
         val appointmentCollection = databaseService.getCollectionOfAppointment()
@@ -37,5 +37,11 @@ fun Route.AppointmentRoutes() {
             }
 
         }
+    }
+    delete("/appointment") {
+        val id = call.parameters["id"]
+        val appointmentCollection = databaseService.getCollectionOfAppointment()
+        appointmentCollection.deleteOne(Appointment::appointmentId eq id)
+        call.respond(HttpStatusCode.OK)
     }
 }

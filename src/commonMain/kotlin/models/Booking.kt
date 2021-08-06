@@ -1,7 +1,7 @@
 package models
 
-import com.benasher44.uuid.Uuid
-import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalDate
+import kotlinx.serialization.Serializable
 
-
-data class Booking(val endTime : LocalDateTime, val price: Float, val subjectNr: Uuid )
+@Serializable
+data class Booking(val endTime: LocalDate, val customer: Customer, val price: Float, val subjectId: String)

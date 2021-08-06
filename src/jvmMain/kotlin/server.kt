@@ -8,8 +8,7 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import models.*
-import routing.AppointmentRoutes
+import routing.*
 import services.DatabaseService
 
 
@@ -38,8 +37,7 @@ fun main() {
         }
 
         routing {
-            AppointmentRoutes()
-
+            appointmentRoutes()
             createCustomer()
             getCustomerById()
             postRoot()

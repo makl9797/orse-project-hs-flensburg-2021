@@ -1,5 +1,7 @@
 package models
 
 import com.benasher44.uuid.Uuid
+import kotlinx.serialization.Serializable
 
-data class Customer(val CustomerId: Uuid)
+@Serializable
+data class Customer(val CustomerId: String)
