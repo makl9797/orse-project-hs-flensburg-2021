@@ -9,8 +9,8 @@ import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import models.*
+import routing.AppointmentRoutes
 import services.DatabaseService
-import kotlin.reflect.jvm.internal.impl.builtins.StandardNames.FqNames.string
 
 
 val databaseService = DatabaseService()
@@ -38,8 +38,8 @@ fun main() {
         }
 
         routing {
-            getAppointmentById()
-            createAppointment()
+            AppointmentRoutes()
+
             createCustomer()
             getCustomerById()
             postRoot()
@@ -49,28 +49,6 @@ fun main() {
 }
 
 
-fun Route.getAppointmentById() {
-    get("/appointment/{id}") {
-        call.respond(HttpStatusCode.OK)
-    }
-}
-
-fun Route.createAppointment() {
-    post("/appointment") {
-        val date = call.parameters["date"]
-        if (date != null) {
-            try {
-                val longValue = date.toLong()
-                databaseService.getCollectionOfAppointment()
-                    .insertOne(Appointment(Uuid.randomUUID(), longValue, call.parameters["info"].toString()))
-                call.respond(HttpStatusCode.Created)
-            } catch (e: NumberFormatException) {
-                call.respondText("It seems as if the date field does not hold a valid value")
-            }
-
-        }
-    }
-}
 
 fun Route.createCustomer() {
     post("/user") {
