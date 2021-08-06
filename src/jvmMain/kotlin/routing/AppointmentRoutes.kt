@@ -39,7 +39,7 @@ fun Route.appointmentRoutes() {
         }
     }
     delete("/appointment") {
-        val id = call.parameters["id"]
+        val id = call.parameters["id"] ?: error("Invalid delete request")
         val appointmentCollection = databaseService.getCollectionOfAppointment()
         appointmentCollection.deleteOne(Appointment::appointmentId eq id)
         call.respond(HttpStatusCode.OK)
