@@ -1,7 +1,7 @@
 package stores
 
 import dev.fritz2.binding.RootStore
-import stores.models.Data
+import models.store.Data
 
 class DataStore(init: Data) : RootStore<Data>(init) {
 

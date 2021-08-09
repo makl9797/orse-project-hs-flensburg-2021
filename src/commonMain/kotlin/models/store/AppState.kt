@@ -1,5 +1,8 @@
-package stores.models
+package models.store
 
+import dev.fritz2.lenses.Lenses
+
+@Lenses
 data class AppState(
     var mode: Mode = Mode.NONE
 ) {

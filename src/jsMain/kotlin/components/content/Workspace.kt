@@ -5,5 +5,5 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 fun RenderContext.workspace() {
-
+    moduleContainer()
 }
