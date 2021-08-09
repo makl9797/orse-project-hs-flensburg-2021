@@ -7,15 +7,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleContainer(id: String) {
     moduleWrapper({
-        width { "auto" }
-        height { "auto" }
-    }, id = "exampleBoxModule") {
+        width { "10rem" }
+        height { "10rem" }
+        overflow { auto }
+    }, id = "exampleBoxModule") { style ->
         div({
-            width { "10rem" }
-            height { "10rem" }
+            style()
             background { color { primary.main } }
-        }, id = "exampleBox") {
-
-        }
+        }, id = "exampleBox") {}
     }
 }

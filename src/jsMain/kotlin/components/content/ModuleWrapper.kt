@@ -7,9 +7,16 @@ import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-fun RenderContext.moduleWrapper(style: Style<BoxParams>, id: String, content: RenderContext.() -> Unit) {
+fun RenderContext.moduleWrapper(
+    style: Style<BoxParams>,
+    id: String,
+    content: RenderContext.(style: Style<BoxParams>) -> Unit
+) {
     div(style, id = id) {
-        content()
+        content {
+            width { "inherit" }
+            height { "inherit" }
+        }
     }
 
 }
