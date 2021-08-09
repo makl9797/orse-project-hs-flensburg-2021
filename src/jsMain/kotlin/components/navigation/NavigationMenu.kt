@@ -7,20 +7,23 @@ import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-fun RenderContext.navigationMenu() {
-    dropdown {
+fun RenderContext.navigationMenu(id: String) {
+    dropdown(id = "navigationDrawer") {
+        placement { bottom }
+        alignment { end }
         content {
-            menu {
+            menu(id = id) {
                 header("Menü")
                 entry {
                     icon { grid }
                     text("Module anpassen")
                 }
+                divider()
                 entry {
                     icon { settings }
                     text("Einstellungen")
                     events {
-                        clicks handledBy modal { content { appSettingsOverview() } }
+                        clicks handledBy modal(id = "appSettingsOverviewModal") { content { appSettingsOverview("appSettingsOverview") } }
                     }
                 }
             }

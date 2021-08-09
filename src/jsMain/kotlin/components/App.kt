@@ -8,7 +8,7 @@ import models.store.AppState
 
 @ExperimentalCoroutinesApi
 fun RenderContext.app() {
-    navigation(AppState.Mode.WORK)
-    workspace()
+    navigation("navigation", AppState.Mode.WORK)
+    workspace("workspace")
 }
 

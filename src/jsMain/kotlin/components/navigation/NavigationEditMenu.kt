@@ -6,24 +6,26 @@ import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-fun RenderContext.navigationEditMenu() {
-    clickButton({
-        margins { horizontal { giant } }
-    }) {
-        text("Modul-Übersicht")
-    } handledBy modal { content { moduleOverview() } }
+fun RenderContext.navigationEditMenu(id: String) {
+    div(id = id) {
+        clickButton({
+            margins { horizontal { giant } }
+        }, id = "moduleOverviewButton") {
+            text("Modul-Übersicht")
+        } handledBy modal(id = "moduleOverviewModal") { content { moduleOverview("moduleOverview") } }
 
-    clickButton({
-        margins { horizontal { tiny } }
-    }) {
-        text("Speichern")
-        type { success }
-    }
+        clickButton({
+            margins { horizontal { tiny } }
+        }, id = "saveSettingsButton") {
+            text("Speichern")
+            type { success }
+        }
 
-    clickButton({
-        margins { horizontal { tiny } }
-    }) {
-        text("Verwerfen")
-        type { danger }
+        clickButton({
+            margins { horizontal { tiny } }
+        }, id = "abortSettingsButton") {
+            text("Verwerfen")
+            type { danger }
+        }
     }
 }
