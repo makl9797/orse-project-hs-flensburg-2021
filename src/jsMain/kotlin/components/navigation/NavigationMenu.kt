@@ -23,7 +23,12 @@ fun RenderContext.navigationMenu(id: String) {
                     icon { settings }
                     text("Einstellungen")
                     events {
-                        clicks handledBy modal(id = "appSettingsOverviewModal") { content { appSettingsOverview("appSettingsOverview") } }
+                        clicks handledBy modal(id = "appSettingsOverviewModal") { close ->
+                            placement { center }
+                            width { small }
+                            hasCloseButton(false)
+                            content { appSettingsOverview("appSettingsOverview", close) }
+                        }
                     }
                 }
             }
