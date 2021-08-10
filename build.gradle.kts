@@ -3,24 +3,16 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
 val kotlinVersion = "1.5.20"
 val serializationVersion = "1.2.1"
 val ktorVersion = "1.6.1"
-val kotlinWrappersVersion = "0.0.1-pre.216-kotlin-1.5.20"
 val logbackVersion = "1.2.3"
 val kmongoVersion = "4.2.7"
-val draggableVersion = "1.0.0-beta.8"
-
-fun kWrapper(target: String): String =
-    "org.jetbrains.kotlin-wrappers:kotlin-$target"
-
-//npm
-val reactVersion = "17.0.2"
-val styledVersion = "5.3.0"
+val fritz2Version = "0.11"
 
 
 plugins {
     kotlin("multiplatform") version "1.5.20"
-    id("dev.fritz2.fritz2-gradle") version "0.11.1"
-    application
+    kotlin("kapt") version "1.5.20"
     kotlin("plugin.serialization") version "1.5.20"
+    application
     id("dev.fritz2.fritz2-gradle") version "0.11"
 }
 
@@ -28,14 +20,14 @@ group = "de.flensburg.orse.project"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    jcenter()
     mavenCentral()
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 }
 
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "15"
+            kotlinOptions.jvmTarget = "1.8"
         }
         testRuns["test"].executionTask.configure {
             useJUnit()
@@ -55,11 +47,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("dev.fritz2:core:0.11")
-                // https://mvnrepository.com/artifact/dev.fritz2/components
-                implementation("dev.fritz2:components:0.11.1")
-
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+                implementation("dev.fritz2:core:$fritz2Version")
 
             }
         }
@@ -82,36 +70,13 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
+                configurations["kapt"].dependencies.add(project.dependencies.create("dev.fritz2:lenses-annotation-processor:$fritz2Version"))
                 implementation("io.ktor:ktor-client-js:$ktorVersion")
                 implementation("io.ktor:ktor-client-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-                // https://mvnrepository.com/artifact/dev.fritz2/components
-                implementation("dev.fritz2:components:0.11.1")
+                implementation("dev.fritz2:components:$fritz2Version.1")
+                implementation("dev.fritz2:styling:$fritz2Version.1")
 
-
-                // Wrappers
-                implementation(project.dependencies.enforcedPlatform(kWrapper("wrappers-bom:${kotlinWrappersVersion}")))
-
-                implementation(kWrapper("react"))
-                implementation(npm("react", reactVersion))
-
-                implementation(kWrapper("react-dom"))
-                implementation(npm("react-dom", reactVersion))
-
-                implementation(kWrapper("styled"))
-                implementation(npm("styled-components", styledVersion))
-
-                // Wrappers
-                implementation(project.dependencies.enforcedPlatform(kWrapper("wrappers-bom:${kotlinWrappersVersion}")))
-
-                implementation(kWrapper("react"))
-                implementation(npm("react", reactVersion))
-
-                implementation(kWrapper("react-dom"))
-                implementation(npm("react-dom", reactVersion))
-
-                implementation(kWrapper("styled"))
-                implementation(npm("styled-components", styledVersion))
             }
         }
     }
