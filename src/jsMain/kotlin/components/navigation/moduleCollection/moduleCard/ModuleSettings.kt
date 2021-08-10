@@ -10,9 +10,16 @@ import models.store.ModuleSettings
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleCardSettings(style: Style<FlexParams>, id: String, settings: ModuleSettings) {
+
     flexBox({
+        justifyContent { spaceBetween }
+        alignItems { center }
+        margins { horizontal { "0.5rem" } }
         style()
     }, id = "${id}Settings") {
-
+        moduleCardSettingsInput(id = id, startValue = settings.width, "Weite", "W")
+        moduleCardSettingsInput(id = id, startValue = settings.height, "Höhe", "H")
+        moduleCardSettingsInput(id = id, startValue = settings.parentX, "Position X", "X")
+        moduleCardSettingsInput(id = id, startValue = settings.parentY, "Position Y", "Y")
     }
 }
