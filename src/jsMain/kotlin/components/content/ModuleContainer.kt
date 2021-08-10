@@ -3,13 +3,13 @@ package components.content
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import models.store.AppState
 
 @ExperimentalCoroutinesApi
-fun RenderContext.moduleContainer(id: String) {
+fun RenderContext.moduleContainer(id: String, mode: AppState.Mode) {
     moduleWrapper({
-        overflow { auto }
-        css("resize: both")
-    }, id = "exampleBoxModule", "Beispielmodul") { style ->
+
+    }, id = "exampleBoxModule", "Beispielmodul", mode) { style ->
         div(style, id = "exampleBox") {
         }
     }

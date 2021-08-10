@@ -1,17 +1,18 @@
 package components.content
 
-import dev.fritz2.components.clickButton
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import dev.fritz2.styling.params.BoxParams
 import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import models.store.AppState
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleWrapper(
     style: Style<BoxParams>,
     id: String,
     title: String,
+    mode: AppState.Mode,
     content: RenderContext.(style: Style<BoxParams>) -> Unit
 ) {
     div({
@@ -23,35 +24,25 @@ fun RenderContext.moduleWrapper(
             color { primary.main }
         }
     }, id = id) {
+        moduleTitleBar(id, title, mode)
         div({
-            height { "1.4rem" }
-            display { flex }
-            justifyContent { spaceBetween }
-            alignItems { center }
-            paddings { left { small } }
-            borders {
-                bottom {
-                    width { "0.1rem" }
-                    style { solid }
-                    color { primary.main }
+            overflow { auto }
+            when (mode) {
+                AppState.Mode.WORK -> {
+
+                }
+                AppState.Mode.EDIT -> {
+                    css("resize: both")
+                }
+                else -> {
+
                 }
             }
-        }, id = id + "Title") {
-            +title
-            clickButton({
-            }) {
-                icon { close }
-                type { danger }
-                size { small }
-                variant { ghost }
-            }
-        }
-        div({
-            style()
             minWidth { "15rem" }
             minHeight { "15rem" }
             width { "15rem" }
             height { "15rem" }
+            style()
         }) {
             content {
                 width { "inherit" }

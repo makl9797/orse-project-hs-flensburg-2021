@@ -1,5 +1,6 @@
 package components.navigation
 
+import components.navigation.appSettings.appSettingsMain
 import dev.fritz2.components.dropdown
 import dev.fritz2.components.menu
 import dev.fritz2.components.modal
@@ -27,7 +28,7 @@ fun RenderContext.navigationMenu(id: String) {
                             placement { center }
                             width { small }
                             hasCloseButton(false)
-                            content { appSettingsOverview("appSettingsOverview", close) }
+                            content { appSettingsMain("appSettingsOverview", close) }
                         }
                     }
                 }
