@@ -6,6 +6,9 @@ import dev.fritz2.components.menu
 import dev.fritz2.components.modal
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
+import models.store.AppState.Mode
+import stores.appStateStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.navigationMenu(id: String) {
@@ -18,6 +21,9 @@ fun RenderContext.navigationMenu(id: String) {
                 entry {
                     icon { grid }
                     text("Module anpassen")
+                    events {
+                        clicks.events.map { Mode.EDIT } handledBy appStateStore.changeMode
+                    }
                 }
                 divider()
                 entry {

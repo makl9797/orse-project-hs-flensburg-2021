@@ -4,11 +4,14 @@ import components.content.workspace
 import components.navigation.navigation
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.store.AppState
+import stores.appStateStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.app() {
-    navigation("navigation", AppState.Mode.EDIT)
-    workspace("workspace", AppState.Mode.EDIT)
+    appStateStore.data.render { state ->
+        navigation("navigation", state.mode)
+        workspace("workspace", state.mode)
+    }
+
 }
 

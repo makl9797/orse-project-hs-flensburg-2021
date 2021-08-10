@@ -7,6 +7,6 @@ import models.store.AppState
 @ExperimentalCoroutinesApi
 fun RenderContext.workspace(id: String, mode: AppState.Mode) {
     div(id = id) {
-        moduleContainer("moduleContainer", mode)
+        moduleContainer(mode)
     }
 }
