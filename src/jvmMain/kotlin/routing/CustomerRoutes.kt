@@ -1,6 +1,5 @@
 package routing
 
-import dev.Devroom
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
@@ -14,9 +13,9 @@ import java.time.*
 fun Route.customerRoute() {
     post("/customer/create") {
         try {
-            //  val customer = Customer("CUSTOMER_ID")
+            //val customer = Customer("CUSTOMER_ID")
             //val col = databaseService.getCollectionOfCustomer()
-            call.respondText(Json.encodeToString(Devroom(1565160000005556495)))
+
         } catch (e: Exception) {
             call.respondText(e.toString())
             call.respond(HttpStatusCode.BadRequest)

@@ -38,6 +38,7 @@ fun main() {
 
         routing {
             subjectRoutes()
+            overviewRoutes()
             appointmentRoutes()
             bookingRoutes()
             createCustomer()

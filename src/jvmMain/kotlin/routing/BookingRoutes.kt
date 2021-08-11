@@ -32,6 +32,7 @@ fun Route.bookingRoutes() {
             call.respond(HttpStatusCode.OK)
         } catch (e: Exception) {
             call.respondText("Error_ $e")
+            call.respond(HttpStatusCode.BadRequest)
         }
     }
 }
