@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.map
 import models.store.AppState.Mode
 import modules.ModuleCatalog
 import stores.appStateStore
+import stores.moduleStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.navigationEditMenu(id: String, moduleCatalog: ModuleCatalog) {
@@ -35,11 +36,11 @@ fun RenderContext.navigationEditMenu(id: String, moduleCatalog: ModuleCatalog) {
 
         pushButton({
             margins { horizontal { tiny } }
-        }, id = "abortSettingsButton") {
-            text("Verwerfen")
+        }, id = "resetSettingsButton") {
+            text("Zurücksetzen")
             type { danger }
             events {
-                clicks.events.map { Mode.WORK } handledBy appStateStore.changeMode
+                clicks handledBy moduleStore.discardChanges
             }
         }
     }

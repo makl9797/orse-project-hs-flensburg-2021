@@ -16,7 +16,11 @@ class AppStateStore(init: AppState) : RootStore<AppState>(init) {
     }
 
     val changeMode = handle { _, newMode: Mode ->
+        if (newMode == Mode.EDIT) {
+            moduleStore.saveCurrentModules()
+        }
         AppState(newMode)
     }
-    
+
+
 }

@@ -9,6 +9,7 @@ val moduleStore = ModuleStore(listOf())
 
 
 class ModuleStore(initModules: List<Module>) : RootStore<List<Module>>(initModules) {
+    var temp: List<Module> = listOf()
 
     val addModule = handle { model, newModule: Module ->
         model + moduleCatalog.newModule(newModule.type, newModule.settings, newModule.card)
@@ -23,5 +24,12 @@ class ModuleStore(initModules: List<Module>) : RootStore<List<Module>>(initModul
         model.filter { module ->
             module.id != moduleId
         }
+    }
+    val discardChanges = handle {
+        temp
+    }
+
+    fun saveCurrentModules() {
+        temp = moduleStore.current
     }
 }
