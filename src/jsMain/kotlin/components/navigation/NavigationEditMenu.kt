@@ -31,7 +31,7 @@ fun RenderContext.navigationEditMenu(id: String, moduleCatalog: ModuleCatalog) {
         }, id = "saveSettingsButton") {
             text("Speichern")
             type { success }
-        }.events.map { "Test" } handledBy appStateStore.save
+        }.events.map { Mode.WORK } handledBy appStateStore.changeMode
 
         pushButton({
             margins { horizontal { tiny } }

@@ -10,18 +10,17 @@ import stores.moduleStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleContainer(mode: AppState.Mode) {
-    moduleStore.data.renderEach { module ->
+    moduleStore.renderEach { module ->
         console.log(module)
         moduleWrapper(
             style = {},
-            id = module.id,
-            title = module.card.moduleName,
-            settings = module.settings,
-            mode = mode
+            id = module.current.id,
+            mode = mode,
+            subStore = module
         ) { style ->
-            when (module.type) {
+            when (module.current.type) {
                 Module.Type.INFOBOX -> {
-                    infoBox(module.id, style)
+                    infoBox(module.current.id, style)
                 }
                 Module.Type.TABLE -> {
 
