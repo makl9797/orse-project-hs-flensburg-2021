@@ -14,7 +14,6 @@ import models.Subject
 
 
 fun Route.subjectRoutes() {
-
     get("/subject/available") {
         try {
             val start = call.parameters["start"]
@@ -51,11 +50,9 @@ fun Route.subjectRoutes() {
                         )
                     }
                 }
-
             val col = databaseService.getCollectionOfSubject()
             col.insertOne(subject)
             call.respond(HttpStatusCode.OK)
-
         } catch (e: Exception) {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)
