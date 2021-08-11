@@ -4,7 +4,9 @@ import dev.fritz2.components.clickButton
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
 import models.store.AppState
+import stores.moduleStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleTitleBar(
@@ -38,7 +40,7 @@ fun RenderContext.moduleTitleBar(
                     type { danger }
                     size { small }
                     variant { ghost }
-                }
+                }.events.map { id } handledBy moduleStore.removeModule
             }
             else -> {
             }

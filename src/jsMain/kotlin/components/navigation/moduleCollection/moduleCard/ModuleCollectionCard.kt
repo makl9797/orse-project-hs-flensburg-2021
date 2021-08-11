@@ -1,15 +1,26 @@
 package components.navigation.moduleCollection.moduleCard
 
 import dev.fritz2.binding.SimpleHandler
-import dev.fritz2.components.clickButton
+import dev.fritz2.binding.storeOf
 import dev.fritz2.components.gridBox
+import dev.fritz2.components.pushButton
+import dev.fritz2.dom.html.Div
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.params.AreaName
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.store.ModuleCard
+import kotlinx.coroutines.flow.map
+import models.store.L
+import models.store.Module
+import stores.moduleStore
 
 @ExperimentalCoroutinesApi
-fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandler<Unit>) {
+fun RenderContext.moduleCollectionCard(
+    module: Module,
+    modalClose: SimpleHandler<Unit>
+): Div {
+    val localStore = storeOf(module)
+    val settingsStore = localStore.sub(L.Module.settings)
+
     val grid = object {
         val IMAGE: AreaName = "image"
         val NAME: AreaName = "name"
@@ -18,7 +29,7 @@ fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandl
         val BUTTON: AreaName = "button"
     }
 
-    gridBox({
+    return gridBox({
         height { "10rem" }
         minWidth { "31rem" }
         width { "100%" }
@@ -44,15 +55,15 @@ fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandl
                 }
             }
         )
-    }, id = "${card.id}Card") {
+    }, id = "${module.id}Card") {
         moduleCardImage(
             {
                 grid {
                     area { grid.IMAGE }
                 }
             },
-            card.id,
-            card.exampleImageSrc
+            module.id,
+            module.card.exampleImageSrc
         )
         moduleCardName(
             {
@@ -60,8 +71,8 @@ fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandl
                     area { grid.NAME }
                 }
             },
-            card.id,
-            card.moduleName
+            module.id,
+            module.card.moduleName
         )
         moduleCardDescription(
             {
@@ -69,8 +80,8 @@ fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandl
                     area { grid.DESCRIPTION }
                 }
             },
-            card.id,
-            card.moduleDescription
+            module.id,
+            module.card.moduleDescription
         )
         moduleCardSettings(
             {
@@ -78,10 +89,11 @@ fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandl
                     area { grid.SETTINGS }
                 }
             },
-            card.id,
-            card.defaultSettings
+            module.id,
+            module.settings,
+            settingsStore
         )
-        clickButton({
+        pushButton({
             grid {
                 area { grid.BUTTON }
             }
@@ -89,6 +101,12 @@ fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandl
             text("Hinzufügen")
             size { small }
             variant { outline }
+            events {
+                mousedowns.events.map { localStore.current } handledBy moduleStore.addModule
+                mouseups handledBy modalClose
+            }
         }
+
+
     }
 }

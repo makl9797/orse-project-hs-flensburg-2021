@@ -3,11 +3,17 @@ package components.navigation
 import components.navigation.moduleCollection.moduleCollectionMain
 import dev.fritz2.components.clickButton
 import dev.fritz2.components.modal
+import dev.fritz2.components.pushButton
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
+import models.store.AppState.Mode
+import modules.ModuleCatalog
+import stores.appStateStore
+import stores.moduleStore
 
 @ExperimentalCoroutinesApi
-fun RenderContext.navigationEditMenu(id: String) {
+fun RenderContext.navigationEditMenu(id: String, moduleCatalog: ModuleCatalog) {
     div(id = id) {
         clickButton({
             margins { horizontal { giant } }
@@ -18,7 +24,7 @@ fun RenderContext.navigationEditMenu(id: String) {
             placement { center }
             width { small }
             hasCloseButton(false)
-            content { moduleCollectionMain("moduleOverview", close) }
+            content { moduleCollectionMain("moduleOverview", moduleCatalog, close) }
         }
 
         clickButton({
@@ -26,13 +32,16 @@ fun RenderContext.navigationEditMenu(id: String) {
         }, id = "saveSettingsButton") {
             text("Speichern")
             type { success }
-        }
+        }.events.map { Mode.WORK } handledBy appStateStore.changeMode
 
-        clickButton({
+        pushButton({
             margins { horizontal { tiny } }
-        }, id = "abortSettingsButton") {
-            text("Verwerfen")
+        }, id = "resetSettingsButton") {
+            text("Zurücksetzen")
             type { danger }
+            events {
+                clicks handledBy moduleStore.discardChanges
+            }
         }
     }
 }

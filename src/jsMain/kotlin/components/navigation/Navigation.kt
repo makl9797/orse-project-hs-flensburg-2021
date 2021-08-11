@@ -5,9 +5,10 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.store.AppState
+import modules.ModuleCatalog
 
 @ExperimentalCoroutinesApi
-fun RenderContext.navigation(id: String, mode: AppState.Mode) {
+fun RenderContext.navigation(id: String, mode: AppState.Mode, moduleCatalog: ModuleCatalog) {
     div({
         height { "4.5rem" }
     }, id = id) {
@@ -25,7 +26,7 @@ fun RenderContext.navigation(id: String, mode: AppState.Mode) {
                     }
 
                     AppState.Mode.EDIT -> {
-                        navigationEditMenu("navigationEditMenu")
+                        navigationEditMenu("navigationEditMenu", moduleCatalog)
 
                     }
 

@@ -5,14 +5,14 @@ import dev.fritz2.binding.SimpleHandler
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.store.ModuleCard
+import models.store.Module
 
 @ExperimentalCoroutinesApi
-fun RenderContext.moduleCollection(id: String, modules: List<ModuleCard>, modalClose: SimpleHandler<Unit>) {
+fun RenderContext.moduleCollection(id: String, moduleExamples: List<Module>, modalClose: SimpleHandler<Unit>) {
     div({
         paddings { vertical { "1rem" } }
     }, id = id) {
-        modules.forEach { module ->
+        moduleExamples.forEach { module ->
             moduleCollectionCard(module, modalClose)
         }
     }
