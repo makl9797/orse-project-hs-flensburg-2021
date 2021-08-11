@@ -1,13 +1,12 @@
 package models
-
-import kotlinx.datetime.LocalDate
+import UTime
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Booking(
-    val startTime: LocalDate,
-    val endTime: LocalDate,
-    val customer: Customer,
     val price: Double,
+    val customer: Customer,
+    val startTime: Long,
+    val endTime:Long,
     val subject: Subject
 )

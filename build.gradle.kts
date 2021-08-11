@@ -46,9 +46,10 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation ("com.benasher44:uuid:0.3.0")
+                implementation("com.benasher44:uuid:0.3.0")
                 implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.20")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
+
 
             }
         }
@@ -66,6 +67,8 @@ kotlin {
                 implementation("io.ktor:ktor-server-netty:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
                 implementation("org.litote.kmongo:kmongo:$kmongoVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
+
 
             }
         }

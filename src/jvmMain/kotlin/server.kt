@@ -8,11 +8,6 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import kotlinx.datetime.LocalDate
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import models.Booking
-import models.Customer
 import routing.*
 import services.DatabaseService
 
@@ -46,6 +41,7 @@ fun main() {
             bookingRoutes()
             createCustomer()
             getCustomerById()
+            customerRoute()
             postRoot()
             getRoot()
         }
