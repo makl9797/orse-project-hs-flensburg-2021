@@ -1,8 +1,10 @@
 package components.navigation.moduleCollection.moduleCard
 
+import dev.fritz2.binding.SimpleHandler
 import dev.fritz2.components.inputField
 import dev.fritz2.components.tooltip
 import dev.fritz2.dom.html.RenderContext
+import dev.fritz2.dom.values
 import dev.fritz2.styling.label
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -11,7 +13,8 @@ fun RenderContext.moduleCardSettingsInput(
     id: String,
     startValue: Double,
     valueName: String,
-    valueShortCut: String
+    valueShortCut: String,
+    handler: SimpleHandler<String>
 ) {
     label({
         tooltip(valueName) { bottom }()
@@ -24,5 +27,8 @@ fun RenderContext.moduleCardSettingsInput(
         type("number")
         placeholder("$startValue")
         step("1")
+        events {
+            changes.values() handledBy handler
+        }
     }
 }

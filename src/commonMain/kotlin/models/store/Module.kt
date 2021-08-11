@@ -6,7 +6,8 @@ import dev.fritz2.lenses.Lenses
 data class Module(
     val id: String,
     val type: Type,
-    val properties: ModuleProperties
+    val settings: ModuleSettings,
+    val card: ModuleCard
 ) {
     enum class Type {
         CALENDAR, INFOBOX, TABLE

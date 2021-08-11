@@ -1,15 +1,24 @@
 package components.navigation.moduleCollection.moduleCard
 
 import dev.fritz2.binding.SimpleHandler
+import dev.fritz2.binding.SubStore
 import dev.fritz2.components.clickButton
 import dev.fritz2.components.gridBox
+import dev.fritz2.dom.html.Div
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.params.AreaName
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.store.ModuleCard
+import models.store.L
+import models.store.Module
 
 @ExperimentalCoroutinesApi
-fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandler<Unit>) {
+fun RenderContext.moduleCollectionCard(
+    module: SubStore<List<Module>, List<Module>, Module>,
+    modalClose: SimpleHandler<Unit>
+): Div {
+    val moduleSettingsStore = module.sub(L.Module.settings)
+
+
     val grid = object {
         val IMAGE: AreaName = "image"
         val NAME: AreaName = "name"
@@ -18,7 +27,7 @@ fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandl
         val BUTTON: AreaName = "button"
     }
 
-    gridBox({
+    return gridBox({
         height { "10rem" }
         minWidth { "31rem" }
         width { "100%" }
@@ -44,15 +53,15 @@ fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandl
                 }
             }
         )
-    }, id = "${card.id}Card") {
+    }, id = "${module.id}Card") {
         moduleCardImage(
             {
                 grid {
                     area { grid.IMAGE }
                 }
             },
-            card.id,
-            card.exampleImageSrc
+            module.current.id,
+            module.current.card.exampleImageSrc
         )
         moduleCardName(
             {
@@ -60,8 +69,8 @@ fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandl
                     area { grid.NAME }
                 }
             },
-            card.id,
-            card.moduleName
+            module.current.id,
+            module.current.card.moduleName
         )
         moduleCardDescription(
             {
@@ -69,8 +78,8 @@ fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandl
                     area { grid.DESCRIPTION }
                 }
             },
-            card.id,
-            card.moduleDescription
+            module.current.id,
+            module.current.card.moduleDescription
         )
         moduleCardSettings(
             {
@@ -78,8 +87,8 @@ fun RenderContext.moduleCollectionCard(card: ModuleCard, modalClose: SimpleHandl
                     area { grid.SETTINGS }
                 }
             },
-            card.id,
-            card.defaultSettings
+            module.current.id,
+            moduleSettingsStore
         )
         clickButton({
             grid {

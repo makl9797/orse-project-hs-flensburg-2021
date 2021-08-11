@@ -13,8 +13,8 @@ fun RenderContext.moduleContainer(mode: AppState.Mode) {
         moduleWrapper(
             {},
             id = module.id,
-            module.properties.card.moduleName,
-            module.properties.settings,
+            module.card.moduleName,
+            module.settings,
             mode
         ) { style ->
             when (module.type) {
