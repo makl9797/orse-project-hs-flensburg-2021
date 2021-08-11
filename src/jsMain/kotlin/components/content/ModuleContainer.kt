@@ -11,7 +11,6 @@ import stores.moduleStore
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleContainer(mode: AppState.Mode) {
     moduleStore.renderEach { module ->
-        console.log(module)
         moduleWrapper(
             style = {},
             id = module.current.id,

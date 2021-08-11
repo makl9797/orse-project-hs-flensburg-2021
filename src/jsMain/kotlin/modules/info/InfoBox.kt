@@ -10,9 +10,7 @@ import models.store.ModuleCard
 import models.store.ModuleSettings
 
 class InfoBox {
-    private var count = 0
-
-    private val id = "infoBox${count}"
+    private var count = -1
 
     private val type = Module.Type.INFOBOX
 
@@ -28,9 +26,10 @@ class InfoBox {
         exampleImageSrc = "https://via.placeholder.com/150?text=Module+Example+PicPlaceholder"
     )
 
-    fun createModule(): Module {
+    fun createModule(settings: ModuleSettings = defaultSettings, card: ModuleCard = this.card): Module {
         count++
-        return Module(id, type, defaultSettings, card)
+        val id = "infoBox${count}"
+        return Module(id, type, settings, card)
     }
 }
 

@@ -15,8 +15,5 @@ fun RenderContext.moduleCollection(id: String, moduleExamples: List<Module>, mod
         moduleExamples.forEach { module ->
             moduleCollectionCard(module, modalClose)
         }
-        /*moduleStore.renderEach(Module::id) { module ->
-            moduleCollectionCard(module, modalClose)
-        }*/
     }
 }
