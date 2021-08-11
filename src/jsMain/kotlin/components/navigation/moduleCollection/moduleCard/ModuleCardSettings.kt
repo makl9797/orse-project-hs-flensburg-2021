@@ -14,8 +14,10 @@ import models.store.ModuleSettings
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleCardSettings(
     style: Style<FlexParams>, id: String,
-    settingsStore: SubStore<List<Module>, Module, ModuleSettings>
+    settings: ModuleSettings,
+    settingsStore: SubStore<Module, Module, ModuleSettings>
 ) {
+
     val widthStore = settingsStore.sub(L.ModuleSettings.width)
     val heightStore = settingsStore.sub(L.ModuleSettings.height)
     val xStore = settingsStore.sub(L.ModuleSettings.parentX)
@@ -40,9 +42,9 @@ fun RenderContext.moduleCardSettings(
         margins { horizontal { "0.5rem" } }
         style()
     }, id = "${id}Settings") {
-        moduleCardSettingsInput(id = id, startValue = widthStore.current, "Weite", "W", changeWidth)
-        moduleCardSettingsInput(id = id, startValue = heightStore.current, "Höhe", "H", changeHeight)
-        moduleCardSettingsInput(id = id, startValue = xStore.current, "Position X", "X", changeX)
-        moduleCardSettingsInput(id = id, startValue = yStore.current, "Position Y", "Y", changeY)
+        moduleCardSettingsInput(id = id, startValue = settings.width, "Weite", "W", changeWidth)
+        moduleCardSettingsInput(id = id, startValue = settings.height, "Höhe", "H", changeHeight)
+        moduleCardSettingsInput(id = id, startValue = settings.parentX, "Position X", "X", changeX)
+        moduleCardSettingsInput(id = id, startValue = settings.parentY, "Position Y", "Y", changeY)
     }
 }

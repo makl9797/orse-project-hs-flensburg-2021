@@ -8,10 +8,11 @@ import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import models.store.AppState.Mode
+import modules.ModuleCatalog
 import stores.appStateStore
 
 @ExperimentalCoroutinesApi
-fun RenderContext.navigationEditMenu(id: String) {
+fun RenderContext.navigationEditMenu(id: String, moduleCatalog: ModuleCatalog) {
     div(id = id) {
         clickButton({
             margins { horizontal { giant } }
@@ -22,7 +23,7 @@ fun RenderContext.navigationEditMenu(id: String) {
             placement { center }
             width { small }
             hasCloseButton(false)
-            content { moduleCollectionMain("moduleOverview", close) }
+            content { moduleCollectionMain("moduleOverview", moduleCatalog, close) }
         }
 
         clickButton({
