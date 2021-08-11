@@ -1,7 +1,6 @@
 package models
-import UTime
 import kotlinx.serialization.Serializable
-
+import kotlin.time.*
 @Serializable
 data class Booking(
     val price: Double,
