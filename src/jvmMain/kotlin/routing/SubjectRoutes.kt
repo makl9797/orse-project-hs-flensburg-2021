@@ -7,6 +7,8 @@ import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.toLocalDate
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import models.Booking
@@ -25,8 +27,8 @@ fun Route.subjectRoutes() {
                 start?.let { it1 ->
                     end?.let { it2 ->
                         getAvailableSubjectsInTimeframe(
-                            it1.toLong(),
-                            it2.toLong(), subjectsCol, bookingsCol
+                            it1.toLocalDate(),
+                            it2.toLocalDate(), subjectsCol, bookingsCol
                         )
                     }
                 }
@@ -62,8 +64,8 @@ fun Route.subjectRoutes() {
 }
 
 fun getAvailableSubjectsInTimeframe(
-    start: Long,
-    end: Long,
+    start: LocalDate,
+    end: LocalDate,
     subjects: MongoCollection<Subject>,
     bookings: MongoCollection<Booking>,
 ): MutableList<Subject> {
@@ -71,7 +73,7 @@ fun getAvailableSubjectsInTimeframe(
     val availableSubjects = mutableListOf<Subject>()
     val allSubjects = subjects.find().toList()
     for (booking: Booking in bookings.find().toList()) {
-        if (booking.endTime in start..end || booking.startTime in start..end) {
+        if (booking.startTime.toLocalDate() in start..end || booking.endTime.toLocalDate() in start..end) {
             notAvailableSubjectIds.add(booking.subject.subjectId)
         }
     }

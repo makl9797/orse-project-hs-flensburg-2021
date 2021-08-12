@@ -1,11 +1,11 @@
 package models
 import kotlinx.serialization.Serializable
-import kotlin.time.*
+import kotlinx.datetime.*
 @Serializable
 data class Booking(
     val price: Double,
     val customer: Customer,
-    val startTime: Long,
-    val endTime:Long,
+    val startTime: String,
+    val endTime:String,
     val subject: Subject
 )
