@@ -4,14 +4,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class Day {
-    var timestampOfThisDay = 0.toLong()
-    var subjectList = mutableListOf<Subject>()
+    var day = ""
     var bookingList = mutableListOf<Booking>()
 
     constructor() : super() {}
-    constructor(timestamp: Long, subjects: MutableList<Subject>, bookings: MutableList<Booking>) {
-        this.timestampOfThisDay = timestamp
-        this.subjectList = subjects
+    constructor(day: String, bookings: MutableList<Booking>) {
+        this.day = day
         this.bookingList = bookings
     }
 }

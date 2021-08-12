@@ -13,6 +13,8 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import models.Booking
 import models.Subject
+import org.litote.kmongo.eq
+import org.litote.kmongo.findOne
 
 
 fun Route.subjectRoutes() {
@@ -59,6 +61,19 @@ fun Route.subjectRoutes() {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)
         }
+    }
+    get("/subject/{id}") {
+        try {
+            val id = call.parameters["id"]
+            val subject = databaseService.getCollectionOfSubject().findOne(Subject::subjectId eq id)
+            call.respondText(Json.encodeToString(subject))
+            call.respond(HttpStatusCode.OK)
+        } catch (e: Exception) {
+            call.respondText("Error_ $e")
+            call.respond(HttpStatusCode.BadRequest)
+        }
+
+
     }
 
 }

@@ -30,18 +30,30 @@ fun Route.overviewRoutes() {
     }
 }
 
-fun createDayList(period: Int): List<Booking> {
+fun createDayList(period: Int): MutableList<Day> {
     val today = Clock.System.todayAt(TimeZone.currentSystemDefault())
     val endOfTimeFrame = today.plus(DatePeriod(days = period))
-    val bookings = getBookingsInTimeframe(today, endOfTimeFrame)
-    return getBookingsOfDay(LocalDate(2021, 8, 16), bookings)
+    val bookingsInTimeframe = getBookingsInTimeframe(today, endOfTimeFrame)
+    val daylist = mutableListOf<Day>()
+    for (i in 0..period) {
+        val nextDay = today.plus((DatePeriod(days = i)))
+        daylist.add(
+            Day(
+                nextDay.toString(),
+                getBookingsOfDay(nextDay, bookingsInTimeframe)
+            )
+        )
+    }
+    return daylist
 }
 
 
-fun getBookingsOfDay(day: LocalDate, bookingsInTimeframe: List<Booking>): List<Booking> {
+fun getBookingsOfDay(day: LocalDate, bookingsInTimeframe: List<Booking>): MutableList<Booking> {
     val bookingsOnDay = mutableListOf<Booking>()
     bookingsInTimeframe.forEach { booking ->
-        if (booking.startTime.toLocalDate() == day || booking.endTime.toLocalDate() == day) {
+        val start = booking.startTime.toLocalDate()
+        val end = booking.endTime.toLocalDate()
+        if (day in start..end) {
             bookingsOnDay.add(booking)
         }
     }
