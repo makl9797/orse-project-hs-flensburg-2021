@@ -42,7 +42,7 @@ fun RenderContext.moduleWrapper(
             }
         }
     }, id = "${id}Module") {
-        moduleTitleBar(id, subStore.current.card.moduleName, mode)
+        moduleTitleBar("${id}Module", subStore.current.card.moduleName, mode)
         div({
             overflow { auto }
             when (mode) {
@@ -61,7 +61,7 @@ fun RenderContext.moduleWrapper(
             width { "${settingsStore.current.width}px" }
             height { "${settingsStore.current.height}px" }
             style()
-        }) {
+        }, id = id) {
             content {
                 width { "inherit" }
                 height { "inherit" }

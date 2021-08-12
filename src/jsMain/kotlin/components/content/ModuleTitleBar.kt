@@ -1,6 +1,7 @@
 package components.content
 
 import dev.fritz2.components.clickButton
+import dev.fritz2.components.popover
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,16 +35,36 @@ fun RenderContext.moduleTitleBar(
 
             }
             AppState.Mode.EDIT -> {
-                clickButton({
-                }) {
-                    icon { close }
-                    type { danger }
-                    size { small }
-                    variant { ghost }
-                }.events.map { id } handledBy moduleStore.removeModule
+                div {
+                    popover({
+                        width { "auto" }
+                    }) {
+                        toggle {
+                            clickButton {
+                                icon { expand }
+                                size { small }
+                                variant { ghost }
+                            }
+
+                        }
+                        placement { bottom }
+                        hasCloseButton(false)
+                        closeOnBlur(false)
+                        content {
+                            moduleMoveController(id)
+                        }
+                    }
+                    clickButton {
+                        icon { close }
+                        type { danger }
+                        size { small }
+                        variant { ghost }
+                    }.events.map { id } handledBy moduleStore.removeModule
+                }
             }
             else -> {
             }
         }
+        mousedowns.events handledBy moveModuleStore.onMouseDown
     }
 }

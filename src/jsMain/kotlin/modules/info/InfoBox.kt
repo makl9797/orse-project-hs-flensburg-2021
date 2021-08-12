@@ -39,6 +39,7 @@ fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
         style()
         background { color { primary.main } }
     }, id = id) {
+
     }
 }
 
