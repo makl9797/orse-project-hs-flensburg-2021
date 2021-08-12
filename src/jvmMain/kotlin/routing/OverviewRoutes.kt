@@ -33,27 +33,32 @@ fun Route.overviewRoutes() {
 fun createDayList(period: Int): List<Booking> {
     val today = Clock.System.todayAt(TimeZone.currentSystemDefault())
     val endOfTimeFrame = today.plus(DatePeriod(days = period))
-
-    println("ausgabe_ $today $endOfTimeFrame")
-    return getBookingsInTimeframe(today, endOfTimeFrame)//1628812800, 1629072060
+    val bookings = getBookingsInTimeframe(today, endOfTimeFrame)
+    return getBookingsOfDay(LocalDate(2021, 8, 16), bookings)
 }
 
 
-
-fun getBookingsOfDay(day: Int, bookings: List<Booking>): List<Booking> {
-    return emptyList()
+fun getBookingsOfDay(day: LocalDate, bookingsInTimeframe: List<Booking>): List<Booking> {
+    val bookingsOnDay = mutableListOf<Booking>()
+    bookingsInTimeframe.forEach { booking ->
+        if (booking.startTime.toLocalDate() == day || booking.endTime.toLocalDate() == day) {
+            bookingsOnDay.add(booking)
+        }
+    }
+    return bookingsOnDay
 }
 
 fun getBookingsInTimeframe(start: LocalDate, end: LocalDate): List<Booking> {
     val allBookings = databaseService.getCollectionOfBooking().find().toList()
     val bookingsInTimeFrame = mutableListOf<Booking>()
     allBookings.forEach { booking ->
-
+        if (booking.startTime.toLocalDate() in start..end || booking.endTime.toLocalDate() in start..end)
+            bookingsInTimeFrame.add(booking)
     }
     return bookingsInTimeFrame
 }
 
 fun getAllSubjects(): List<Subject> {
-    return emptyList()
+    return databaseService.getCollectionOfSubject().find().toList()
 }
 
