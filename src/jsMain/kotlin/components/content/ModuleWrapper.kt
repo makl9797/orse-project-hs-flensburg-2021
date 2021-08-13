@@ -32,14 +32,14 @@ fun RenderContext.moduleWrapper(
                 start {
                     settingsStore.current.startX.toString()
                 }
-                end { (settingsStore.current.startX + settingsStore.current.width).toString() }
+                end { (settingsStore.current.startX + settingsStore.current.width - 1).toString() }
             }
             row {
                 start {
                     settingsStore.current.startY.toString()
                 }
                 end {
-                    (settingsStore.current.startY + settingsStore.current.height).toString()
+                    (settingsStore.current.startY + settingsStore.current.height - 1).toString()
                 }
             }
         }
