@@ -1,6 +1,5 @@
 package routing
 
-import com.mongodb.client.MongoCollection
 import databaseService
 import io.ktor.application.*
 import io.ktor.http.*
@@ -10,8 +9,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import models.*
 import kotlinx.datetime.*
-import org.litote.kmongo.eq
-import org.litote.kmongo.findOne
+
 
 
 fun Route.overviewRoutes() {
@@ -31,7 +29,6 @@ fun Route.overviewRoutes() {
             call.respond(HttpStatusCode.BadRequest)
         }
     }
-
 }
 
 fun createDayList(period: Int): MutableList<Day> {

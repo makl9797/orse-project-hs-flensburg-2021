@@ -16,7 +16,7 @@ import java.sql.Timestamp
 import kotlin.time.*
 
 fun Route.bookingRoutes() {
-    post("/booking") {
+    post("/booking/create") {
         try {
             val booking = call.receive<Booking>()
             val col = databaseService.getCollectionOfBooking()

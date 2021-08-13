@@ -1,3 +1,4 @@
+import com.benasher44.uuid.Uuid
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -10,7 +11,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import models.Day
+import models.*
 import routing.*
 import services.DatabaseService
 
@@ -75,9 +76,14 @@ fun Route.getRoot() {
 fun Route.postRoot() {
     post("/") {
         try {
-            val days = call.receive<Array<Day>>()
-            days[0].availableSubjects[0].subjectId
-            call.respondText(Json.encodeToString(days))
+            val booking = Booking(
+                5.0,
+                Customer(Uuid.randomUUID().toString(), Address("Bahnhofsweg", "Flensburg", 24954), "Hans", "Peter"),
+                "2021-08-23",
+                "2021-09-01",
+                Subject("Subjectname", "Subscription", Uuid.randomUUID().toString())
+            )
+            call.respondText(Json.encodeToString(booking))
             call.respond(HttpStatusCode.OK)
         } catch (e: Exception) {
             call.respondText(e.toString())

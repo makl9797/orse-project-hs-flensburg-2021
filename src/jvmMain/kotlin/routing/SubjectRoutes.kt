@@ -35,7 +35,7 @@ fun Route.subjectRoutes() {
                 }
 
             call.respondText(Json.encodeToString(availableSubjects))
-            call.respond(HttpStatusCode.OK)
+            call.respond(HttpStatusCode.Created)
         } catch (e: Exception) {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)
