@@ -1,14 +1,12 @@
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
-import io.ktor.routing.get
-import io.ktor.routing.routing
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.netty.Netty
-import io.ktor.http.content.resources
-import io.ktor.http.content.static
+import io.ktor.http.content.*
 import io.ktor.response.*
+import io.ktor.routing.*
 import io.ktor.serialization.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 
 
 fun main() {
