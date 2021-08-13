@@ -6,13 +6,10 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import dev.fritz2.styling.params.BoxParams
 import dev.fritz2.styling.params.Style
-import kotlinx.browser.document
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.map
 import models.store.AppState
 import models.store.L
 import models.store.Module
-import models.store.ModuleSettings
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleWrapper(
@@ -23,43 +20,35 @@ fun RenderContext.moduleWrapper(
     content: RenderContext.(style: Style<BoxParams>) -> Unit
 ): Div {
     val settingsStore = subStore.sub(L.Module.settings)
-    val updateModuleSettings = settingsStore.handle { _, action: ModuleSettings ->
-        action
-    }
 
     return div({
-        width { maxContent }
-        height { maxContent }
         border {
             width { "0.1rem" }
             style { solid }
-            color { primary.main }
+            color { primary.mainContrast }
         }
-        position {
-            relative {
-                top { "${settingsStore.current.parentY}px" }
-                left { "${settingsStore.current.parentX}px" }
+        grid {
+            column {
+                start {
+                    settingsStore.current.startX.toString()
+                }
+                end { (settingsStore.current.startX + settingsStore.current.width).toString() }
+            }
+            row {
+                start {
+                    settingsStore.current.startY.toString()
+                }
+                end {
+                    (settingsStore.current.startY + settingsStore.current.height).toString()
+                }
             }
         }
     }, id = "${id}Module") {
-        moduleTitleBar("${id}Module", subStore.current.card.moduleName, mode)
+        moduleTitleBar("${id}Module", subStore.current.card.moduleName, mode, settingsStore)
         div({
             overflow { auto }
-            when (mode) {
-                AppState.Mode.WORK -> {
-
-                }
-                AppState.Mode.EDIT -> {
-                    css("resize: both")
-                }
-                else -> {
-
-                }
-            }
-            minWidth { "15rem" }
-            minHeight { "15rem" }
-            width { "${settingsStore.current.width}px" }
-            height { "${settingsStore.current.height}px" }
+            width { "auto" }
+            height { "${settingsStore.current.height - 1.6}rem" }
             style()
         }, id = id) {
             content {
@@ -71,13 +60,7 @@ fun RenderContext.moduleWrapper(
 
                 }
                 AppState.Mode.EDIT -> {
-                    mouseups.events.map {
-                        val moduleElement = document.getElementById(id)
-                        ModuleSettings(
-                            moduleElement?.clientWidth!!.toDouble(),
-                            moduleElement.clientHeight.toDouble(),
-                        )
-                    } handledBy updateModuleSettings
+
                 }
                 else -> {
 
