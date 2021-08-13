@@ -1,7 +1,6 @@
 package routing
 
 import com.benasher44.uuid.Uuid
-import com.mongodb.client.MongoCollection
 import databaseService
 import io.ktor.application.*
 import io.ktor.http.*
@@ -22,15 +21,15 @@ fun Route.subjectRoutes() {
         try {
             val start = call.parameters["start"]
             val end = call.parameters["end"]
-            val subjectsCol = databaseService.getCollectionOfSubject()
-            val bookingsCol = databaseService.getCollectionOfBooking()
+            val subjects = databaseService.getCollectionOfSubject().find().toList()
+            val bookings = databaseService.getCollectionOfBooking().find().toList()
 
             val availableSubjects =
                 start?.let { it1 ->
                     end?.let { it2 ->
                         getAvailableSubjectsInTimeframe(
                             it1.toLocalDate(),
-                            it2.toLocalDate(), subjectsCol, bookingsCol
+                            it2.toLocalDate(), subjects, bookings
                         )
                     }
                 }
@@ -66,8 +65,12 @@ fun Route.subjectRoutes() {
         try {
             val id = call.parameters["id"]
             val subject = databaseService.getCollectionOfSubject().findOne(Subject::subjectId eq id)
-            call.respondText(Json.encodeToString(subject))
-            call.respond(HttpStatusCode.OK)
+            if (subject != null) {
+                call.respondText(Json.encodeToString(subject))
+                call.respond(HttpStatusCode.OK)
+            } else {
+                call.respondText { "no subject was found with the ID $id" }
+            }
         } catch (e: Exception) {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)
@@ -81,18 +84,17 @@ fun Route.subjectRoutes() {
 fun getAvailableSubjectsInTimeframe(
     start: LocalDate,
     end: LocalDate,
-    subjects: MongoCollection<Subject>,
-    bookings: MongoCollection<Booking>,
+    subjects: List<Subject>,
+    bookings: List<Booking>,
 ): MutableList<Subject> {
     val notAvailableSubjectIds = mutableListOf<String>()
     val availableSubjects = mutableListOf<Subject>()
-    val allSubjects = subjects.find().toList()
-    for (booking: Booking in bookings.find().toList()) {
+    for (booking: Booking in bookings) {
         if (booking.startTime.toLocalDate() in start..end || booking.endTime.toLocalDate() in start..end) {
             notAvailableSubjectIds.add(booking.subject.subjectId)
         }
     }
-    allSubjects.forEach { subject ->
+    subjects.forEach { subject ->
         if (subject.subjectId !in notAvailableSubjectIds) {
             availableSubjects.add(subject)
         }

@@ -1,5 +1,6 @@
 package routing
 
+import com.mongodb.client.MongoCollection
 import databaseService
 import io.ktor.application.*
 import io.ktor.http.*
@@ -9,6 +10,8 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import models.*
 import kotlinx.datetime.*
+import org.litote.kmongo.eq
+import org.litote.kmongo.findOne
 
 
 fun Route.overviewRoutes() {
@@ -28,6 +31,7 @@ fun Route.overviewRoutes() {
             call.respond(HttpStatusCode.BadRequest)
         }
     }
+
 }
 
 fun createDayList(period: Int): MutableList<Day> {
@@ -35,12 +39,14 @@ fun createDayList(period: Int): MutableList<Day> {
     val endOfTimeFrame = today.plus(DatePeriod(days = period))
     val bookingsInTimeframe = getBookingsInTimeframe(today, endOfTimeFrame)
     val daylist = mutableListOf<Day>()
+    val allSubjects = getAllSubjects()
     for (i in 0..period) {
         val nextDay = today.plus((DatePeriod(days = i)))
         daylist.add(
             Day(
                 nextDay.toString(),
-                getBookingsOfDay(nextDay, bookingsInTimeframe)
+                getBookingsOfDay(nextDay, bookingsInTimeframe),
+                getAvailableSubjectsInTimeframe(nextDay, nextDay, allSubjects, bookingsInTimeframe),
             )
         )
     }

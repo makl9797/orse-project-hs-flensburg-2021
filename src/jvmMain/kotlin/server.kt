@@ -1,13 +1,16 @@
-import com.benasher44.uuid.Uuid
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.http.content.*
+import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import models.Day
 import routing.*
 import services.DatabaseService
 
@@ -71,7 +74,15 @@ fun Route.getRoot() {
 
 fun Route.postRoot() {
     post("/") {
-        call.respond(HttpStatusCode.OK)
+        try {
+            val days = call.receive<Array<Day>>()
+            days[0].availableSubjects[0].subjectId
+            call.respondText(Json.encodeToString(days))
+            call.respond(HttpStatusCode.OK)
+        } catch (e: Exception) {
+            call.respondText(e.toString())
+        }
+
     }
 }
 
