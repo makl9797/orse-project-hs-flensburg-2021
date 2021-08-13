@@ -41,6 +41,7 @@ kotlin {
             }
         }
         binaries.executable()
+        useCommonJs()
     }
     sourceSets {
         val commonMain by getting {
@@ -76,7 +77,6 @@ kotlin {
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("dev.fritz2:components:$fritz2Version.1")
                 implementation("dev.fritz2:styling:$fritz2Version.1")
-
             }
         }
     }

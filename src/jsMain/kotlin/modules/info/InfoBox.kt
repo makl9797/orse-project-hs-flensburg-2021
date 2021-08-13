@@ -15,10 +15,10 @@ class InfoBox {
     private val type = Module.Type.INFOBOX
 
     private val defaultSettings = ModuleSettings(
-        width = 700.0,
-        height = 250.0,
-        parentX = 0.0,
-        parentY = 0.0
+        width = 60,
+        height = 40,
+        startX = 1,
+        startY = 1
     )
     private val card = ModuleCard(
         moduleName = "Informationen",
@@ -39,6 +39,7 @@ fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
         style()
         background { color { primary.main } }
     }, id = id) {
+
     }
 }
 

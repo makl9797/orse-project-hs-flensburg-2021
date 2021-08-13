@@ -1,12 +1,16 @@
 package components.content
 
 import dev.fritz2.dom.html.RenderContext
+import kotlinx.browser.document
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.store.AppState
 import models.store.Module
 import modules.info.infoBox
+import org.w3c.dom.Element
+import stores.MoveModuleStore
 import stores.moduleStore
 
+val moveModuleStore = MoveModuleStore(document.body as Element)
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleContainer(mode: AppState.Mode) {

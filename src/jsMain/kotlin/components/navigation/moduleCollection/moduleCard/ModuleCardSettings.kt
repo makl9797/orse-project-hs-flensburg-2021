@@ -20,20 +20,20 @@ fun RenderContext.moduleCardSettings(
 
     val widthStore = settingsStore.sub(L.ModuleSettings.width)
     val heightStore = settingsStore.sub(L.ModuleSettings.height)
-    val xStore = settingsStore.sub(L.ModuleSettings.parentX)
-    val yStore = settingsStore.sub(L.ModuleSettings.parentY)
+    val xStore = settingsStore.sub(L.ModuleSettings.startX)
+    val yStore = settingsStore.sub(L.ModuleSettings.startY)
 
     val changeWidth = widthStore.handle { _, value: String ->
-        value.toDouble()
+        value.toInt()
     }
     val changeHeight = heightStore.handle { _, value: String ->
-        value.toDouble()
+        value.toInt()
     }
     val changeX = xStore.handle { _, value: String ->
-        value.toDouble()
+        value.toInt()
     }
     val changeY = yStore.handle { _, value: String ->
-        value.toDouble()
+        value.toInt()
     }
 
     flexBox({
@@ -44,7 +44,7 @@ fun RenderContext.moduleCardSettings(
     }, id = "${id}Settings") {
         moduleCardSettingsInput(id = id, startValue = settings.width, "Weite", "W", changeWidth)
         moduleCardSettingsInput(id = id, startValue = settings.height, "Höhe", "H", changeHeight)
-        moduleCardSettingsInput(id = id, startValue = settings.parentX, "Position X", "X", changeX)
-        moduleCardSettingsInput(id = id, startValue = settings.parentY, "Position Y", "Y", changeY)
+        moduleCardSettingsInput(id = id, startValue = settings.startX, "Position X", "X", changeX)
+        moduleCardSettingsInput(id = id, startValue = settings.startY, "Position Y", "Y", changeY)
     }
 }

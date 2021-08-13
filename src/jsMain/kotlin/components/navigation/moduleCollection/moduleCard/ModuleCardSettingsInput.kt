@@ -11,7 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleCardSettingsInput(
     id: String,
-    startValue: Double,
+    startValue: Int,
     valueName: String,
     valueShortCut: String,
     handler: SimpleHandler<String>

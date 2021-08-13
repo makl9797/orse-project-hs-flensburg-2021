@@ -10,7 +10,7 @@ import modules.ModuleCatalog
 @ExperimentalCoroutinesApi
 fun RenderContext.navigation(id: String, mode: AppState.Mode, moduleCatalog: ModuleCatalog) {
     div({
-        height { "4.5rem" }
+        height { "5rem" }
     }, id = id) {
         navBar({
             border { width { "0" } }
