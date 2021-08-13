@@ -9,6 +9,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.toLocalDate
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import models.Customer
 
 import java.time.*
 
@@ -16,12 +17,8 @@ import java.time.*
 fun Route.customerRoute() {
     post("/customer/create") {
         try {
-            //val customer = Customer("CUSTOMER_ID")
-            //val col = databaseService.getCollectionOfCustomer()
-            val date = LocalDate(2021, 8, 16)
-
-            val date1 = "2021-08-16".toLocalDate()
-            call.respondText(Json.encodeToString(date)+Json.encodeToString(date1))
+            val customer = Customer("dfgdfg","f","l")
+            call.respondText(Json.encodeToString(customer))
 
         } catch (e: Exception) {
             call.respondText(e.toString())
