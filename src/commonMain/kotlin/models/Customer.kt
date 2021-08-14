@@ -11,7 +11,12 @@ class Customer : Person {
     @Contextual
     var address = Address("", "", 0)
 
-    constructor(customerId: String, address: Address, firstname: String, lastname: String) : super(
+    constructor(
+        customerId: String,// = uniqueId(),
+        address: Address,// = Address(),
+        firstname: String,// = "",
+        lastname: String// = ""
+    ) : super(
         firstname,
         lastname
     ) {
