@@ -3,7 +3,6 @@ import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
@@ -11,7 +10,10 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import models.*
+import models.Address
+import models.Booking
+import models.Customer
+import models.Subject
 import routing.*
 import services.DatabaseService
 
@@ -69,7 +71,10 @@ fun Route.getCustomerById() {
 
 fun Route.getRoot() {
     get("/") {
-        call.respond(HttpStatusCode.OK)
+        call.respondText(
+            this::class.java.classLoader.getResource("index.html")!!.readText(),
+            ContentType.Text.Html
+        )
     }
 }
 
