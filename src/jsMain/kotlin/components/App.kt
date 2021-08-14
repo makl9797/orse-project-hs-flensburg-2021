@@ -1,6 +1,5 @@
 package components
 
-import api.Network
 import components.content.workspace
 import components.navigation.navigation
 import dev.fritz2.components.clickButton
@@ -9,6 +8,7 @@ import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import modules.moduleCatalog
 import stores.appStateStore
+import stores.dataStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.app() {
@@ -20,13 +20,16 @@ fun RenderContext.app() {
             navigation("navigation", state.mode, moduleCatalog)
             workspace("workspace", state.mode)
         }
-        val net = Network()
-        input {
-            value(net.testStorage.data)
+    }
+    div {
+        dataStore.data.renderElement {
+            div {
+                console.log(it)
+            }
         }
         clickButton {
             text("Test")
-        } handledBy net.testGet
+        } handledBy dataStore.getSubject
     }
 }
 
