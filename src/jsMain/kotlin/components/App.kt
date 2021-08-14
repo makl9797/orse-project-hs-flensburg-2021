@@ -30,7 +30,7 @@ fun RenderContext.app() {
                 console.log(it)
             }
         }
-        val booking = Booking(id = uniqueId())
+        val booking = Booking(_id = uniqueId())
         clickButton {
             text("New Booking")
         }.events.map {
@@ -39,7 +39,7 @@ fun RenderContext.app() {
         clickButton {
             text("Delete last Booking")
         }.events.map {
-            booking.id
+            booking._id
         } handledBy bookingStore.remove
         clickButton {
             text("Show Bookings")

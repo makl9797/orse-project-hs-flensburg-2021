@@ -26,7 +26,7 @@ fun Route.bookingRoutes() {
         try {
             val booking = call.receive<Booking>()
             val bookingId = call.parameters["id"].toString()
-            booking.id = bookingId
+            booking._id = bookingId
             val col = databaseService.getCollectionOfBooking()
             col.insertOne(booking)
             call.respond(col.find().toList())
@@ -40,59 +40,10 @@ fun Route.bookingRoutes() {
         try {
             val booking = call.receive<Booking>()
             val bookingId = call.parameters["id"].toString()
-            booking.id = bookingId
-            val col = databaseService.getCollectionOfBooking()
-            col.findOneAndReplace(Booking::id eq bookingId, booking)
-            call.respond(col.find().toList())
-            call.respond(HttpStatusCode.OK)
-
-        } catch (e: Exception) {
-            call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
-        }
-    }
-    delete("/bookings/{id}") {
-        try {
-            val col = databaseService.getCollectionOfBooking()
-            col.deleteOne(Booking::id eq call.parameters["id"].toString())
-            call.respond(col.find().toList())
-            call.respond(HttpStatusCode.OK)
-
-        } catch (e: Exception) {
-            call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
-        }
-    }
-/*
-    get("/bookings") {
-        try {
-            val col = databaseService.getCollectionOfBooking()
-            val bookings = col.find().toList()
-            call.respond(bookings)
-            call.respond(HttpStatusCode.OK)
-        } catch (e: Exception) {
-            call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
-        }
-    }
-    post("/bookings/") {
-        try {
-            val booking = call.receive<Booking>()
-            val col = databaseService.getCollectionOfBooking()
-            col.insertOne(booking)
-            call.respond(col.find().toList())
-            call.respond(HttpStatusCode.OK)
-        } catch (e: Exception) {
-            call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
-        }
-    }
-    put("/bookings/{id}") {
-        try {
-            val booking = call.receive<Booking>()
-            booking.id = call.parameters["id"].toString()
+            booking._id = bookingId
             val col = databaseService.getCollectionOfBooking()
             col.save(booking)
+
             call.respond(col.find().toList())
             call.respond(HttpStatusCode.OK)
 
@@ -104,7 +55,7 @@ fun Route.bookingRoutes() {
     delete("/bookings/{id}") {
         try {
             val col = databaseService.getCollectionOfBooking()
-            col.deleteOne(Booking::id eq call.parameters["id"].toString())
+            col.deleteOne(Booking::_id eq call.parameters["id"].toString())
             call.respond(col.find().toList())
             call.respond(HttpStatusCode.OK)
 
@@ -112,5 +63,5 @@ fun Route.bookingRoutes() {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)
         }
-    }*/
+    }
 }

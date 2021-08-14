@@ -11,7 +11,7 @@ import kotlinx.serialization.json.Json
 @Serializable
 @Lenses
 data class Booking(
-    var id: String = uniqueId(),
+    var _id: String = uniqueId(),
     val price: Double = 0.0,
     val customer: Customer = Customer(uniqueId(), Address(), "", ""),
     val startTime: String = "01-01-1970",
@@ -20,7 +20,7 @@ data class Booking(
 )
 
 object BookingResource : Resource<Booking, String> {
-    override val idProvider: IdProvider<Booking, String> = Booking::id
+    override val idProvider: IdProvider<Booking, String> = Booking::_id
 
     override fun deserialize(source: String): Booking = Json.decodeFromString(Booking.serializer(), source)
     override fun deserializeList(source: String): List<Booking> =
