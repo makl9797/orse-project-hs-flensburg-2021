@@ -5,10 +5,13 @@ import components.navigation.navigation
 import dev.fritz2.components.clickButton
 import dev.fritz2.components.flexBox
 import dev.fritz2.dom.html.RenderContext
+import dev.fritz2.identification.uniqueId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
+import models.Booking
 import modules.moduleCatalog
 import stores.appStateStore
-import stores.dataStore
+import stores.bookingStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.app() {
@@ -22,14 +25,25 @@ fun RenderContext.app() {
         }
     }
     div {
-        dataStore.data.renderElement {
+        bookingStore.data.renderEach {
             div {
                 console.log(it)
             }
         }
+        val booking = Booking(id = uniqueId())
         clickButton {
-            text("Test")
-        } handledBy dataStore.getSubject
+            text("New Booking")
+        }.events.map {
+            booking
+        } handledBy bookingStore.save
+        clickButton {
+            text("Delete last Booking")
+        }.events.map {
+            booking.id
+        } handledBy bookingStore.remove
+        clickButton {
+            text("Show Bookings")
+        } handledBy bookingStore.query
     }
 }
 

@@ -1,4 +1,5 @@
 import com.benasher44.uuid.Uuid
+import dev.fritz2.identification.uniqueId
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -80,6 +81,7 @@ fun Route.postRoot() {
     post("/") {
         try {
             val booking = Booking(
+                uniqueId(),
                 5.0,
                 Customer(Uuid.randomUUID().toString(), Address("Bahnhofsweg", "Flensburg", 24954), "Hans", "Peter"),
                 "2021-08-23",
