@@ -1,5 +1,8 @@
 package models
+
+import dev.fritz2.lenses.Lenses
 import kotlinx.serialization.Serializable
+
 @Serializable
 open class Person {
     var firstname = ""
@@ -12,3 +15,9 @@ open class Person {
 
 
 }
+
+@Lenses
+data class PersonLenses(
+    val firstname: String,
+    val lastname: String
+)

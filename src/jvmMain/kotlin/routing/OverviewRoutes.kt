@@ -5,11 +5,10 @@ import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import kotlinx.serialization.*
-import kotlinx.serialization.json.Json
-import models.*
 import kotlinx.datetime.*
-
+import models.Booking
+import models.Day
+import models.Subject
 
 
 fun Route.overviewRoutes() {
@@ -21,7 +20,7 @@ fun Route.overviewRoutes() {
             }
             val listOfDays = createDayList(period)
 
-            call.respondText(Json.encodeToString(listOfDays))
+            call.respond(listOfDays)
             call.respond(HttpStatusCode.OK)
 
         } catch (e: Exception) {

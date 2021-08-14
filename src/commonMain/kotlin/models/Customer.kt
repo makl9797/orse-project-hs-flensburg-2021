@@ -1,11 +1,13 @@
 package models
 
+import dev.fritz2.lenses.Lenses
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
 class Customer : Person {
     var customerId = ""
+
     @Contextual
     var address = Address("", "", 0)
 
@@ -17,3 +19,11 @@ class Customer : Person {
         this.address = address
     }
 }
+
+@Lenses
+data class CustomerLenses(
+    val customerId: String,
+    val address: Address,
+    val firstname: String,
+    val lastname: String
+)

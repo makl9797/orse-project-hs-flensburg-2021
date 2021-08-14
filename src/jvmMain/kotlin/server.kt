@@ -8,8 +8,6 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import models.Address
 import models.Booking
 import models.Customer
@@ -88,7 +86,7 @@ fun Route.postRoot() {
                 "2021-09-01",
                 Subject("Subjectname", "Subscription", Uuid.randomUUID().toString())
             )
-            call.respondText(Json.encodeToString(booking))
+            call.respond(booking)
             call.respond(HttpStatusCode.OK)
         } catch (e: Exception) {
             call.respondText(e.toString())

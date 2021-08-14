@@ -1,5 +1,6 @@
 package util
 
+import dev.fritz2.lenses.Lenses
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,3 +13,8 @@ class UTime {
     }
 
 }
+
+@Lenses
+data class UTimeLenses(
+    val timestamp: Long
+)

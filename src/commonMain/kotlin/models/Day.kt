@@ -1,5 +1,6 @@
 package models
 
+import dev.fritz2.lenses.Lenses
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,3 +16,10 @@ class Day {
         this.bookingList = bookings
     }
 }
+
+@Lenses
+data class DayLenses(
+    val day: String,
+    val bookings: MutableList<Booking>,
+    val subjects: MutableList<Subject>
+)

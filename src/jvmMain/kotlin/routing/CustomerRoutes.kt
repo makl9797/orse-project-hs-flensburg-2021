@@ -6,12 +6,8 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import models.Address
 import models.Customer
 import org.litote.kmongo.eq
-import org.litote.kmongo.findOne
 
 
 fun Route.customerRoute() {
@@ -26,11 +22,8 @@ fun Route.customerRoute() {
     }
     get("/customer/search") {
         try {
-            call.respondText(
-                Json.encodeToString(
-                    databaseService.getCollectionOfCustomer().find(Customer::lastname eq call.parameters["name"])
-                        .toList()
-                )
+            call.respond(
+                databaseService.getCollectionOfCustomer().find(Customer::lastname eq call.parameters["name"]).toList()
             )
             call.respond(HttpStatusCode.OK)
 

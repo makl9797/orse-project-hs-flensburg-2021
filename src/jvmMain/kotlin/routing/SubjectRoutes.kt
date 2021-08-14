@@ -8,8 +8,6 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.toLocalDate
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import models.Booking
 import models.Subject
 import org.litote.kmongo.eq
@@ -34,7 +32,11 @@ fun Route.subjectRoutes() {
                     }
                 }
 
-            call.respondText(Json.encodeToString(availableSubjects))
+            if (availableSubjects != null) {
+                call.respond(availableSubjects.toList())
+            } else {
+                throw Exception("No available Subjects")
+            }
             call.respond(HttpStatusCode.Created)
         } catch (e: Exception) {
             call.respondText("Error_ $e")
@@ -66,7 +68,7 @@ fun Route.subjectRoutes() {
             val id = call.parameters["id"]
             val subject = databaseService.getCollectionOfSubject().findOne(Subject::subjectId eq id)
             if (subject != null) {
-                call.respondText(Json.encodeToString(subject))
+                call.respond(subject)
                 call.respond(HttpStatusCode.OK)
             } else {
                 call.respondText { "no subject was found with the ID $id" }
