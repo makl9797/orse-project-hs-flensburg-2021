@@ -12,11 +12,11 @@ import kotlinx.serialization.json.Json
 @Lenses
 data class Booking(
     var _id: String = uniqueId(),
-    val price: Double = 0.0,
-    val customer: Customer = Customer(uniqueId(), Address(), "", ""),
-    val startTime: String = "01-01-1970",
-    val endTime: String = "01-01-1970",
-    val subject: Subject = Subject()
+    val price: Double,
+    val customer: Customer,
+    val startTime: String,
+    val endTime: String,
+    val subject: Subject
 )
 
 object BookingResource : Resource<Booking, String> {

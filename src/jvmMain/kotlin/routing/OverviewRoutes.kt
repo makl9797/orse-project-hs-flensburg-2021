@@ -76,3 +76,26 @@ fun getAllSubjects(): List<Subject> {
     return databaseService.getCollectionOfSubject().find().toList()
 }
 
+
+fun getAvailableSubjectsInTimeframe(
+    start: LocalDate,
+    end: LocalDate,
+    subjects: List<Subject>,
+    bookings: List<Booking>
+): MutableList<Subject> {
+    val notAvailableSubjectIds = mutableListOf<String>()
+    val availableSubjects = mutableListOf<Subject>()
+    for (booking: Booking in bookings) {
+        if (booking.startTime.toLocalDate() in start..end || booking.endTime.toLocalDate() in start..end) {
+            notAvailableSubjectIds.add(booking.subject._id)
+        }
+    }
+    subjects.forEach { subject ->
+        if (subject._id !in notAvailableSubjectIds) {
+            availableSubjects.add(subject)
+        }
+    }
+    return availableSubjects
+
+
+}

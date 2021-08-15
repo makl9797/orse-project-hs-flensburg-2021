@@ -5,9 +5,13 @@ import components.navigation.navigation
 import dev.fritz2.components.clickButton
 import dev.fritz2.components.flexBox
 import dev.fritz2.dom.html.RenderContext
+import dev.fritz2.identification.uniqueId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
+import models.Address
 import models.Booking
+import models.Customer
+import models.Subject
 import modules.moduleCatalog
 import stores.appStateStore
 import stores.bookingStore
@@ -29,7 +33,13 @@ fun RenderContext.app() {
                 console.log(it)
             }
         }
-        val booking = Booking(_id = "test")
+        val booking = Booking(
+            price = 0.0,
+            customer = Customer(uniqueId(), Address(), "", ""),
+            startTime = "1970-01-01",
+            endTime = "1970-01-01",
+            subject = Subject()
+        )
         clickButton {
             text("New Booking")
         }.events.map {
