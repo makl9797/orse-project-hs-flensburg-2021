@@ -5,12 +5,16 @@ val serializationVersion = "1.2.1"
 val ktorVersion = "1.6.1"
 val logbackVersion = "1.2.3"
 val kmongoVersion = "4.2.7"
-val reactWrappersVersion = "17.0.2-pre.214-kotlin-1.5.20"
+val fritz2Version = "0.11"
+val uuidVersion = "0.3.0"
+val kotlinXDateTimeVersion = "0.2.1"
 
 plugins {
     kotlin("multiplatform") version "1.5.20"
-    application
+    kotlin("kapt") version "1.5.20"
     kotlin("plugin.serialization") version "1.5.20"
+    application
+    id("dev.fritz2.fritz2-gradle") version "0.11"
 }
 
 group = "de.flensburg.orse.project"
@@ -19,8 +23,6 @@ version = "1.0-SNAPSHOT"
 repositories {
     jcenter()
     mavenCentral()
-    maven { url = uri("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven") }
-    maven("https://dl.bintray.com/kotlin/kotlin-eap")
 }
 
 kotlin {
@@ -33,22 +35,24 @@ kotlin {
         }
         withJava()
     }
-    js(LEGACY) {
-        binaries.executable()
+    js(IR) {
         browser {
             commonWebpackConfig {
                 cssSupport.enabled = true
             }
         }
+        binaries.executable()
+        useCommonJs()
     }
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("com.benasher44:uuid:0.3.0")
-                implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.20")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
+                implementation("dev.fritz2:core:$fritz2Version")
+                implementation("com.benasher44:uuid:$uuidVersion")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinXDateTimeVersion")
             }
         }
         val commonTest by getting {
@@ -65,20 +69,18 @@ kotlin {
                 implementation("io.ktor:ktor-server-netty:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
                 implementation("org.litote.kmongo:kmongo:$kmongoVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
-
-
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinXDateTimeVersion")
             }
         }
 
         val jsMain by getting {
             dependencies {
+                configurations["kapt"].dependencies.add(project.dependencies.create("dev.fritz2:lenses-annotation-processor:$fritz2Version"))
                 implementation("io.ktor:ktor-client-js:$ktorVersion")
                 implementation("io.ktor:ktor-client-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-
-                implementation("org.jetbrains.kotlin-wrappers:kotlin-react:$reactWrappersVersion")
-                implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom:$reactWrappersVersion")
+                implementation("dev.fritz2:components:$fritz2Version.1")
+                implementation("dev.fritz2:styling:$fritz2Version.1")
             }
         }
     }

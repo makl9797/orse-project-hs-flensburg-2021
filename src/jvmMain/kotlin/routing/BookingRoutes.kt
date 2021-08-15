@@ -6,43 +6,82 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import kotlinx.datetime.toLocalDate
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import models.Booking
 import org.litote.kmongo.eq
-import org.litote.kmongo.findOne
-import java.sql.Timestamp
-import kotlin.time.*
+import org.litote.kmongo.findOneById
+import org.litote.kmongo.save
 
 fun Route.bookingRoutes() {
-    post("/booking/create") {
+    get("/bookings") {
+        try {
+            val col = databaseService.getCollectionOfBooking()
+            val day = call.request.queryParameters["day"]
+            var bookings = col.find().toList()
+            if (day != null) {
+                bookings = col.find(Booking::startTime eq day).toList()
+            }
+            call.respond(bookings)
+            call.respond(HttpStatusCode.OK)
+        } catch (e: Exception) {
+            call.respondText("Error_ $e")
+            call.respond(HttpStatusCode.BadRequest)
+        }
+    }
+    get("/bookings/{id}") {
+        try {
+            val col = databaseService.getCollectionOfBooking()
+            val id = call.parameters["id"].toString()
+            val booking = col.findOneById(id)
+            if (booking != null) {
+                call.respond(booking)
+            } else {
+                call.respondText("Booking with _id:$id not found")
+            }
+            call.respond(HttpStatusCode.OK)
+        } catch (e: Exception) {
+            call.respondText("Error_ $e")
+            call.respond(HttpStatusCode.BadRequest)
+        }
+    }
+    post("/bookings") {
         try {
             val booking = call.receive<Booking>()
+            val bookingId = call.request.queryParameters["id"]
+            if (bookingId != null) {
+                booking._id = bookingId
+            }
             val col = databaseService.getCollectionOfBooking()
             col.insertOne(booking)
+            call.respond(col.find().toList())
             call.respond(HttpStatusCode.OK)
         } catch (e: Exception) {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)
         }
     }
-    get("/booking/all") {
+    put("/bookings/{id}") {
+        try {
+            val booking = call.receive<Booking>()
+            val bookingId = call.parameters["id"].toString()
+            booking._id = bookingId
+            val col = databaseService.getCollectionOfBooking()
+            col.save(booking)
+
+            call.respond(col.find().toList())
+            call.respond(HttpStatusCode.OK)
+
+        } catch (e: Exception) {
+            call.respondText("Error_ $e")
+            call.respond(HttpStatusCode.BadRequest)
+        }
+    }
+    delete("/bookings/{id}") {
         try {
             val col = databaseService.getCollectionOfBooking()
-            val bookings = col.find().toList()
-            call.respondText(Json.encodeToString(bookings))
+            col.deleteOne(Booking::_id eq call.parameters["id"])
+            call.respond(col.find().toList())
             call.respond(HttpStatusCode.OK)
-        } catch (e: Exception) {
-            call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
-        }
-    }
-    get("/booking/{day}") {
-        try {
-            val bookings = databaseService.getCollectionOfBooking().find(Booking::startTime eq call.parameters["day"]).toList()
-            call.respondText(Json.encodeToString(bookings))
-            call.respond(HttpStatusCode.OK)
+
         } catch (e: Exception) {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)

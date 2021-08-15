@@ -1,7 +1,12 @@
 package models
 
-import com.benasher44.uuid.Uuid
+import dev.fritz2.lenses.Lenses
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Appointment(val appointmentId: String, val date: Long, val info: String)
+@Lenses
+data class Appointment(
+    val appointmentId: String,
+    val date: Long,
+    val info: String
+)

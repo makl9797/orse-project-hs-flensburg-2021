@@ -1,6 +1,7 @@
 package models
 
-
+import com.benasher44.uuid.Uuid
+import dev.fritz2.lenses.Lenses
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -17,3 +18,11 @@ class Address {
     }
 
 }
+
+@Lenses
+data class AddressLenses(
+    val uuid: Uuid,
+    val street: String,
+    val city: String,
+    val zip: Int
+)

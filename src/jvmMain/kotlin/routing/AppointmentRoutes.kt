@@ -6,8 +6,6 @@ import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import models.Appointment
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
@@ -20,7 +18,7 @@ fun Route.appointmentRoutes() {
         val appointment =
             appointmentCollection.findOne(Appointment::appointmentId eq id)
         if (appointment != null) {
-            call.respondText(Json.encodeToString(appointment))
+            call.respond(appointment)
         }
         call.respond(HttpStatusCode.BadRequest)
     }

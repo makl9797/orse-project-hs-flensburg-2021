@@ -1,10 +1,13 @@
 package models
 
+import dev.fritz2.identification.uniqueId
+import dev.fritz2.lenses.Lenses
 import kotlinx.serialization.Serializable
-import kotlinx.datetime.*
 
 @Serializable
+@Lenses
 data class Booking(
+    var _id: String = uniqueId(),
     val price: Double,
     val customer: Customer,
     val startTime: String,

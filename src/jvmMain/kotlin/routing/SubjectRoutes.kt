@@ -1,104 +1,107 @@
 package routing
 
-import com.benasher44.uuid.Uuid
 import databaseService
 import io.ktor.application.*
 import io.ktor.http.*
+import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.toLocalDate
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import models.Booking
 import models.Subject
-import org.litote.kmongo.eq
-import org.litote.kmongo.findOne
+import org.litote.kmongo.findOneById
 
 
 fun Route.subjectRoutes() {
-    get("/subject/available") {
+    get("/subjects/{id}") {
         try {
-            val start = call.parameters["start"]
-            val end = call.parameters["end"]
-            val subjects = databaseService.getCollectionOfSubject().find().toList()
-            val bookings = databaseService.getCollectionOfBooking().find().toList()
-
-            val availableSubjects =
-                start?.let { it1 ->
-                    end?.let { it2 ->
-                        getAvailableSubjectsInTimeframe(
-                            it1.toLocalDate(),
-                            it2.toLocalDate(), subjects, bookings
-                        )
-                    }
-                }
-
-            call.respondText(Json.encodeToString(availableSubjects))
-            call.respond(HttpStatusCode.Created)
-        } catch (e: Exception) {
-            call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
-        }
-    }
-    post("/subject/create") {
-        try {
-            val subject =
-                call.parameters["subscription"]?.let { it2 ->
-                    call.parameters["name"]?.let { it3 ->
-                        Subject(
-                            it3,
-                            it2,
-                            Uuid.randomUUID().toString()
-                        )
-                    }
-                }
-            val col = databaseService.getCollectionOfSubject()
-            col.insertOne(subject)
+            val subjects = databaseService.getCollectionOfSubject()
+            val id = call.parameters["id"].toString()
+            val subject = subjects.findOneById(id)
+            if (subject != null) {
+                call.respond(subject)
+            } else {
+                call.respondText("Subject with _id:$id not found")
+            }
             call.respond(HttpStatusCode.OK)
         } catch (e: Exception) {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)
         }
     }
-    get("/subject/{id}") {
+    get("/subjects") {
         try {
-            val id = call.parameters["id"]
-            val subject = databaseService.getCollectionOfSubject().findOne(Subject::subjectId eq id)
-            if (subject != null) {
-                call.respondText(Json.encodeToString(subject))
+            val onlyAvailable: Boolean = call.parameters["onlyAvailable"].toBoolean()
+            val startTime = call.parameters["start"]
+            val endTime = call.parameters["end"]
+            val subjects = databaseService.getCollectionOfSubject()
+            val bookings = databaseService.getCollectionOfBooking()
+            if (startTime != null && endTime != null) {
+                call.respond(
+                    getSubjectsInTimeframe(
+                        startTime.toLocalDate(),
+                        endTime.toLocalDate(),
+                        subjects.find().toList(),
+                        bookings.find().toList(),
+                        onlyAvailable
+                    )
+                )
                 call.respond(HttpStatusCode.OK)
             } else {
-                call.respondText { "no subject was found with the ID $id" }
+                call.respond(subjects.find().toList())
+                call.respond(HttpStatusCode.OK)
             }
         } catch (e: Exception) {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)
         }
+    }
 
-
+    post("/subjects") {
+        try {
+            val subject = call.receive<Subject>()
+            val subjects = databaseService.getCollectionOfSubject()
+            subjects.insertOne(subject)
+            call.respond(subjects.find().toList())
+            call.respond(HttpStatusCode.OK)
+        } catch (e: Exception) {
+            call.respondText("Error_ $e")
+            call.respond(HttpStatusCode.BadRequest)
+        }
     }
 
 }
 
-fun getAvailableSubjectsInTimeframe(
+fun getSubjectsInTimeframe(
     start: LocalDate,
     end: LocalDate,
     subjects: List<Subject>,
     bookings: List<Booking>,
+    onlyAvailable: Boolean
 ): MutableList<Subject> {
     val notAvailableSubjectIds = mutableListOf<String>()
+    val notAvailableSubjects = mutableListOf<Subject>()
     val availableSubjects = mutableListOf<Subject>()
     for (booking: Booking in bookings) {
         if (booking.startTime.toLocalDate() in start..end || booking.endTime.toLocalDate() in start..end) {
-            notAvailableSubjectIds.add(booking.subject.subjectId)
+            notAvailableSubjectIds.add(booking.subject._id)
         }
     }
     subjects.forEach { subject ->
-        if (subject.subjectId !in notAvailableSubjectIds) {
+        if (subject._id !in notAvailableSubjectIds) {
             availableSubjects.add(subject)
+        } else {
+            notAvailableSubjects.add(subject)
         }
     }
-    return availableSubjects
+    return if (onlyAvailable) {
+        availableSubjects
+    } else {
+        notAvailableSubjects
+    }
+
 }
+
+
 
