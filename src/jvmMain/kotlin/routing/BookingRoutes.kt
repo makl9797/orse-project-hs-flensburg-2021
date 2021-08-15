@@ -14,7 +14,11 @@ fun Route.bookingRoutes() {
     get("/bookings") {
         try {
             val col = databaseService.getCollectionOfBooking()
-            val bookings = col.find().toList()
+            val day = call.request.queryParameters["day"]
+            var bookings = col.find().toList()
+            if (day != null) {
+                bookings = col.find(Booking::startTime eq day).toList()
+            }
             call.respond(bookings)
             call.respond(HttpStatusCode.OK)
         } catch (e: Exception) {
@@ -22,11 +26,13 @@ fun Route.bookingRoutes() {
             call.respond(HttpStatusCode.BadRequest)
         }
     }
-    post("/bookings/{id}") {
+    post("/bookings") {
         try {
             val booking = call.receive<Booking>()
-            val bookingId = call.parameters["id"].toString()
-            booking._id = bookingId
+            val bookingId = call.request.queryParameters["id"]
+            if (bookingId != null) {
+                booking._id = bookingId
+            }
             val col = databaseService.getCollectionOfBooking()
             col.insertOne(booking)
             call.respond(col.find().toList())
@@ -55,7 +61,7 @@ fun Route.bookingRoutes() {
     delete("/bookings/{id}") {
         try {
             val col = databaseService.getCollectionOfBooking()
-            col.deleteOne(Booking::_id eq call.parameters["id"].toString())
+            col.deleteOne(Booking::_id eq call.parameters["id"])
             call.respond(col.find().toList())
             call.respond(HttpStatusCode.OK)
 
