@@ -55,17 +55,16 @@ fun Route.customerRoute() {
         try {
             val customerId = call.parameters["id"]
             val customers = databaseService.getCollectionOfCustomer()
-            if (customerId != null) {
-                val customer = customers.findOne(Customer::_id eq customerId)
-                if (customer != null) {
-                    call.respond(Json.encodeToString(customer))
-                    call.respond(HttpStatusCode.OK)
 
-                } else {
-                    call.respondText("no customer with the id $customerId was found")
-                    call.respond(HttpStatusCode.BadRequest)
-                }
+            val customer = customers.findOne(Customer::_id eq customerId)
+            if (customer != null) {
+                call.respond(Json.encodeToString(customer))
+                call.respond(HttpStatusCode.OK)
+            } else {
+                call.respondText("no customer with the id $customerId was found")
+                call.respond(HttpStatusCode.BadRequest)
             }
+
 
         } catch (e: Exception) {
             call.respondText("Error_ $e")
