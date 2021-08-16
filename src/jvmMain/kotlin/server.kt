@@ -8,7 +8,6 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import kotlinx.datetime.LocalDate
 import models.Address
 import models.Customer
 import routing.bookingRoutes
@@ -77,7 +76,7 @@ fun Route.getRoot() {
     post("/") {
         call.respond(
             Customer(
-                uniqueId(), Address("street", "city", 21344), "jürgen", "hansen"
+                uniqueId(), Address(street = "street", city = "city", zip = 21344), "jürgen", "hansen"
             )
         )
     }

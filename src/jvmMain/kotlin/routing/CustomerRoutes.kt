@@ -15,15 +15,6 @@ import org.litote.kmongo.save
 
 
 fun Route.customerRoute() {
-    post("/customer/create") {
-        try {
-            databaseService.getCollectionOfCustomer().insertOne(call.receive<Customer>())
-            call.respond(HttpStatusCode.Created)
-        } catch (e: Exception) {
-            call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
-        }
-    }
     put("/customers/{id}") {
         try {
             val customers = databaseService.getCollectionOfCustomer()
@@ -72,14 +63,10 @@ fun Route.customerRoute() {
             call.respond(HttpStatusCode.BadRequest)
         }
     }
-
-    get("/customer/search") {
+    get("/customers") {
         try {
-            call.respond(
-                databaseService.getCollectionOfCustomer().find(Customer::lastname eq call.parameters["name"]).toList()
-            )
-            call.respond(HttpStatusCode.OK)
-
+            val customers = databaseService.getCollectionOfCustomer()
+            call.respond(customers.find().toList())
         } catch (e: Exception) {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)
