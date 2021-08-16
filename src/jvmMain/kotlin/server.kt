@@ -1,3 +1,4 @@
+import dev.fritz2.identification.uniqueId
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -8,6 +9,8 @@ import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import kotlinx.datetime.LocalDate
+import models.Address
+import models.Customer
 import routing.bookingRoutes
 import routing.customerRoute
 import routing.overviewRoutes
@@ -72,7 +75,11 @@ fun Route.getRoot() {
         )
     }
     post("/") {
-        call.respond(LocalDate(2021, 8, 15))
+        call.respond(
+            Customer(
+                uniqueId(), Address("street", "city", 21344), "jürgen", "hansen"
+            )
+        )
     }
 }
 
