@@ -1,0 +1,70 @@
+package components.navigation.subjectModal
+
+import dev.fritz2.binding.storeOf
+import dev.fritz2.components.clickButton
+import dev.fritz2.components.flexBox
+import dev.fritz2.components.formControl
+import dev.fritz2.dom.html.RenderContext
+import dev.fritz2.dom.values
+import dev.fritz2.identification.uniqueId
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
+import models.L
+import models.Subject
+import stores.subjectsStore
+
+
+@ExperimentalCoroutinesApi
+fun RenderContext.addSubjectForm(id: String) {
+    val subjectStore =
+        storeOf(Subject(name = "", description = "", type = ""))
+    val idStore = subjectStore.sub(L.Subject._id)
+    val nameStore = subjectStore.sub(L.Subject.name)
+    val descriptionStore = subjectStore.sub(L.Subject.description)
+    val typeStore = subjectStore.sub(L.Subject.type)
+    val types = mutableListOf("Strandkorb", "Fahrrad")
+
+    flexBox({
+        wrap { wrap }
+        justifyContent { flexEnd }
+    }, id = id + "Form") {
+        formControl {
+            label("Objektname")
+            inputField(value = nameStore) {
+                placeholder("Name des Objekts...")
+            }
+        }
+        formControl({
+            margins { top { small } }
+        }) {
+            label("Objektbeschreibung")
+            textArea {
+                value(descriptionStore.data)
+                placeholder("Beschreibe das Objekt...")
+                resizeBehavior { none }
+                events {
+                    changes.values() handledBy descriptionStore.update
+                }
+            }
+        }
+
+        formControl({
+            margins { top { small } }
+        }) {
+            label("Objekttyp")
+            selectField(items = types, value = typeStore) {
+                placeholder("Wähle den Objekttyp...")
+            }
+        }
+        clickButton({
+            margins { top { small } }
+        }) {
+            variant { outline }
+            type { success }
+            text("Hinzufügen")
+        }.events.map {
+            idStore.update(uniqueId())
+            subjectStore.current
+        } handledBy subjectsStore.save
+    }
+}

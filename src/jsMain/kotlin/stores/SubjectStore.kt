@@ -1,12 +1,14 @@
 package stores
 
 import dev.fritz2.binding.RootStore
+import dev.fritz2.binding.storeOf
 import dev.fritz2.identification.uniqueId
 import dev.fritz2.repositories.rest.restQuery
 import models.Subject
 import models.SubjectResource
 
-val subjectStore = SubjectStore(emptyList(), id = "bookings")
+val subjectsStore = SubjectStore(emptyList(), id = "subjects")
+val subjectTypeStore = storeOf(listOf("Strandkorb", "Fahrrad"))
 const val SUBJECT_ENDPOINT = "/subjects"
 
 class SubjectStore(init: List<Subject>, id: String) : RootStore<List<Subject>>(init, id = id) {
