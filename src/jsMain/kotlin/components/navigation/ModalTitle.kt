@@ -9,7 +9,7 @@ fun RenderContext.modalTitle(id: String, title: String) {
     flexBox({
         alignContent { start }
         justifyContent { flexStart }
-    }, id = id) {
+    }, id = id + "Title") {
         h1 { +title }
     }
 }

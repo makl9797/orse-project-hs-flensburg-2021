@@ -6,7 +6,8 @@ val ktorVersion = "1.6.1"
 val logbackVersion = "1.2.3"
 val kmongoVersion = "4.2.7"
 val fritz2Version = "0.11"
-
+val uuidVersion = "0.3.0"
+val kotlinXDateTimeVersion = "0.2.1"
 
 plugins {
     kotlin("multiplatform") version "1.5.20"
@@ -49,6 +50,10 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("dev.fritz2:core:$fritz2Version")
+                implementation("com.benasher44:uuid:$uuidVersion")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinXDateTimeVersion")
+                implementation("org.litote.kmongo:kmongo-id:4.2.8")
 
             }
         }
@@ -65,7 +70,7 @@ kotlin {
                 implementation("io.ktor:ktor-server-core:$ktorVersion")
                 implementation("io.ktor:ktor-server-netty:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
-                implementation("org.litote.kmongo:kmongo-coroutine-serialization:$kmongoVersion")
+                implementation("org.litote.kmongo:kmongo:$kmongoVersion")
             }
         }
 
