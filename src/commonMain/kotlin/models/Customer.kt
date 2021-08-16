@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Lenses
 @Serializable
 data class Customer(
-    val _id: String = uniqueId(),
+    var _id: String = uniqueId(),
     val address: Address,
     val firstname: String,
     val lastname: String
