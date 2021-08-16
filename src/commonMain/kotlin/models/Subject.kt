@@ -8,38 +8,22 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
-@Serializable
-class Subject {
-    var subjectName = ""
-    var subjectDescription = ""
-    var _id = uniqueId()
-
-    constructor() : super() {}
-    constructor(subjectName: String, subjectDescription: String, _id: String) {
-        this.subjectName = subjectName
-        this.subjectDescription = subjectDescription
-        this._id = _id
-    }
-
-}
-
 @Lenses
 @Serializable
-data class SubjectLenses(
-    val subjectName: String,
-    val subjectDescription: String,
-    val _id: String
+data class Subject(
+    val _id: String = uniqueId(),
+    val name: String = "",
+    val description: String = ""
 )
 
+object SubjectResource : Resource<Subject, String> {
+    override val idProvider: IdProvider<Subject, String> = Subject::_id
 
-object SubjectResource : Resource<SubjectLenses, String> {
-    override val idProvider: IdProvider<SubjectLenses, String> = SubjectLenses::_id
+    override fun deserialize(source: String): Subject = Json.decodeFromString(Subject.serializer(), source)
+    override fun deserializeList(source: String): List<Subject> =
+        Json.decodeFromString(ListSerializer(Subject.serializer()), source)
 
-    override fun deserialize(source: String): SubjectLenses = Json.decodeFromString(SubjectLenses.serializer(), source)
-    override fun deserializeList(source: String): List<SubjectLenses> =
-        Json.decodeFromString(ListSerializer(SubjectLenses.serializer()), source)
-
-    override fun serialize(item: SubjectLenses): String = Json.encodeToString(SubjectLenses.serializer(), item)
-    override fun serializeList(items: List<SubjectLenses>): String =
-        Json.encodeToString(ListSerializer(SubjectLenses.serializer()), items)
+    override fun serialize(item: Subject): String = Json.encodeToString(Subject.serializer(), item)
+    override fun serializeList(items: List<Subject>): String =
+        Json.encodeToString(ListSerializer(Subject.serializer()), items)
 }

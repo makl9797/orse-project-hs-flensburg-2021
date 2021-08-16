@@ -3,8 +3,12 @@ package services
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.client.MongoCollection
-import models.*
-import org.litote.kmongo.*
+import models.Address
+import models.Booking
+import models.Customer
+import models.Subject
+import org.litote.kmongo.KMongo
+import org.litote.kmongo.getCollection
 
 
 open class DatabaseService {
@@ -16,9 +20,6 @@ open class DatabaseService {
     private var client = KMongo.createClient(settings)
     private var database = client.getDatabase("orsedatabase")
 
-    fun getCollectionOfPerson(): MongoCollection<Person> {
-        return database.getCollection<Person>()
-    }
 
     fun getCollectionOfCustomer(): MongoCollection<Customer> {
         return database.getCollection<Customer>()
@@ -30,14 +31,6 @@ open class DatabaseService {
 
     fun getCollectionOfAddress(): MongoCollection<Address> {
         return database.getCollection<Address>()
-    }
-
-    fun getCollectionOfAppointment(): MongoCollection<Appointment> {
-        return database.getCollection<Appointment>()
-    }
-
-    fun getCollectionOfEmployee(): MongoCollection<Employee> {
-        return database.getCollection<Employee>()
     }
 
     fun getCollectionOfSubject(): MongoCollection<Subject> {

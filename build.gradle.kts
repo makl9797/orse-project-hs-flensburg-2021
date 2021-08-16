@@ -53,6 +53,8 @@ kotlin {
                 implementation("com.benasher44:uuid:$uuidVersion")
                 implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinXDateTimeVersion")
+                implementation("org.litote.kmongo:kmongo-id:4.2.8")
+
             }
         }
         val commonTest by getting {
@@ -69,7 +71,6 @@ kotlin {
                 implementation("io.ktor:ktor-server-netty:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
                 implementation("org.litote.kmongo:kmongo:$kmongoVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinXDateTimeVersion")
             }
         }
 
