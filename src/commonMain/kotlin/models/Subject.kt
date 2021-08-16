@@ -12,8 +12,9 @@ import kotlinx.serialization.json.Json
 @Serializable
 data class Subject(
     val _id: String = uniqueId(),
-    val name: String = "",
-    val description: String = ""
+    val name: String,
+    val description: String,
+    val type: String
 )
 
 object SubjectResource : Resource<Subject, String> {
