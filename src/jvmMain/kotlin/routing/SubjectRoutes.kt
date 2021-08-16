@@ -77,8 +77,8 @@ fun Route.subjectRoutes() {
         try{
             val subjects = databaseService.getCollectionOfSubject()
             val subject  = call.receive<Subject>()
-            val subjectId = call.parameters["id"].toString()
-            if(subjectId != null){
+            val subjectId = call.parameters["id"]
+            if (subjectId != null) {
                 subject._id = subjectId
             }
             subjects.save(subject)

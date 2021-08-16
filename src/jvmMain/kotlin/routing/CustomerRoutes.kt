@@ -19,7 +19,7 @@ fun Route.customerRoute() {
         try {
             val customers = databaseService.getCollectionOfCustomer()
             val customer = call.receive<Customer>()
-            val customerId = call.parameters["id"].toString()
+            val customerId = call.parameters["id"]
             if (customerId != null) {
                 customer._id = customerId
             }
