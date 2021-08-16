@@ -11,7 +11,7 @@ import kotlinx.serialization.json.Json
 @Lenses
 @Serializable
 data class Subject(
-    val _id: String = uniqueId(),
+    var _id: String = uniqueId(),
     val name: String,
     val description: String,
     val type: String
