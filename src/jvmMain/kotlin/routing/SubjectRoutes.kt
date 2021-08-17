@@ -10,7 +10,9 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.toLocalDate
 import models.Booking
 import models.Subject
+import org.litote.kmongo.eq
 import org.litote.kmongo.findOneById
+import org.litote.kmongo.save
 
 
 fun Route.subjectRoutes() {
@@ -33,15 +35,15 @@ fun Route.subjectRoutes() {
     get("/subjects") {
         try {
             val onlyAvailable: Boolean = call.parameters["onlyAvailable"].toBoolean()
-            val startTime = call.parameters["start"]
-            val endTime = call.parameters["end"]
+            val startTime = call.parameters["start"]?.toLocalDate()
+            val endTime = call.parameters["end"]?.toLocalDate()
             val subjects = databaseService.getCollectionOfSubject()
             val bookings = databaseService.getCollectionOfBooking()
             if (startTime != null && endTime != null) {
                 call.respond(
                     getSubjectsInTimeframe(
-                        startTime.toLocalDate(),
-                        endTime.toLocalDate(),
+                        startTime,
+                        endTime,
                         subjects.find().toList(),
                         bookings.find().toList(),
                         onlyAvailable
@@ -56,12 +58,27 @@ fun Route.subjectRoutes() {
             call.respond(HttpStatusCode.BadRequest)
         }
     }
-
-    post("/subjects") {
+    put("/subjects/{id}") {
         try {
-            val subject = call.receive<Subject>()
             val subjects = databaseService.getCollectionOfSubject()
-            subjects.insertOne(subject)
+            val subject = call.receive<Subject>()
+            val subjectId = call.parameters["id"]
+            if (subjectId != null) {
+                subject._id = subjectId
+            }
+            subjects.save(subject)
+            call.respond(subjects.find().toList())
+            call.respond(HttpStatusCode.Created)
+        } catch (e: Exception) {
+            call.respondText("Error_ $e")
+            call.respond(HttpStatusCode.BadRequest)
+        }
+    }
+
+    delete("subjects/{id}") {
+        try {
+            val subjects = databaseService.getCollectionOfSubject()
+            subjects.deleteOne(Subject::_id eq call.parameters["id"])
             call.respond(subjects.find().toList())
         } catch (e: Exception) {
             call.respondText("Error_ $e")

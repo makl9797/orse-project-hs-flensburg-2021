@@ -41,22 +41,6 @@ fun Route.bookingRoutes() {
             call.respond(HttpStatusCode.BadRequest)
         }
     }
-    post("/bookings") {
-        try {
-            val booking = call.receive<Booking>()
-            val bookingId = call.request.queryParameters["id"]
-            if (bookingId != null) {
-                booking._id = bookingId
-            }
-            val col = databaseService.getCollectionOfBooking()
-            col.insertOne(booking)
-            call.respond(col.find().toList())
-            call.respond(HttpStatusCode.OK)
-        } catch (e: Exception) {
-            call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
-        }
-    }
     put("/bookings/{id}") {
         try {
             val booking = call.receive<Booking>()
