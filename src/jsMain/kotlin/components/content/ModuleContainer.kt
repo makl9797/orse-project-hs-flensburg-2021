@@ -5,6 +5,7 @@ import kotlinx.browser.document
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.store.AppState
 import models.store.Module
+import modules.calendar.calendar
 import modules.info.infoBox
 import org.w3c.dom.Element
 import stores.MoveModuleStore
@@ -29,7 +30,7 @@ fun RenderContext.moduleContainer(mode: AppState.Mode) {
 
                 }
                 Module.Type.CALENDAR -> {
-
+                    calendar(module.current.id, style)
                 }
                 else -> {
 
