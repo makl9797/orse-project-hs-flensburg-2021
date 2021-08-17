@@ -1,5 +1,6 @@
 package modules.info
 
+import dev.fritz2.components.clickButton
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import dev.fritz2.styling.params.BoxParams
@@ -8,6 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
+import stores.bookSubjectStore
 
 class InfoBox {
     private var count = -1
@@ -40,6 +42,19 @@ fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
         background { color { primary.main } }
     }, id = id) {
 
+        bookSubjectStore.data.render { subject ->
+            console.log(subject)
+            p {
+                +"HALLO"
+            }
+            p {
+                +subject?.description.toString()
+            }
+            clickButton {
+                text("Buchen")
+                type { success }
+            }
+        }
     }
 }
 

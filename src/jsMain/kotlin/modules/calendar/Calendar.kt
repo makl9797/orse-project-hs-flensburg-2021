@@ -32,7 +32,7 @@ class Calendar {
 
     fun createModule(settings: ModuleSettings = defaultSettings, card: ModuleCard = this.card): Module {
         count++
-        val id = "infoBox${count}"
+        val id = "calendar${count}"
         return Module(id, type, settings, card)
     }
 }
