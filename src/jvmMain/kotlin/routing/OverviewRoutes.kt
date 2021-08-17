@@ -16,7 +16,7 @@ fun Route.overviewRoutes() {
         try {
             var period = call.parameters["periodInDays"]?.toInt()
             if (period == null) {
-                period = 7
+                period = 30
             }
             val listOfDays = createDayList(period)
 
@@ -38,11 +38,15 @@ fun createDayList(period: Int): MutableList<Day> {
     val allSubjects = getAllSubjects()
     for (i in 0..period) {
         val nextDay = today.plus((DatePeriod(days = i)))
+        val bookingsOfDay = getBookingsOfDay(nextDay, bookingsInTimeframe)
+        val availableSubjects =  getAvailableSubjectsOfDay(allSubjects.toMutableList(), bookingsOfDay)
+
         daylist.add(
             Day(
                 nextDay.toString(),
-                getBookingsOfDay(nextDay, bookingsInTimeframe),
-                getAvailableSubjectsInTimeframe(nextDay, nextDay, allSubjects, bookingsInTimeframe),
+                bookingsOfDay,
+                availableSubjects,
+                availableSubjects.count()
             )
         )
     }
@@ -77,25 +81,28 @@ fun getAllSubjects(): List<Subject> {
 }
 
 
-fun getAvailableSubjectsInTimeframe(
-    start: LocalDate,
-    end: LocalDate,
-    subjects: List<Subject>,
-    bookings: List<Booking>
+fun getAvailableSubjectsOfDay(
+    subjects: MutableList<Subject>,
+    bookingsOfDay: MutableList<Booking>
 ): MutableList<Subject> {
+
     val notAvailableSubjectIds = mutableListOf<String>()
+    val subjectsBooked = mutableListOf<Subject>()
     val availableSubjects = mutableListOf<Subject>()
-    for (booking: Booking in bookings) {
-        if (booking.startTime.toLocalDate() in start..end || booking.endTime.toLocalDate() in start..end) {
-            notAvailableSubjectIds.add(booking.subject._id)
+
+    bookingsOfDay.forEach { item -> subjectsBooked.add(item.subject) }
+
+    subjects.forEach { item ->
+        subjectsBooked.forEach { subjectBooked ->
+            if (item._id in subjectBooked._id) {
+                notAvailableSubjectIds.add(item._id)
+            }
         }
     }
-    subjects.forEach { subject ->
-        if (subject._id !in notAvailableSubjectIds) {
-            availableSubjects.add(subject)
+    subjects.forEach { item ->
+        if (item._id !in notAvailableSubjectIds) {
+            availableSubjects.add(item)
         }
     }
     return availableSubjects
-
-
 }

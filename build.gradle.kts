@@ -41,6 +41,7 @@ kotlin {
                 cssSupport.enabled = true
             }
         }
+
         binaries.executable()
         useCommonJs()
     }

@@ -18,6 +18,7 @@ data class Customer(
     val lastname: String
 )
 
+
 object CustomerResource : Resource<Customer, String> {
     override val idProvider: IdProvider<Customer, String> = Customer::_id
 
