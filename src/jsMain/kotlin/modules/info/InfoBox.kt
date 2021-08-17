@@ -1,5 +1,7 @@
 package modules.info
 
+import dev.fritz2.components.dataTable
+import dev.fritz2.components.spinner
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import dev.fritz2.styling.params.BoxParams
@@ -35,11 +37,21 @@ class InfoBox {
 
 @ExperimentalCoroutinesApi
 fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
+    spinner({
+        size { large }
+    }) {
+        icon { fritz2 }
+        speed ( "1.5s" )
+    }
     div({
         style()
         background { color { primary.main } }
+
     }, id = id) {
 
+            p {
+
+            }
     }
 }
 

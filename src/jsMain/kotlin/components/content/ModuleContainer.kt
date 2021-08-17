@@ -31,9 +31,9 @@ fun RenderContext.moduleContainer(mode: AppState.Mode) {
                 Module.Type.CALENDAR -> {
 
                 }
-                else -> {
-
-                }
+//                else -> {
+//
+//                }
             }
         }
     }
