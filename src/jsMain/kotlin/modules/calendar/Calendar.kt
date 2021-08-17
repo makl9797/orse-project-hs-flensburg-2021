@@ -1,6 +1,5 @@
 package modules.calendar
 
-import dev.fritz2.binding.storeOf
 import dev.fritz2.components.dataTable
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.lenses.asString
@@ -14,6 +13,7 @@ import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
 import stores.dayListStore
+import stores.dayStore
 
 class Calendar {
     private var count = -1
@@ -39,7 +39,6 @@ class Calendar {
 
 @ExperimentalCoroutinesApi
 fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
-    val dayStore = storeOf<Day?>(null)
     div({
         style()
         background { color { primary.main } }

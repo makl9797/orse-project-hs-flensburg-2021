@@ -8,9 +8,9 @@ import modules.info.InfoBox
 import modules.table.Table
 
 class ModuleCatalog {
-    private val infoBox: InfoBox = InfoBox()
+    val infoBox: InfoBox = InfoBox()
     val table: Table = Table()
-    private val calendar: Calendar = Calendar()
+    val calendar: Calendar = Calendar()
 
     val defaultModules = listOf(
         infoBox.createModule(),
