@@ -42,7 +42,7 @@ fun createDayList(period: Int): MutableList<Day> {
             Day(
                 nextDay.toString(),
                 getBookingsOfDay(nextDay, bookingsInTimeframe),
-                getAvailableSubjectsInTimeframe(nextDay, nextDay, allSubjects, bookingsInTimeframe),
+                getSubjectsInTimeframe(nextDay, nextDay, allSubjects, bookingsInTimeframe, true),
             )
         )
     }

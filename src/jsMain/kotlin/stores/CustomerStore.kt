@@ -11,13 +11,15 @@ const val CUSTOMER_ENDPOINT = "/customers"
 
 class CustomerStore(init: List<Customer>, id: String) : RootStore<List<Customer>>(init, id = id) {
     private val repo = restQuery<Customer, String, Unit>(CustomerResource, CUSTOMER_ENDPOINT, uniqueId())
-    val query = handle { repo.query(Unit).toList() }
+    val query = handle { repo.query(Unit) }
 
     val save = handle { customers, new: Customer ->
-        repo.addOrUpdate(customers, new).toList()
+        repo.addOrUpdate(customers, new)
+        repo.query(Unit)
     }
     val remove = handle { customers, id: String ->
-        repo.delete(customers, id).toList()
+        repo.delete(customers, id)
+        repo.query(Unit)
     }
 
     init {

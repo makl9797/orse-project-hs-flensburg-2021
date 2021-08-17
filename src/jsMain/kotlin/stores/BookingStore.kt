@@ -11,13 +11,15 @@ const val BOOKING_ENDPOINT = "/bookings"
 
 class BookingStore(init: List<Booking>, id: String) : RootStore<List<Booking>>(init, id = id) {
     private val repo = restQuery<Booking, String, Unit>(BookingResource, BOOKING_ENDPOINT, uniqueId())
-    val query = handle { repo.query(Unit).toList() }
+    val query = handle { repo.query(Unit) }
 
     val save = handle { bookings, new: Booking ->
-        repo.addOrUpdate(bookings, new).toList()
+        repo.addOrUpdate(bookings, new)
+        repo.query(Unit)
     }
     val remove = handle { bookings, id: String ->
-        repo.delete(bookings, id).toList()
+        repo.delete(bookings, id)
+        repo.query(Unit)
     }
 
     init {

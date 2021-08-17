@@ -21,7 +21,6 @@ fun Route.bookingRoutes() {
                 bookings = col.find(Booking::startTime eq day).toList()
             }
             call.respond(bookings)
-            call.respond(HttpStatusCode.OK)
         } catch (e: Exception) {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)
@@ -37,7 +36,6 @@ fun Route.bookingRoutes() {
             } else {
                 call.respondText("Booking with _id:$id not found")
             }
-            call.respond(HttpStatusCode.OK)
         } catch (e: Exception) {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)

@@ -5,7 +5,7 @@ import kotlinx.browser.document
 import models.store.Module
 import modules.moduleCatalog
 
-val moduleStore = ModuleStore(listOf())
+val moduleStore = ModuleStore(listOf(moduleCatalog.table.createModule()))
 
 
 class ModuleStore(initModules: List<Module>) : RootStore<List<Module>>(initModules) {

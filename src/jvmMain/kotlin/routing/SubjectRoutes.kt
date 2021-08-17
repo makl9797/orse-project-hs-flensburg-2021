@@ -47,11 +47,10 @@ fun Route.subjectRoutes() {
                         onlyAvailable
                     )
                 )
-                call.respond(HttpStatusCode.OK)
             } else {
                 call.respond(subjects.find().toList())
-                call.respond(HttpStatusCode.OK)
             }
+
         } catch (e: Exception) {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)
@@ -64,7 +63,6 @@ fun Route.subjectRoutes() {
             val subjects = databaseService.getCollectionOfSubject()
             subjects.insertOne(subject)
             call.respond(subjects.find().toList())
-            call.respond(HttpStatusCode.OK)
         } catch (e: Exception) {
             call.respondText("Error_ $e")
             call.respond(HttpStatusCode.BadRequest)

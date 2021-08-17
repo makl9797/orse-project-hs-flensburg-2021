@@ -7,8 +7,6 @@ import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import modules.moduleCatalog
 import stores.appStateStore
-import stores.bookingsStore
-import stores.customersStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.app() {
@@ -21,16 +19,6 @@ fun RenderContext.app() {
             workspace("workspace", state.mode)
         }
     }
-    div {
-        bookingsStore.data.renderEach {
-            div {
-                console.log(it)
-            }
-        }
-    }
-    customersStore.data.renderEach {
-        console.log(it)
-        div { }
-    }
+
 }
 
