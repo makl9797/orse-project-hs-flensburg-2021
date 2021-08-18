@@ -1,15 +1,20 @@
 package modules.info
 
-import dev.fritz2.components.dataTable
-import dev.fritz2.components.spinner
+import dev.fritz2.binding.RootStore
+import dev.fritz2.components.*
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import dev.fritz2.styling.params.BoxParams
 import dev.fritz2.styling.params.Style
+import dev.fritz2.styling.theme.ColorScheme
+import dev.fritz2.tracking.tracker
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
+import stores.bookSubjectStore
+import stores.bookingsStore
 
 class InfoBox {
     private var count = -1
@@ -28,6 +33,8 @@ class InfoBox {
         exampleImageSrc = "https://via.placeholder.com/150?text=Module+Example+PicPlaceholder"
     )
 
+
+
     fun createModule(settings: ModuleSettings = defaultSettings, card: ModuleCard = this.card): Module {
         count++
         val id = "infoBox${count}"
@@ -37,21 +44,50 @@ class InfoBox {
 
 @ExperimentalCoroutinesApi
 fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
-    spinner({
-        size { large }
-    }) {
-        icon { fritz2 }
-        speed ( "1.5s" )
-    }
+
     div({
         style()
         background { color { primary.main } }
 
+
+
     }, id = id) {
+        bookSubjectStore.data.render { subject ->
+        flexBox({
+            direction { row }
+        }) {
+            box {
+                formControl {
+                    label("Subject Name:"+subject?.name)
+                }}
+            box { formControl {
+                label("Type:" + subject?.type)
+            }}
+            box { formControl {
+                label("Start Date: ")
+                inputField {
+                    type("date check in")
+                    placeholder("date")
+                }
+            }}
+            box { formControl {
+                label("Start Date: ")
+                inputField {
+                    type("date check out")
+                    placeholder("date")
+                }
+            }}
+            box { formControl {
+                label("Price: 5.0 Euro")
+            }}
+            box {
+                clickButton {
+                    text("Buchen")
+                    type { ColorScheme("#00A848","#2D3748","#E14F2A", "#2D3748") }
 
-            p {
+            }}
+        }}
 
-            }
     }
 }
 

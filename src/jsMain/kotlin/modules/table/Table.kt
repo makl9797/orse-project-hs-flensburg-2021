@@ -12,6 +12,7 @@ import models.Subject
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
+import stores.bookSubjectStore
 import stores.dayStore
 
 class Table {
@@ -46,14 +47,13 @@ fun RenderContext.table(id: String, style: Style<BoxParams>) {
         if (day != null) {
             availableSubjectsStore = storeOf(day.subjects)
         }
-        val subjectStore = storeOf<Subject?>(null)
         div({
             style()
         }, id = id) {
             dataTable(
                 rows = availableSubjectsStore,
                 rowIdProvider = Subject::_id,
-                selection = subjectStore
+                selection = bookSubjectStore
             ) {
                 columns {
                     column(title = "Name") { lens(L.Subject.name) }

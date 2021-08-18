@@ -44,7 +44,7 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
         background { color { primary.main } }
 
     }, id = id) {
-        dataTable(rows = dayListStore, rowIdProvider = Day::day, selection = dayStore) {
+        dataTable(rows = dayListStore, rowIdProvider = L.Day::day, selection = dayStore) {
             columns {
                 column(title = "Tag") { lens(L.Day.day) }
                 column(title = "Verfügbar") { lens(L.Day.availableSubjects.asString()) }
