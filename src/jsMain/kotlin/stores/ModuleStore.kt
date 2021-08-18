@@ -13,8 +13,10 @@ val moduleStore = ModuleStore(
         ),
         moduleCatalog.table.createModule(
             ModuleSettings(60, 20, 1, 23)
+        ),
+        moduleCatalog.infoBox.createModule(
+            ModuleSettings(30, 40, 61, 1)
         )
-
     )
 )
 

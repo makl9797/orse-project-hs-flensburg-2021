@@ -1,20 +1,25 @@
 package modules.info
 
-import dev.fritz2.binding.RootStore
 import dev.fritz2.components.*
 import dev.fritz2.dom.html.RenderContext
+import dev.fritz2.identification.uniqueId
 import dev.fritz2.styling.div
 import dev.fritz2.styling.params.BoxParams
 import dev.fritz2.styling.params.Style
 import dev.fritz2.styling.theme.ColorScheme
-import dev.fritz2.tracking.tracker
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
+import models.Booking
+import models.Customer
+import models.Subject
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
+import modules.info.selectCustomerModal.CustomersModal
+import stores.SelectedCustomerStore
 import stores.bookSubjectStore
-import stores.bookingsStore
+import stores.customersStore
+import stores.dayStore
 
 class InfoBox {
     private var count = -1
@@ -34,7 +39,6 @@ class InfoBox {
     )
 
 
-
     fun createModule(settings: ModuleSettings = defaultSettings, card: ModuleCard = this.card): Module {
         count++
         val id = "infoBox${count}"
@@ -47,48 +51,67 @@ fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
 
     div({
         style()
-        background { color { primary.main } }
-
-
-
+        background { color { "grey" } }
     }, id = id) {
         bookSubjectStore.data.render { subject ->
-        flexBox({
-            direction { row }
-        }) {
-            box {
-                formControl {
-                    label("Subject Name:"+subject?.name)
-                }}
-            box { formControl {
-                label("Type:" + subject?.type)
-            }}
-            box { formControl {
-                label("Start Date: ")
-                inputField {
-                    type("date check in")
-                    placeholder("date")
-                }
-            }}
-            box { formControl {
-                label("Start Date: ")
-                inputField {
-                    type("date check out")
-                    placeholder("date")
-                }
-            }}
-            box { formControl {
-                label("Price: 5.0 Euro")
-            }}
-            box {
-                clickButton {
-                    text("Buchen")
-                    type { ColorScheme("#00A848","#2D3748","#E14F2A", "#2D3748") }
+            stackUp {
+                items {
+                    // styling omitted for readability
+                    box {
+                        +("Subject Name: " + subject?.name)
+                    }
+                    box {
+                        +("Type: " + subject?.type)
+                    }
+                    box {
+                        +("Day: " + dayStore.current?.day)
+                    }
+                    box {
+                        +("Number of days: ")
+                        inputField {
+                            type("number")
+                            placeholder("42")
+                            step("1")
+                        }
+                    }
+                    box {
+                        +"Price: 5.0 Euro"
+                        inputField {
+                            type("number")
+                            placeholder("Euro")
+                        }
+                    }
+                    box {
+                        clickButton {
+                            text("Kunden auswählen")
+                            type { ColorScheme("#00A848", "#2D3748", "#E14F2A", "#2D3748") }
+                        } handledBy modal { close ->
+                            content {
+                                CustomersModal("CustomerModal", close)
+                            }
+                        }
+                    }
+                    SelectedCustomerStore.data.render { customer ->
+                        box {
+                            if (customer != null) {
+                                +("Kunde: " + customer.firstname+ " " +customer.lastname)
+                            }
+                        }
+                    }
+                    box {
+                        clickButton {
+                            text("Buchen")
+                            type { ColorScheme("#00A848", "#2D3748", "#E14F2A", "#2D3748") }
+                        }.events.map {
+                        }
 
-            }}
-        }}
-
+                    }
+                }
+            }
+        }
     }
+
 }
+
 
 

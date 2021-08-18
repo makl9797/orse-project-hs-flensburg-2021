@@ -21,6 +21,10 @@ class CustomerStore(init: List<Customer>, id: String) : RootStore<List<Customer>
         repo.delete(customers, id)
         repo.query(Unit)
     }
+    val getAll = handle { customers, id: String ->
+
+        repo.query(Unit)
+    }
 
     init {
         query()
