@@ -6,7 +6,6 @@ import dev.fritz2.components.flexBox
 import dev.fritz2.components.formControl
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.values
-import dev.fritz2.identification.uniqueId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import models.Address
@@ -77,8 +76,11 @@ fun RenderContext.addCustomerForm(id: String) {
             type { success }
             text("Hinzufügen")
         }.events.map {
-            idStore.update(uniqueId())
-            customerStore.current
+            Customer(
+                address = customerStore.current.address,
+                firstname = customerStore.current.firstname,
+                lastname = customerStore.current.lastname
+            )
         } handledBy CustomerListStore.save
 
     }
