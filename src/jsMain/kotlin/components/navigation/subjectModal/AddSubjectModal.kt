@@ -15,7 +15,7 @@ fun RenderContext.addSubjectModal(id: String, modalClose: SimpleHandler<Unit>) {
             paddings { vertical { "1rem" } }
             direction { column }
         }, id = id + "Body") {
-            addSubjectForm(id)
+            addSubjectForm(id, modalClose)
         }
 
         addSubjectFooter(id, modalClose)

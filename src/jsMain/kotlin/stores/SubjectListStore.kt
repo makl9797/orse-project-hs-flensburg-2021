@@ -1,6 +1,8 @@
 package stores
 
 import dev.fritz2.binding.RootStore
+import dev.fritz2.components.alert
+import dev.fritz2.components.toast
 import dev.fritz2.repositories.rest.restQuery
 import models.Subject
 import models.SubjectResource
@@ -28,6 +30,17 @@ object SubjectListStore : RootStore<List<Subject>>(listOf()) {
     init {
         query()
         syncBy(query)
+        save handledBy toast {
+            placement { top }
+            background { success.main }
+            hasCloseButton(false)
+            content {
+                alert {
+                    severity { success }
+                    title("Objekt hinzugefügt!")
+                }
+            }
+        }
     }
 }
 

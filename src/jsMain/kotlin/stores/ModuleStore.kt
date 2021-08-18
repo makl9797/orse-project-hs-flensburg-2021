@@ -9,13 +9,13 @@ import modules.moduleCatalog
 val moduleList =
     listOf(
         moduleCatalog.table.createModule(
-            ModuleSettings(60, 30, 1, 1)
+            ModuleSettings(74, 30, 1, 1)
         ),
         moduleCatalog.calendar.createModule(
-            ModuleSettings(30, 30, 61, 1)
+            ModuleSettings(103, 30, 75, 1)
         ),
         moduleCatalog.infoBox.createModule(
-            ModuleSettings(60, 30, 1, 31)
+            ModuleSettings(103, 30, 1, 31)
         )
 
     )

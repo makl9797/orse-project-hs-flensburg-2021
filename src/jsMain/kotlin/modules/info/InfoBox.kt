@@ -1,6 +1,9 @@
 package modules.info
 
-import dev.fritz2.components.*
+import dev.fritz2.components.box
+import dev.fritz2.components.clickButton
+import dev.fritz2.components.inputField
+import dev.fritz2.components.modal
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.values
 import dev.fritz2.styling.div
@@ -56,77 +59,74 @@ fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
 
 
         SelectedSubjectStore.data.render { subject ->
-            stackUp {
-                items {
-                    // styling omitted for readability
-                    box {
-                        +("Subject Name:" + subject?.name)
-                    }
-                    box {
-                        +("Type: " + subject?.type)
-                    }
-                    box {
-                        +("Day: " + SelectedDayStore.current?.day)
-                    }
-                    box {
-                        +("Number of days: ")
-                        inputField {
-                            type("number")
-                            placeholder("42")
-                            step("1")
-                            events {
-                                changes.values() handledBy endTimeStore.handle { _, new ->
-                                    daysToEndDate(
-                                        startDate = startTimeStore.current.toLocalDate(),
-                                        daysUntilEnd = new.toInt()
-                                    )
-                                }
-                            }
+            // styling omitted for readability
+            box {
+                +("Subject Name: Test" + subject?.name)
+            }
+            box {
+                +("Type: " + subject?.type)
+            }
+            box {
+                +("Day: " + SelectedDayStore.current?.day)
+            }
+            box {
+                +("Number of days: ")
+                inputField {
+                    type("number")
+                    placeholder("42")
+                    step("1")
+                    events {
+                        changes.values() handledBy endTimeStore.handle { _, new ->
+                            daysToEndDate(
+                                startDate = startTimeStore.current.toLocalDate(),
+                                daysUntilEnd = new.toInt()
+                            )
                         }
-                    }
-                    box {
-                        +"Price: 5.0 Euro"
-                        inputField {
-                            type("number")
-                            placeholder("Euro")
-                            events {
-                                changes.values() handledBy priceStore.handle { _, new ->
-                                    new.toDouble()
-                                }
-                            }
-                        }
-                    }
-                    box {
-                        clickButton {
-                            text("Kunden auswählen")
-                            type { success }
-                        } handledBy modal { close ->
-                            content {
-                                selectCustomerModal("CustomerModal", close)
-                            }
-                        }
-                    }
-                    SelectedCustomerStore.data.render { customer ->
-                        box {
-                            if (customer != null) {
-                                +("Kunde: " + customer.firstname + " " + customer.lastname)
-                            }
-                        }
-                    }
-                    box {
-                        clickButton {
-                            text("Buchen")
-                            type { success }
-                        }.events.map {
-                            BookingStore.current
-                        } handledBy BookingListStore.save
-
                     }
                 }
             }
+            box {
+                +"Price: 5.0 Euro"
+                inputField {
+                    type("number")
+                    placeholder("Euro")
+                    events {
+                        changes.values() handledBy priceStore.handle { _, new ->
+                            new.toDouble()
+                        }
+                    }
+                }
+            }
+            box {
+                clickButton {
+                    text("Kunden auswählen")
+                    type { success }
+                } handledBy modal { close ->
+                    content {
+                        selectCustomerModal("CustomerModal", close)
+                    }
+                }
+            }
+            SelectedCustomerStore.data.render { customer ->
+                box {
+                    if (customer != null) {
+                        +("Kunde: " + customer.firstname + " " + customer.lastname)
+                    }
+                }
+            }
+            box {
+                clickButton {
+                    text("Buchen")
+                    type { success }
+                }.events.map {
+                    BookingStore.current
+                } handledBy BookingListStore.save
+
+            }
+
+
         }
     }
-
 }
 
 fun daysToEndDate(startDate: LocalDate, daysUntilEnd: Int): String {

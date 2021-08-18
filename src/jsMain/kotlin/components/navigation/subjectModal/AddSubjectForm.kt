@@ -1,5 +1,6 @@
 package components.navigation.subjectModal
 
+import dev.fritz2.binding.SimpleHandler
 import dev.fritz2.binding.storeOf
 import dev.fritz2.components.clickButton
 import dev.fritz2.components.flexBox
@@ -14,7 +15,7 @@ import stores.SubjectListStore
 
 
 @ExperimentalCoroutinesApi
-fun RenderContext.addSubjectForm(id: String) {
+fun RenderContext.addSubjectForm(id: String, modalClose: SimpleHandler<Unit>) {
     val subjectStore =
         storeOf(Subject(name = "", description = "", type = ""))
     val idStore = subjectStore.sub(L.Subject._id)
@@ -61,6 +62,9 @@ fun RenderContext.addSubjectForm(id: String) {
             variant { outline }
             type { success }
             text("Hinzufügen")
+            events {
+                mouseups handledBy modalClose
+            }
         }.events.map {
             Subject(
                 name = subjectStore.current.name,
