@@ -35,7 +35,7 @@ kotlin {
         }
         withJava()
     }
-    js(IR) {
+    js(LEGACY) {
         browser {
             commonWebpackConfig {
                 cssSupport.enabled = true

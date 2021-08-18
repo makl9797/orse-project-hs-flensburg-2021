@@ -12,7 +12,7 @@ val moduleList =
             ModuleSettings(74, 30, 1, 1)
         ),
         moduleCatalog.calendar.createModule(
-            ModuleSettings(103, 30, 75, 1)
+            ModuleSettings(30, 30, 75, 1)
         ),
         moduleCatalog.infoBox.createModule(
             ModuleSettings(103, 30, 1, 31)

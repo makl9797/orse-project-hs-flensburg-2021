@@ -1,6 +1,8 @@
 package stores
 
 import dev.fritz2.binding.RootStore
+import dev.fritz2.components.alert
+import dev.fritz2.components.toast
 import dev.fritz2.identification.uniqueId
 import dev.fritz2.repositories.rest.restQuery
 import models.Booking
@@ -12,8 +14,8 @@ object BookingListStore : RootStore<List<Booking>>(emptyList()) {
     private val repo = restQuery<Booking, String, Unit>(BookingResource, BOOKING_ENDPOINT, uniqueId())
     val query = handle { repo.query(Unit) }
 
-    val save = handle { bookings, new: Booking ->
-        console.log(new)
+    val save = handleAndEmit<Booking, Unit> { bookings, new ->
+        emit(Unit)
         repo.addOrUpdate(bookings, new)
     }
     val remove = handle { bookings, id: String ->
@@ -23,5 +25,16 @@ object BookingListStore : RootStore<List<Booking>>(emptyList()) {
     init {
         query()
         syncBy(query)
+        save handledBy toast {
+            placement { bottomRight }
+            background { success.main }
+            hasCloseButton(false)
+            content {
+                alert {
+                    severity { success }
+                    title("Buchung hinzugefügt!")
+                }
+            }
+        }
     }
 }

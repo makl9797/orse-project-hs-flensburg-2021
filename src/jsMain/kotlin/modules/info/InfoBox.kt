@@ -1,13 +1,9 @@
 package modules.info
 
-import dev.fritz2.components.box
-import dev.fritz2.components.clickButton
-import dev.fritz2.components.inputField
-import dev.fritz2.components.modal
+import dev.fritz2.components.*
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.values
-import dev.fritz2.styling.div
-import dev.fritz2.styling.params.BoxParams
+import dev.fritz2.styling.params.FlexParams
 import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
@@ -50,81 +46,171 @@ class InfoBox {
 }
 
 @ExperimentalCoroutinesApi
-fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
-
-    div({
-        style()
-        background { color { "grey" } }
-    }, id = id) {
-
-
-        SelectedSubjectStore.data.render { subject ->
-            // styling omitted for readability
-            box {
-                +("Subject Name: Test" + subject?.name)
-            }
-            box {
-                +("Type: " + subject?.type)
-            }
-            box {
-                +("Day: " + SelectedDayStore.current?.day)
-            }
-            box {
-                +("Number of days: ")
-                inputField {
-                    type("number")
-                    placeholder("42")
-                    step("1")
-                    events {
-                        changes.values() handledBy endTimeStore.handle { _, new ->
-                            daysToEndDate(
-                                startDate = startTimeStore.current.toLocalDate(),
-                                daysUntilEnd = new.toInt()
-                            )
+fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
+    SelectedSubjectStore.data.render { subject ->
+        lineUp({
+            style()
+            justifyContent { spaceEvenly }
+        }, id = id) {
+            items {
+                infoBoxArea("subjectBox", "Objekt") {
+                    lineUp({
+                        alignItems { center }
+                    }) {
+                        items {
+                            h4 {
+                                +"Objektname: "
+                            }
+                            a {
+                                +(subject?.name ?: "Kein Objekt ausgewählt")
+                            }
+                        }
+                    }
+                    lineUp({
+                        alignItems { center }
+                    }) {
+                        items {
+                            h4 {
+                                +"Objektbeschreibung: "
+                            }
+                            a {
+                                +(subject?.description ?: "Kein Objekt ausgewählt")
+                            }
+                        }
+                    }
+                    lineUp({
+                        alignItems { center }
+                    }) {
+                        items {
+                            h4 {
+                                +"Objekttyp: "
+                            }
+                            a {
+                                +(subject?.type ?: "Kein Objekt ausgewählt")
+                            }
                         }
                     }
                 }
-            }
-            box {
-                +"Price: 5.0 Euro"
-                inputField {
-                    type("number")
-                    placeholder("Euro")
-                    events {
-                        changes.values() handledBy priceStore.handle { _, new ->
-                            new.toDouble()
+                infoBoxArea("customerBox", "Kunde") {
+                    SelectedCustomerStore.data.render { customer ->
+                        if (customer != null) {
+                            lineUp({
+                                alignItems { center }
+                            }) {
+                                items {
+                                    h4 {
+                                        +"Name: "
+                                    }
+                                    a {
+                                        +"${customer.firstname} ${customer.lastname}"
+                                    }
+                                }
+                            }
+                            stackUp({
+
+                            }) {
+                                items {
+                                    h4 {
+                                        +"Adresse: "
+                                    }
+                                    a {
+                                        +customer.address.street
+                                    }
+                                    a {
+                                        +"${customer.address.zip} ${customer.address.city}"
+                                    }
+
+                                }
+                            }
+
+                        }
+                    }
+                    box {
+                        clickButton {
+                            text("Kunden auswählen")
+                            type { success }
+                        } handledBy modal { close ->
+                            content {
+                                selectCustomerModal("CustomerModal", close)
+                            }
                         }
                     }
                 }
-            }
-            box {
-                clickButton {
-                    text("Kunden auswählen")
-                    type { success }
-                } handledBy modal { close ->
-                    content {
-                        selectCustomerModal("CustomerModal", close)
+                infoBoxArea("bookingBox", "Buchen") {
+                    lineUp({
+                        alignItems { center }
+                    }) {
+                        items {
+                            h4 {
+                                +"Ausgewählter Tag: "
+                            }
+                            a {
+                                +(SelectedDayStore.current?.day ?: "Kein Tag ausgewählt")
+                            }
+                        }
                     }
+                    lineUp({
+                        alignItems { center }
+                    }) {
+                        items {
+                            h4 {
+                                +"Tage buchen: "
+                            }
+                            inputField {
+                                type("number")
+                                placeholder("3")
+                                step("1")
+                                events {
+                                    changes.values() handledBy endTimeStore.handle { _, new ->
+                                        daysToEndDate(
+                                            startDate = startTimeStore.current.toLocalDate(),
+                                            daysUntilEnd = new.toInt()
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    lineUp({
+                        alignItems { center }
+                    }) {
+                        items {
+                            h4 {
+                                +"Buchung bis einschließlich: "
+                            }
+                            endTimeStore.data.render { endTime ->
+                                a {
+                                    +endTime
+                                }
+                            }
+                        }
+                    }
+                    lineUp({
+                        alignItems { center }
+                    }) {
+                        items {
+                            h4 {
+                                +"Preis in Euro: "
+                            }
+                            inputField {
+                                type("number")
+                                placeholder("Euro")
+                                events {
+                                    changes.values() handledBy priceStore.handle { _, new ->
+                                        new.toDouble()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    clickButton {
+                        text("Buchen")
+                        type { success }
+                    }.events.map {
+                        BookingStore.current
+                    } handledBy BookingListStore.save
                 }
             }
-            SelectedCustomerStore.data.render { customer ->
-                box {
-                    if (customer != null) {
-                        +("Kunde: " + customer.firstname + " " + customer.lastname)
-                    }
-                }
-            }
-            box {
-                clickButton {
-                    text("Buchen")
-                    type { success }
-                }.events.map {
-                    BookingStore.current
-                } handledBy BookingListStore.save
-
-            }
-
-
         }
     }
 }

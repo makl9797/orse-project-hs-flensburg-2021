@@ -5,6 +5,7 @@ import dev.fritz2.dom.html.Div
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import dev.fritz2.styling.params.BoxParams
+import dev.fritz2.styling.params.FlexParams
 import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.store.AppState
@@ -17,10 +18,9 @@ fun RenderContext.moduleWrapper(
     id: String,
     mode: AppState.Mode,
     subStore: SubStore<List<Module>, List<Module>, Module>,
-    content: RenderContext.(style: Style<BoxParams>) -> Unit
+    content: RenderContext.(style: Style<FlexParams>) -> Unit
 ): Div {
     val settingsStore = subStore.sub(L.Module.settings)
-
     return div({
         border {
             width { "0.1rem" }
