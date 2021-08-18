@@ -11,7 +11,7 @@ import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import models.store.AppState.Mode
-import stores.appStateStore
+import stores.AppStateStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.navigationMenu(id: String) {
@@ -51,7 +51,7 @@ fun RenderContext.navigationMenu(id: String) {
                         icon { grid }
                         text("Module anpassen")
                         events {
-                            clicks.events.map { Mode.EDIT } handledBy appStateStore.changeMode
+                            clicks.events.map { Mode.EDIT } handledBy AppStateStore.changeMode
                         }
                     }
                     divider()

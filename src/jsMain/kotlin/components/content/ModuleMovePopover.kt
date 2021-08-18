@@ -14,7 +14,6 @@ fun RenderContext.moduleMoveController(
     id: String,
     settingsStore: SubStore<List<Module>, Module, ModuleSettings>
 ) {
-    console.log(settingsStore.current)
     val increaseHeight = settingsStore.handle { model ->
         ModuleSettings(model.width, model.height + 1, model.startX, model.startY)
     }

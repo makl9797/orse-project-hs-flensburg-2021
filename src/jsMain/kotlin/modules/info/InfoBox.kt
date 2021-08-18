@@ -9,7 +9,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
-import stores.bookSubjectStore
+import stores.SelectedDayStore
+import stores.SelectedSubjectStore
 
 class InfoBox {
     private var count = -1
@@ -39,22 +40,21 @@ class InfoBox {
 fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
     div({
         style()
-        background { color { primary.main } }
     }, id = id) {
+        SelectedSubjectStore.data.render { subject ->
 
-        bookSubjectStore.data.render { subject ->
-            console.log(subject)
             p {
-                +"HALLO"
+                +"Test${subject?.description}"
             }
             p {
-                +subject?.description.toString()
+                +"Test2${SelectedDayStore.current?.day!!}"
             }
             clickButton {
                 text("Buchen")
                 type { success }
             }
         }
+
     }
 }
 

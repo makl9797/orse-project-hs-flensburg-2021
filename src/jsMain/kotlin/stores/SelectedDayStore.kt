@@ -15,9 +15,7 @@ val testList = listOf(
 
 val exampleDay = Day("2021-09-20", emptyList<Booking>().toMutableList(), testList.toMutableList(), testList.count())
 
-val dayStore = DayStore(exampleDay, "selectedDayStore")
-
-class DayStore(initDay: Day, id: String) : RootStore<Day?>(initDay, id = id) {
+object SelectedDayStore : RootStore<Day?>(exampleDay) {
 
 
 }

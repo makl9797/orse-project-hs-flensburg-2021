@@ -12,8 +12,8 @@ import models.L
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
-import stores.dayListStore
-import stores.dayStore
+import stores.DayListStore
+import stores.SelectedDayStore
 
 class Calendar {
     private var count = -1
@@ -44,12 +44,15 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
         background { color { primary.main } }
 
     }, id = id) {
-        dataTable(rows = dayListStore, rowIdProvider = Day::day, selection = dayStore) {
-            columns {
-                column(title = "Tag") { lens(L.Day.day) }
-                column(title = "Verfügbar") { lens(L.Day.availableSubjects.asString()) }
+        DayListStore.data.render {
+            dataTable(rows = DayListStore, rowIdProvider = Day::day, selection = SelectedDayStore) {
+                columns {
+                    column(title = "Tag") { lens(L.Day.day) }
+                    column(title = "Verfügbar") { lens(L.Day.availableSubjects.asString()) }
+                }
             }
         }
+
     }
 
 }

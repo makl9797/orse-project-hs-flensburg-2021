@@ -1,22 +1,18 @@
 package components.content
 
 import dev.fritz2.dom.html.RenderContext
-import kotlinx.browser.document
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.store.AppState
 import models.store.Module
 import modules.calendar.calendar
 import modules.info.infoBox
 import modules.table.table
-import org.w3c.dom.Element
-import stores.MoveModuleStore
-import stores.moduleStore
+import stores.ModuleStore
 
-val moveModuleStore = MoveModuleStore(document.body as Element)
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleContainer(mode: AppState.Mode) {
-    moduleStore.renderEach { module ->
+    ModuleStore.renderEach { module ->
         moduleWrapper(
             style = {},
             id = module.current.id,

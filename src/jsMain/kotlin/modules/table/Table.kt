@@ -12,8 +12,8 @@ import models.Subject
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
-import stores.bookSubjectStore
-import stores.dayStore
+import stores.SelectedDayStore
+import stores.SelectedSubjectStore
 
 class Table {
     private var count = -1
@@ -41,7 +41,7 @@ class Table {
 
 @ExperimentalCoroutinesApi
 fun RenderContext.table(id: String, style: Style<BoxParams>) {
-    dayStore.data.renderElement { day ->
+    SelectedDayStore.data.renderElement { day ->
         var availableSubjectsStore = storeOf<List<Subject>>(emptyList())
         if (day != null) {
             availableSubjectsStore = storeOf(day.subjects)
@@ -52,7 +52,7 @@ fun RenderContext.table(id: String, style: Style<BoxParams>) {
             dataTable(
                 rows = availableSubjectsStore,
                 rowIdProvider = Subject::_id,
-                selection = bookSubjectStore
+                selection = SelectedSubjectStore
             ) {
                 columns {
                     column(title = "Name") { lens(L.Subject.name) }

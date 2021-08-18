@@ -21,11 +21,10 @@ fun Route.overviewRoutes() {
             val listOfDays = createDayList(period)
 
             call.respond(listOfDays)
-            call.respond(HttpStatusCode.OK)
 
         } catch (e: Exception) {
+            call.response.status(HttpStatusCode.BadRequest)
             call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
 }
@@ -39,7 +38,7 @@ fun createDayList(period: Int): MutableList<Day> {
     for (i in 0..period) {
         val nextDay = today.plus((DatePeriod(days = i)))
         val bookingsOfDay = getBookingsOfDay(nextDay, bookingsInTimeframe)
-        val availableSubjects =  getAvailableSubjectsOfDay(allSubjects.toMutableList(), bookingsOfDay)
+        val availableSubjects = getAvailableSubjectsOfDay(allSubjects.toMutableList(), bookingsOfDay)
 
         daylist.add(
             Day(

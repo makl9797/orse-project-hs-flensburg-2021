@@ -11,7 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import models.store.L
 import models.store.Module
-import stores.moduleStore
+import stores.ModuleStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleCollectionCard(
@@ -102,7 +102,7 @@ fun RenderContext.moduleCollectionCard(
             size { small }
             variant { outline }
             events {
-                mousedowns.events.map { localStore.current } handledBy moduleStore.addModule
+                mousedowns.events.map { localStore.current } handledBy ModuleStore.addModule
                 mouseups handledBy modalClose
             }
         }

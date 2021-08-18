@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.map
 import models.store.AppState
 import models.store.Module
 import models.store.ModuleSettings
-import stores.moduleStore
+import stores.ModuleStateStore
+import stores.ModuleStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleTitleBar(
@@ -63,12 +64,12 @@ fun RenderContext.moduleTitleBar(
                         type { danger }
                         size { small }
                         variant { ghost }
-                    }.events.map { id } handledBy moduleStore.removeModule
+                    }.events.map { id } handledBy ModuleStore.removeModule
                 }
             }
             else -> {
             }
         }
-        mousedowns.events handledBy moveModuleStore.onMouseDown
+        mousedowns.events handledBy ModuleStateStore.onMouseDown
     }
 }

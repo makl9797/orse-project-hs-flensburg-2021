@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import models.Address
 import models.Customer
 import models.L
-import stores.customersStore
+import stores.CustomerListStore
 
 
 @ExperimentalCoroutinesApi
@@ -79,7 +79,7 @@ fun RenderContext.addCustomerForm(id: String) {
         }.events.map {
             idStore.update(uniqueId())
             customerStore.current
-        } handledBy customersStore.save
+        } handledBy CustomerListStore.save
 
     }
 

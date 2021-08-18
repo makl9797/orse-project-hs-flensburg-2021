@@ -9,8 +9,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import models.store.AppState.Mode
 import modules.ModuleCatalog
-import stores.appStateStore
-import stores.moduleStore
+import stores.AppStateStore
+import stores.ModuleStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.navigationEditMenu(id: String, moduleCatalog: ModuleCatalog) {
@@ -32,7 +32,7 @@ fun RenderContext.navigationEditMenu(id: String, moduleCatalog: ModuleCatalog) {
         }, id = "saveSettingsButton") {
             text("Speichern")
             type { success }
-        }.events.map { Mode.WORK } handledBy appStateStore.changeMode
+        }.events.map { Mode.WORK } handledBy AppStateStore.changeMode
 
         pushButton({
             margins { horizontal { tiny } }
@@ -40,7 +40,7 @@ fun RenderContext.navigationEditMenu(id: String, moduleCatalog: ModuleCatalog) {
             text("Zurücksetzen")
             type { danger }
             events {
-                clicks handledBy moduleStore.discardChanges
+                clicks handledBy ModuleStore.discardChanges
             }
         }
     }

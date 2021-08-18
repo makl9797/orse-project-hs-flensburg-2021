@@ -22,8 +22,8 @@ fun Route.bookingRoutes() {
             }
             call.respond(bookings)
         } catch (e: Exception) {
+            call.response.status(HttpStatusCode.BadRequest)
             call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
     get("/bookings/{id}") {
@@ -37,8 +37,8 @@ fun Route.bookingRoutes() {
                 call.respondText("Booking with _id:$id not found")
             }
         } catch (e: Exception) {
+            call.response.status(HttpStatusCode.BadRequest)
             call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
     put("/bookings/{id}") {
@@ -50,11 +50,10 @@ fun Route.bookingRoutes() {
             col.save(booking)
 
             call.respond(col.find().toList())
-            call.respond(HttpStatusCode.OK)
 
         } catch (e: Exception) {
+            call.response.status(HttpStatusCode.BadRequest)
             call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
     delete("/bookings/{id}") {
@@ -62,11 +61,10 @@ fun Route.bookingRoutes() {
             val col = databaseService.getCollectionOfBooking()
             col.deleteOne(Booking::_id eq call.parameters["id"])
             call.respond(col.find().toList())
-            call.respond(HttpStatusCode.OK)
 
         } catch (e: Exception) {
+            call.response.status(HttpStatusCode.BadRequest)
             call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
 }

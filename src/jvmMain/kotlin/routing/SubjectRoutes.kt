@@ -26,10 +26,9 @@ fun Route.subjectRoutes() {
             } else {
                 call.respondText("Subject with _id:$id not found")
             }
-            call.respond(HttpStatusCode.OK)
         } catch (e: Exception) {
+            call.response.status(HttpStatusCode.BadRequest)
             call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
     get("/subjects") {
@@ -54,8 +53,8 @@ fun Route.subjectRoutes() {
             }
 
         } catch (e: Exception) {
+            call.response.status(HttpStatusCode.BadRequest)
             call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
     put("/subjects/{id}") {
@@ -68,10 +67,9 @@ fun Route.subjectRoutes() {
             }
             subjects.save(subject)
             call.respond(subjects.find().toList())
-            call.respond(HttpStatusCode.Created)
         } catch (e: Exception) {
+            call.response.status(HttpStatusCode.BadRequest)
             call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
 
@@ -81,8 +79,8 @@ fun Route.subjectRoutes() {
             subjects.deleteOne(Subject::_id eq call.parameters["id"])
             call.respond(subjects.find().toList())
         } catch (e: Exception) {
+            call.response.status(HttpStatusCode.BadRequest)
             call.respondText("Error_ $e")
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
 

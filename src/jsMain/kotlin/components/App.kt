@@ -6,7 +6,7 @@ import dev.fritz2.components.flexBox
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import modules.moduleCatalog
-import stores.appStateStore
+import stores.AppStateStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.app() {
@@ -14,7 +14,7 @@ fun RenderContext.app() {
         height { "100vh" }
         direction { column }
     }, id = "app") {
-        appStateStore.data.render { state ->
+        AppStateStore.data.render { state ->
             navigation("navigation", state.mode, moduleCatalog)
             workspace("workspace", state.mode)
         }

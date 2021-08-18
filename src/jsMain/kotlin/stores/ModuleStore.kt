@@ -6,20 +6,22 @@ import models.store.Module
 import models.store.ModuleSettings
 import modules.moduleCatalog
 
-val moduleStore = ModuleStore(
+val moduleList =
     listOf(
-        moduleCatalog.calendar.createModule(
-            ModuleSettings(60, 20, 1, 1)
-        ),
         moduleCatalog.table.createModule(
-            ModuleSettings(60, 20, 1, 23)
+            ModuleSettings(60, 30, 1, 1)
+        ),
+        moduleCatalog.calendar.createModule(
+            ModuleSettings(30, 30, 61, 1)
+        ),
+        moduleCatalog.infoBox.createModule(
+            ModuleSettings(60, 30, 1, 31)
         )
 
     )
-)
 
 
-class ModuleStore(initModules: List<Module>) : RootStore<List<Module>>(initModules) {
+object ModuleStore : RootStore<List<Module>>(moduleList) {
     var temp: List<Module> = listOf()
 
     val addModule = handle { model, newModule: Module ->
@@ -27,7 +29,6 @@ class ModuleStore(initModules: List<Module>) : RootStore<List<Module>>(initModul
     }
 
     val removeModule = handle { model, moduleId: String ->
-        console.log(moduleId)
         val moduleElement = document.getElementById(moduleId)
         if (moduleElement != null) {
             moduleElement.parentElement?.removeChild(moduleElement)
@@ -41,6 +42,6 @@ class ModuleStore(initModules: List<Module>) : RootStore<List<Module>>(initModul
     }
 
     fun saveCurrentModules() {
-        temp = moduleStore.current
+        temp = this.current
     }
 }

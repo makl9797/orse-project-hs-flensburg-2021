@@ -6,12 +6,11 @@ import dev.fritz2.components.flexBox
 import dev.fritz2.components.formControl
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.values
-import dev.fritz2.identification.uniqueId
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import models.L
 import models.Subject
-import stores.subjectsStore
+import stores.SubjectListStore
 
 
 @ExperimentalCoroutinesApi
@@ -63,8 +62,11 @@ fun RenderContext.addSubjectForm(id: String) {
             type { success }
             text("Hinzufügen")
         }.events.map {
-            idStore.update(uniqueId())
-            subjectStore.current
-        } handledBy subjectsStore.save
+            Subject(
+                name = subjectStore.current.name,
+                description = subjectStore.current.description,
+                type = subjectStore.current.type
+            )
+        } handledBy SubjectListStore.save
     }
 }
