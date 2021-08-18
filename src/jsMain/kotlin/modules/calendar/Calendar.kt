@@ -4,6 +4,7 @@ import dev.fritz2.components.dataTable
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.lenses.asString
 import dev.fritz2.styling.div
+import dev.fritz2.styling.params.BasicParams
 import dev.fritz2.styling.params.BoxParams
 import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +27,7 @@ class Calendar {
     )
     private val card = ModuleCard(
         moduleName = "Calendar",
-        moduleDescription = "Dieses modul repräsentiert ein Kalender",
+        moduleDescription = "Dieses modul repräsentiert einen Kalender",
         exampleImageSrc = "https://via.placeholder.com/150?text=Module+Example+PicPlaceholder"
     )
 
@@ -39,21 +40,31 @@ class Calendar {
 
 @ExperimentalCoroutinesApi
 fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
+    val notAvailableStyle: Style<BasicParams> = {
+        color { danger.main }
+    }
     div({
         style()
         background { color { primary.main } }
 
     }, id = id) {
-        DayListStore.data.render {
-            dataTable(rows = DayListStore, rowIdProvider = Day::day, selection = SelectedDayStore) {
-                columns {
-                    column(title = "Tag") { lens(L.Day.day) }
-                    column(title = "Verfügbar") { lens(L.Day.availableSubjects.asString()) }
+        dataTable(rows = DayListStore, rowIdProvider = Day::day, selection = SelectedDayStore) {
+            header { fixedHeader(true) }
+            columns({ (_, state) ->
+                if (state.item.availableSubjects < 1) {
+                    notAvailableStyle()
+                }
+            }) {
+                column(title = "Tag") {
+                    lens(L.Day.day)
+                    width { minmax("150px") }
+                }
+                column(title = "Verfügbar") {
+                    lens(L.Day.availableSubjects.asString())
+                    width { minmax("1fr") }
                 }
             }
         }
-
     }
-
 }
 
