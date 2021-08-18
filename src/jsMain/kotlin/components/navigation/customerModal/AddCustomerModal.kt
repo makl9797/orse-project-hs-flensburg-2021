@@ -16,7 +16,6 @@ fun RenderContext.addCustomerModal(id: String, modalClose: SimpleHandler<Unit>) 
         }, id = id + "Body") {
             addCustomerForm(id)
         }
-
         addCustomerFooter(id, modalClose)
     }
 }

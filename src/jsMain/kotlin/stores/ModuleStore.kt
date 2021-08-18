@@ -9,15 +9,14 @@ import modules.moduleCatalog
 val moduleStore = ModuleStore(
     listOf(
         moduleCatalog.calendar.createModule(
-            ModuleSettings(60, 20, 1, 1)
+            ModuleSettings(30, 30, 1, 1)
         ),
         moduleCatalog.table.createModule(
-            ModuleSettings(60, 20, 1, 23)
+            ModuleSettings(60, 20, 1, 33)
         )
 
     )
 )
-
 
 class ModuleStore(initModules: List<Module>) : RootStore<List<Module>>(initModules) {
     var temp: List<Module> = listOf()

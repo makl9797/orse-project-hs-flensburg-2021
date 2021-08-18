@@ -1,22 +1,15 @@
 package modules.calendar
 
-import dev.fritz2.components.DropdownComponent.PlacementContext.right
 import dev.fritz2.components.dataTable
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.lenses.asString
-import dev.fritz2.lenses.buildLens
 import dev.fritz2.styling.div
-import dev.fritz2.styling.params.BackgroundBlendModes.color
 import dev.fritz2.styling.params.BasicParams
 import dev.fritz2.styling.params.BoxParams
 import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.Day
 import models.L
-import models.L.Day.availableSubjects
-import models.L.Day.bookings
-import models.L.Day.day
-import models.L.Day.subjects
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
@@ -47,6 +40,10 @@ class Calendar {
 
 @ExperimentalCoroutinesApi
 fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
+    val notAvailableStyle: Style<BasicParams> = {
+        color { danger.main }
+    }
+
     div({
         style()
         background { color { primary.main } }
@@ -54,13 +51,17 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
     }, id = id) {
         dataTable(rows = dayListStore, rowIdProvider = Day::day, selection = dayStore) {
             header { fixedHeader(true) }
-            columns {
+            columns({ (_, state) ->
+                if (state.item.availableSubjects < 1) {
+                    notAvailableStyle()
+                }
+            }) {
                 column(title = "Tag") {
-                    lens(day)
+                    lens(L.Day.day)
                     width { minmax("150px") }
                 }
                 column(title = "Verfügbar") {
-                    lens(availableSubjects)
+                    lens(L.Day.availableSubjects.asString())
                     width { minmax("1fr") }
                 }
             }

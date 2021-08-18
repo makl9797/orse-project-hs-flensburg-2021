@@ -46,7 +46,7 @@ fun createDayList(period: Int): MutableList<Day> {
                 nextDay.toString(),
                 bookingsOfDay,
                 availableSubjects,
-                availableSubjects.count().toString()
+                availableSubjects.count()
             )
         )
     }

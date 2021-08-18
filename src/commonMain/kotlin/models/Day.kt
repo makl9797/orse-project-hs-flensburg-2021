@@ -13,7 +13,7 @@ data class Day(
     val day: String,
     val bookings: MutableList<Booking>,
     val subjects: MutableList<Subject>,
-    val availableSubjects: String
+    val availableSubjects: Int
 )
 
 object DayResource : Resource<Day, String> {

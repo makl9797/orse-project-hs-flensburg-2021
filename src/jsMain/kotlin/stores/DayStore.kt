@@ -13,7 +13,7 @@ val testList = listOf(
     Subject("5", "Name5", "Beschreibung5", "Typ5")
 ).shuffled()
 
-val exampleDay = Day("2021-09-20", emptyList<Booking>().toMutableList(), testList.toMutableList(), testList.count().toString())
+val exampleDay = Day("2021-09-20", emptyList<Booking>().toMutableList(), testList.toMutableList(), testList.count())
 
 val dayStore = DayStore(exampleDay, "selectedDayStore")
 
