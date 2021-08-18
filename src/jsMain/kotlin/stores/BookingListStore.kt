@@ -13,15 +13,15 @@ object BookingListStore : RootStore<List<Booking>>(emptyList()) {
     val query = handle { repo.query(Unit) }
 
     val save = handle { bookings, new: Booking ->
+        console.log(new)
         repo.addOrUpdate(bookings, new)
-        repo.query(Unit)
     }
     val remove = handle { bookings, id: String ->
         repo.delete(bookings, id)
-        repo.query(Unit)
     }
 
     init {
         query()
+        syncBy(query)
     }
 }

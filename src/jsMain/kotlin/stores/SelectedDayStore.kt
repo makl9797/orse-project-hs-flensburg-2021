@@ -15,7 +15,10 @@ val testList = listOf(
 
 val exampleDay = Day("2021-09-20", emptyList<Booking>().toMutableList(), testList.toMutableList(), testList.count())
 
-object SelectedDayStore : RootStore<Day?>(exampleDay) {
+object SelectedDayStore : RootStore<Day?>(null) {
 
+    init {
+        syncBy(BookingStore.updateStartTime)
+    }
 
 }

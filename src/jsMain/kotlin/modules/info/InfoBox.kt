@@ -2,21 +2,24 @@ package modules.info
 
 import dev.fritz2.components.*
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.identification.uniqueId
+import dev.fritz2.dom.values
 import dev.fritz2.styling.div
 import dev.fritz2.styling.params.BoxParams
 import dev.fritz2.styling.params.Style
-import dev.fritz2.styling.theme.ColorScheme
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
-import models.Booking
-import models.Customer
-import models.Subject
+import kotlinx.datetime.DatePeriod
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.plus
+import kotlinx.datetime.toLocalDate
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
-import modules.info.selectCustomerModal.CustomersModal
+import modules.info.selectCustomerModal.selectCustomerModal
 import stores.*
+import stores.BookingStore.endTimeStore
+import stores.BookingStore.priceStore
+import stores.BookingStore.startTimeStore
 
 class InfoBox {
     private var count = -1
@@ -50,18 +53,20 @@ fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
         style()
         background { color { "grey" } }
     }, id = id) {
+
+
         SelectedSubjectStore.data.render { subject ->
             stackUp {
                 items {
                     // styling omitted for readability
                     box {
-                        +("Subject Name: " + subject?.name)
+                        +("Subject Name:" + subject?.name)
                     }
                     box {
                         +("Type: " + subject?.type)
                     }
                     box {
-                        +("Day: " + dayStore.current?.day)
+                        +("Day: " + SelectedDayStore.current?.day)
                     }
                     box {
                         +("Number of days: ")
@@ -69,6 +74,14 @@ fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
                             type("number")
                             placeholder("42")
                             step("1")
+                            events {
+                                changes.values() handledBy endTimeStore.handle { _, new ->
+                                    daysToEndDate(
+                                        startDate = startTimeStore.current.toLocalDate(),
+                                        daysUntilEnd = new.toInt()
+                                    )
+                                }
+                            }
                         }
                     }
                     box {
@@ -76,31 +89,37 @@ fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
                         inputField {
                             type("number")
                             placeholder("Euro")
+                            events {
+                                changes.values() handledBy priceStore.handle { _, new ->
+                                    new.toDouble()
+                                }
+                            }
                         }
                     }
                     box {
                         clickButton {
                             text("Kunden auswählen")
-                            type { ColorScheme("#00A848", "#2D3748", "#E14F2A", "#2D3748") }
+                            type { success }
                         } handledBy modal { close ->
                             content {
-                                CustomersModal("CustomerModal", close)
+                                selectCustomerModal("CustomerModal", close)
                             }
                         }
                     }
                     SelectedCustomerStore.data.render { customer ->
                         box {
                             if (customer != null) {
-                                +("Kunde: " + customer.firstname+ " " +customer.lastname)
+                                +("Kunde: " + customer.firstname + " " + customer.lastname)
                             }
                         }
                     }
                     box {
                         clickButton {
                             text("Buchen")
-                            type { ColorScheme("#00A848", "#2D3748", "#E14F2A", "#2D3748") }
+                            type { success }
                         }.events.map {
-                        }
+                            BookingStore.current
+                        } handledBy BookingListStore.save
 
                     }
                 }
@@ -108,6 +127,10 @@ fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
         }
     }
 
+}
+
+fun daysToEndDate(startDate: LocalDate, daysUntilEnd: Int): String {
+    return startDate.plus(DatePeriod(days = daysUntilEnd)).toString()
 }
 
 

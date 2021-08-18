@@ -1,34 +1,26 @@
 package modules.info.selectCustomerModal
 
 import dev.fritz2.binding.SimpleHandler
-import dev.fritz2.binding.storeOf
-import dev.fritz2.components.*
+import dev.fritz2.components.clickButton
+import dev.fritz2.components.dataTable
+import dev.fritz2.components.flexBox
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.dom.values
-import dev.fritz2.identification.uniqueId
 import dev.fritz2.styling.div
-import dev.fritz2.styling.params.JustifyContentValues
-import dev.fritz2.styling.params.WrapValues
-import dev.fritz2.styling.style
-import dev.fritz2.styling.theme.Theme.Companion.data
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.map
-import models.Address
 import models.Customer
 import models.L
-import models.Subject
-import models.store.L.Data.data
-import stores.*
+import stores.CustomerListStore
+import stores.SelectedCustomerStore
 
 @ExperimentalCoroutinesApi
-fun RenderContext.CustomersModal(id: String, close: SimpleHandler<Unit>) {
+fun RenderContext.selectCustomerModal(id: String, close: SimpleHandler<Unit>) {
 
-
+    CustomerListStore.data.render {
         div({
             background { color { "orange" } }
         }, id = id) {
             dataTable(
-                rows = customersStore,
+                rows = CustomerListStore,
                 rowIdProvider = Customer::firstname,
                 selection = SelectedCustomerStore
 
@@ -40,18 +32,18 @@ fun RenderContext.CustomersModal(id: String, close: SimpleHandler<Unit>) {
             }
         }
 
-    flexBox({
-        wrap { wrap }
-        justifyContent { flexEnd }
-    }, id = id + "Form") {
-        clickButton({
-            margins { top { small } }
-        }) {
-            variant { outline }
-            type { success }
-            text("Auswählen")
-        }handledBy close
+        flexBox({
+            wrap { wrap }
+            justifyContent { flexEnd }
+        }, id = id + "Form") {
+            clickButton({
+                margins { top { small } }
+            }) {
+                variant { outline }
+                type { success }
+                text("Auswählen")
+            } handledBy close
 
+        }
     }
-
 }

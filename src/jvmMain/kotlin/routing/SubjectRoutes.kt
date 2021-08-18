@@ -98,7 +98,7 @@ fun getSubjectsInTimeframe(
     val availableSubjects = mutableListOf<Subject>()
     for (booking: Booking in bookings) {
         if (booking.startTime.toLocalDate() in start..end || booking.endTime.toLocalDate() in start..end) {
-            notAvailableSubjectIds.add(booking.subject._id)
+            notAvailableSubjectIds.add(booking.subject!!._id)
         }
     }
     subjects.forEach { subject ->
