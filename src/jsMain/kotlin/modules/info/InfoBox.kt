@@ -1,10 +1,14 @@
 package modules.info
 
+import dev.fritz2.components.box
 import dev.fritz2.components.clickButton
+import dev.fritz2.components.flexBox
+import dev.fritz2.components.formControl
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import dev.fritz2.styling.params.BoxParams
 import dev.fritz2.styling.params.Style
+import dev.fritz2.styling.theme.ColorScheme
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.store.Module
 import models.store.ModuleCard
@@ -41,21 +45,40 @@ fun RenderContext.infoBox(id: String, style: Style<BoxParams>) {
         style()
         background { color { primary.main } }
     }, id = id) {
-
         bookSubjectStore.data.render { subject ->
-            console.log(subject)
-            p {
-                +"HALLO"
-            }
-            p {
-                +subject?.description.toString()
-            }
-            clickButton {
-                text("Buchen")
-                type { success }
-            }
-        }
+            flexBox({
+                direction { row }
+            }) {
+                box {
+                    formControl {
+                        label("Subject Name:"+subject?.name)
+                    }}
+                box { formControl {
+                    label("Type:" + subject?.type)
+                }}
+                box { formControl {
+                    label("Start Date: ")
+                    inputField {
+                        type("date check in")
+                        placeholder("date")
+                    }
+                }}
+                box { formControl {
+                    label("Start Date: ")
+                    inputField {
+                        type("date check out")
+                        placeholder("date")
+                    }
+                }}
+                box { formControl {
+                    label("Price: 5.0 Euro")
+                }}
+                box {
+                    clickButton {
+                        text("Buchen")
+                        type { ColorScheme("#00A848","#2D3748","#E14F2A", "#2D3748") }
+                    }}
+            }}
+
     }
 }
-
-
