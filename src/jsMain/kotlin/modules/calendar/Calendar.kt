@@ -43,7 +43,6 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
     val notAvailableStyle: Style<BasicParams> = {
         color { danger.main }
     }
-
     div({
         style()
         background { color { primary.main } }
