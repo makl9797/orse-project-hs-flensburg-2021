@@ -16,6 +16,7 @@ import stores.SelectedCustomerStore
 fun RenderContext.selectCustomerModal(id: String, close: SimpleHandler<Unit>) {
 
     CustomerListStore.data.render {
+        console.log("Reload Customerlist")
         div({
             background { color { "orange" } }
         }, id = id) {

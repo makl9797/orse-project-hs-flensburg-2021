@@ -18,6 +18,7 @@ object DayListStore : RootStore<List<Day>>(emptyList()) {
     init {
         query()
         SubjectListStore.save handledBy query
+        BookingListStore.save handledBy query
     }
 }
 

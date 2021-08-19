@@ -2,9 +2,9 @@ package components.navigation.subjectModal
 
 import dev.fritz2.binding.SimpleHandler
 import dev.fritz2.binding.storeOf
-import dev.fritz2.components.clickButton
 import dev.fritz2.components.flexBox
 import dev.fritz2.components.formControl
+import dev.fritz2.components.pushButton
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.values
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -56,21 +56,21 @@ fun RenderContext.addSubjectForm(id: String, modalClose: SimpleHandler<Unit>) {
                 placeholder("Wähle den Objekttyp...")
             }
         }
-        clickButton({
+        pushButton({
             margins { top { small } }
         }) {
             variant { outline }
             type { success }
             text("Hinzufügen")
             events {
-                mouseups handledBy modalClose
+                clicks.events.map {
+                    Subject(
+                        name = subjectStore.current.name,
+                        description = subjectStore.current.description,
+                        type = subjectStore.current.type
+                    )
+                } handledBy SubjectListStore.save
             }
-        }.events.map {
-            Subject(
-                name = subjectStore.current.name,
-                description = subjectStore.current.description,
-                type = subjectStore.current.type
-            )
-        } handledBy SubjectListStore.save
+        }
     }
 }

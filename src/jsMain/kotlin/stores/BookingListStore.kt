@@ -15,8 +15,9 @@ object BookingListStore : RootStore<List<Booking>>(emptyList()) {
     val query = handle { repo.query(Unit) }
 
     val save = handleAndEmit<Booking, Unit> { bookings, new ->
+        val temp = repo.addOrUpdate(bookings, new)
         emit(Unit)
-        repo.addOrUpdate(bookings, new)
+        temp
     }
     val remove = handle { bookings, id: String ->
         repo.delete(bookings, id)

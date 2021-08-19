@@ -37,7 +37,7 @@ object SubjectListStore : RootStore<List<Subject>>(listOf()) {
             content {
                 alert {
                     severity { success }
-                    title("Objekt hinzugefügt!")
+                    title("Neues Objekt angelegt!")
                 }
             }
         }

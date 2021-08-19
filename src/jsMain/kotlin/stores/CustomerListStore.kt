@@ -1,6 +1,8 @@
 package stores
 
 import dev.fritz2.binding.RootStore
+import dev.fritz2.components.alert
+import dev.fritz2.components.toast
 import dev.fritz2.identification.uniqueId
 import dev.fritz2.repositories.rest.restQuery
 import models.Customer
@@ -14,8 +16,10 @@ object CustomerListStore : RootStore<List<Customer>>(emptyList()) {
 
     val query = handle { repo.query(Unit) }
 
-    val save = handle { customers, new: Customer ->
-        repo.addOrUpdate(customers, new)
+    val save = handleAndEmit<Customer, Unit> { customers, new: Customer ->
+        val temp = repo.addOrUpdate(customers, new)
+        emit(Unit)
+        temp
     }
     val remove = handle { customers, id: String ->
         repo.delete(customers, id)
@@ -24,5 +28,16 @@ object CustomerListStore : RootStore<List<Customer>>(emptyList()) {
     init {
         query()
         syncBy(query)
+        save handledBy toast {
+            placement { bottomRight }
+            background { success.main }
+            hasCloseButton(false)
+            content {
+                alert {
+                    severity { success }
+                    title("Neuer Kunde angelegt!")
+                }
+            }
+        }
     }
 }

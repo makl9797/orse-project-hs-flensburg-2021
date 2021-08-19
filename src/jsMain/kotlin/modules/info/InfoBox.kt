@@ -53,7 +53,7 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
             justifyContent { spaceEvenly }
         }, id = id) {
             items {
-                infoBoxArea("subjectBox", "Objekt") {
+                infoBoxArea("subjectBox", "Objekte") {
                     lineUp({
                         alignItems { center }
                     }) {
@@ -127,9 +127,11 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
                     }
                     box {
                         clickButton {
-                            text("Kunden auswählen")
+                            text("Kunde auswählen")
                             type { success }
                         } handledBy modal { close ->
+                            hasCloseButton(false)
+                            placement { center }
                             content {
                                 selectCustomerModal("CustomerModal", close)
                             }
@@ -216,7 +218,7 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
 }
 
 fun daysToEndDate(startDate: LocalDate, daysUntilEnd: Int): String {
-    return startDate.plus(DatePeriod(days = daysUntilEnd)).toString()
+    return startDate.plus(DatePeriod(days = daysUntilEnd - 1)).toString()
 }
 
 
