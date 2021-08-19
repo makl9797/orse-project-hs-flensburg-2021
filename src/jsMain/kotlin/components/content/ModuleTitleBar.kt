@@ -8,6 +8,7 @@ import dev.fritz2.styling.div
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import models.store.AppState
+import models.store.AppState.Mode.*
 import models.store.Module
 import models.store.ModuleSettings
 import stores.ModuleStateStore
@@ -37,10 +38,7 @@ fun RenderContext.moduleTitleBar(
     }, id = id + "Title") {
         +title
         when (mode) {
-            AppState.Mode.WORK -> {
-
-            }
-            AppState.Mode.EDIT -> {
+            EDIT -> {
                 div {
                     popover({
                         width { "auto" }
@@ -67,7 +65,11 @@ fun RenderContext.moduleTitleBar(
                     }.events.map { id } handledBy ModuleStore.removeModule
                 }
             }
-            else -> {
+            WORK -> {
+                div { +"Text" }
+            }
+            NONE -> {
+                div { +"Text" }
             }
         }
         mousedowns.events handledBy ModuleStateStore.onMouseDown

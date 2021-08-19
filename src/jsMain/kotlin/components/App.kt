@@ -4,8 +4,11 @@ import components.content.workspace
 import components.navigation.navigation
 import dev.fritz2.components.flexBox
 import dev.fritz2.dom.html.RenderContext
+import kotlinx.browser.document
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import modules.moduleCatalog
+import org.w3c.dom.HTMLElement
+import org.w3c.dom.get
 import stores.AppStateStore
 
 @ExperimentalCoroutinesApi
@@ -19,6 +22,7 @@ fun RenderContext.app() {
             workspace("workspace", state.mode)
         }
     }
-
+    val nav = document.getElementsByTagName("nav")[0] as HTMLElement
+    nav.style.position = "relative"
 }
 

@@ -50,10 +50,10 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
     SelectedSubjectStore.data.render { subject ->
         lineUp({
             style()
-            justifyContent { spaceEvenly }
+            alignItems { stretch }
         }, id = id) {
             items {
-                infoBoxArea("subjectBox", "Objekte") {
+                infoBoxArea("subjectBox", "Objekt") {
                     lineUp({
                         alignItems { center }
                     }) {

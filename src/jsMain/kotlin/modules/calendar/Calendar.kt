@@ -45,8 +45,6 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
     }
     div({
         style()
-        background { color { primary.main } }
-
     }, id = id) {
         dataTable(rows = DayListStore, rowIdProvider = Day::day, selection = SelectedDayStore) {
             header { fixedHeader(true) }

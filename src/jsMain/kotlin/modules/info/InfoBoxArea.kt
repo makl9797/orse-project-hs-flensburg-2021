@@ -15,6 +15,7 @@ fun RenderContext.infoBoxArea(id: String, title: String, content: RenderContext.
             style { solid }
         }
         radius { "1rem" }
+        width { "-webkit-fill-available" }
     }, id = id) {
         items {
             h3({ textDecoration { underline } }) { +title }

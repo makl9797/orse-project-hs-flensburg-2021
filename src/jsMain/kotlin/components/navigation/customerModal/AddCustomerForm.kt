@@ -16,9 +16,9 @@ import stores.CustomerListStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.addCustomerForm(id: String) {
-    val customerStore =
-        storeOf(Customer(address = Address(street = "", city = "", zip = 0), firstname = "", lastname = ""))
-    val idStore = customerStore.sub(L.Customer._id)
+    val customerStore = storeOf(
+        Customer(address = Address(street = "", city = "", zip = 0), firstname = "", lastname = "")
+    )
     val fNameStore = customerStore.sub(L.Customer.firstname)
     val lNameStore = customerStore.sub(L.Customer.lastname)
     val addressStore = customerStore.sub(L.Customer.address)
@@ -26,6 +26,7 @@ fun RenderContext.addCustomerForm(id: String) {
     val streetStore = addressStore.sub(L.Address.street)
     val cityStore = addressStore.sub(L.Address.city)
     val zipStore = addressStore.sub(L.Address.zip)
+
     flexBox({
         wrap { wrap }
         justifyContent { flexEnd }
@@ -68,6 +69,7 @@ fun RenderContext.addCustomerForm(id: String) {
                     }
                 }
             }
+
         }
         clickButton({
             margins { top { small } }
@@ -82,7 +84,6 @@ fun RenderContext.addCustomerForm(id: String) {
                 lastname = customerStore.current.lastname
             )
         } handledBy CustomerListStore.save
-
     }
 
 }

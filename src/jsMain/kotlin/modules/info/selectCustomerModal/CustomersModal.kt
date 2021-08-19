@@ -16,7 +16,7 @@ import stores.SelectedCustomerStore
 fun RenderContext.selectCustomerModal(id: String, close: SimpleHandler<Unit>) {
 
     CustomerListStore.data.render {
-        console.log("Reload Customerlist")
+
         div({
             background { color { "orange" } }
         }, id = id) {
@@ -38,13 +38,20 @@ fun RenderContext.selectCustomerModal(id: String, close: SimpleHandler<Unit>) {
             justifyContent { flexEnd }
         }, id = id + "Form") {
             clickButton({
-                margins { top { small } }
+                margins {
+                    top { small }
+                    right { small }
+                }
             }) {
                 variant { outline }
                 type { success }
                 text("Auswählen")
             } handledBy close
-
+            clickButton({
+                margins { top { small } }
+            }) {
+                text("Schließen")
+            } handledBy close
         }
     }
 }
