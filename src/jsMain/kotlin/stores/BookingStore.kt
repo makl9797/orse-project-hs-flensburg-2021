@@ -6,9 +6,12 @@ import models.*
 
 object BookingStore : RootStore<Booking>(
     Booking(
+        _id = "empty",
         price = 0.0,
         customer = Customer(
+            _id = "empty",
             address = Address(
+                _id = "empty",
                 street = "",
                 city = "",
                 zip = 0
@@ -19,6 +22,7 @@ object BookingStore : RootStore<Booking>(
         startTime = "",
         endTime = "",
         subject = Subject(
+            _id = "empty",
             name = "",
             description = "",
             type = ""

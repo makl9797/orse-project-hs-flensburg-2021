@@ -60,6 +60,11 @@ fun RenderContext.addSubjectForm(id: String, modalClose: SimpleHandler<Unit>) {
             margins { top { small } }
         }) {
             variant { outline }
+            if (subjectStore.current.name == "" || subjectStore.current.type == "" || subjectStore.current.description == "") {
+                disabled(true)
+            } else {
+                disabled(false)
+            }
             type { success }
             text("Hinzufügen")
             events {

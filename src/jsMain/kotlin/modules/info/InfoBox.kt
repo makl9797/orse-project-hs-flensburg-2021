@@ -207,6 +207,15 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
                     }
                     clickButton {
                         text("Buchen")
+                        if (BookingStore.current._id == "empty"
+                            || BookingStore.current.customer._id == "empty"
+                            || BookingStore.current.subject._id == "empty"
+                            || BookingStore.current.endTime == ""
+                        ) {
+                            disabled(true)
+                        } else {
+                            disabled(false)
+                        }
                         type { success }
                     }.events.map {
                         BookingStore.current
