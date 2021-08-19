@@ -6,7 +6,6 @@ import models.*
 
 object BookingStore : RootStore<Booking>(
     Booking(
-        _id = "empty",
         price = 0.0,
         customer = Customer(
             _id = "empty",

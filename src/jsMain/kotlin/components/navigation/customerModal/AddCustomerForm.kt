@@ -71,19 +71,25 @@ fun RenderContext.addCustomerForm(id: String) {
             }
 
         }
-        clickButton({
-            margins { top { small } }
-        }) {
-            variant { outline }
-            type { success }
-            text("Hinzufügen")
-        }.events.map {
-            Customer(
-                address = customerStore.current.address,
-                firstname = customerStore.current.firstname,
-                lastname = customerStore.current.lastname
-            )
-        } handledBy CustomerListStore.save
+        customerStore.data.render { customer ->
+            clickButton({
+                margins { top { small } }
+            }) {
+                if (customer.firstname == "" || customer.lastname == "" || customer.address.city == "" || customer.address.street == "" || customer.address.zip == 0) {
+                    disabled(true)
+                } else {
+                    disabled(false)
+                }
+                variant { outline }
+                type { success }
+                text("Hinzufügen")
+            }.events.map {
+                Customer(
+                    address = customer.address,
+                    firstname = customer.firstname,
+                    lastname = customer.lastname
+                )
+            } handledBy CustomerListStore.save
+        }
     }
-
 }

@@ -56,25 +56,27 @@ fun RenderContext.addSubjectForm(id: String, modalClose: SimpleHandler<Unit>) {
                 placeholder("Wähle den Objekttyp...")
             }
         }
-        pushButton({
-            margins { top { small } }
-        }) {
-            variant { outline }
-            if (subjectStore.current.name == "" || subjectStore.current.type == "" || subjectStore.current.description == "") {
-                disabled(true)
-            } else {
-                disabled(false)
-            }
-            type { success }
-            text("Hinzufügen")
-            events {
-                clicks.events.map {
-                    Subject(
-                        name = subjectStore.current.name,
-                        description = subjectStore.current.description,
-                        type = subjectStore.current.type
-                    )
-                } handledBy SubjectListStore.save
+        subjectStore.data.render { subject ->
+            pushButton({
+                margins { top { small } }
+            }) {
+                variant { outline }
+                if (subject.name == "" || subject.type == "" || subject.description == "") {
+                    disabled(true)
+                } else {
+                    disabled(false)
+                }
+                type { success }
+                text("Hinzufügen")
+                events {
+                    clicks.events.map {
+                        Subject(
+                            name = subject.name,
+                            description = subject.description,
+                            type = subject.type
+                        )
+                    } handledBy SubjectListStore.save
+                }
             }
         }
     }

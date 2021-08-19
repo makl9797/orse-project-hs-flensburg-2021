@@ -66,10 +66,8 @@ fun RenderContext.moduleTitleBar(
                 }
             }
             WORK -> {
-                div { +"Text" }
             }
             NONE -> {
-                div { +"Text" }
             }
         }
         mousedowns.events handledBy ModuleStateStore.onMouseDown

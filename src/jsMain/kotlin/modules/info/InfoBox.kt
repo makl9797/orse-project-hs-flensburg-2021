@@ -205,21 +205,24 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
                             }
                         }
                     }
-                    clickButton {
-                        text("Buchen")
-                        if (BookingStore.current._id == "empty"
-                            || BookingStore.current.customer._id == "empty"
-                            || BookingStore.current.subject._id == "empty"
-                            || BookingStore.current.endTime == ""
-                        ) {
-                            disabled(true)
-                        } else {
-                            disabled(false)
-                        }
-                        type { success }
-                    }.events.map {
-                        BookingStore.current
-                    } handledBy BookingListStore.save
+                    BookingStore.data.render { booking ->
+                        clickButton {
+                            text("Buchen")
+                            if (booking._id == "empty"
+                                || booking.customer._id == "empty"
+                                || booking.subject._id == "empty"
+                                || booking.endTime == ""
+                                || booking.price == 0.0
+                            ) {
+                                disabled(true)
+                            } else {
+                                disabled(false)
+                            }
+                            type { success }
+                        }.events.map {
+                            BookingStore.current
+                        } handledBy BookingListStore.save
+                    }
                 }
             }
         }

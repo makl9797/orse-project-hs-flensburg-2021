@@ -55,7 +55,6 @@ fun RenderContext.moduleWrapper(
                 width { "inherit" }
                 height { "inherit" }
             }
-            console.log("TEst")
             when (mode) {
                 AppState.Mode.WORK -> {
 

@@ -5,13 +5,12 @@ import dev.fritz2.components.clickButton
 import dev.fritz2.components.gridBox
 import dev.fritz2.components.selectField
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.styling.button
 import dev.fritz2.styling.div
-import dev.fritz2.styling.params.BasicParams
 import dev.fritz2.styling.params.BoxParams
 import dev.fritz2.styling.params.FontWeights.bold
 import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.*
 import models.store.Module
@@ -87,42 +86,37 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
         div { +"Sa" }
         div { +"So" }
 
-        selectedMonth.data.render { month ->
-            val daysInMonth = daysInMonth(month.number, false)
-            val firstDayInMonth = LocalDate(today.year, month.number, 1)
+        selectedMonth.data.combine(DayListStore.data) { month, dayList ->
+            Pair(month, dayList)
+        }.render { combinedData ->
+            val daysInMonth = daysInMonth(combinedData.first.number, false)
+            val firstDayInMonth = LocalDate(today.year, combinedData.first.number, 1)
             val dayOfWeekFirstDay = firstDayInMonth.dayOfWeek.isoDayNumber
-            console.log(dayOfWeekFirstDay)
-            console.log("TESTNACHRICHT")
             for (i in 1 until dayOfWeekFirstDay) {
                 div { }
             }
             for (i in 1..daysInMonth) {
 
-                DayListStore.data.render { daylist ->
-
-                    val day = daylist.filter { day ->
-                        day.day.toLocalDate() == LocalDate(today.year, month.number, i)
-                    }.firstOrNull()
-
-                    clickButton({
-                        if (day != null) {
-                            if (day.availableSubjects < 1) {
-                                background { color { danger.main } }
-                            } else {
-                                background { color { primary.main } }
-                            }
-                        } else {
-                            background { color { warning.main } }
-                        }
-
-                    }) {
-                        text(i.toString())
-                        type { primary }
-                    }.events.map { LocalDate(today.year, month.number, i) } handledBy DayListStore.getDay
+                val day = combinedData.second.firstOrNull { day ->
+                    day.day.toLocalDate() == LocalDate(today.year, combinedData.first.number, i)
                 }
+                clickButton({
+                    if (day != null) {
+                        if (day.availableSubjects < 1) {
+                            background { color { danger.main } }
+                        } else {
+                            background { color { primary.main } }
+                        }
+                    } else {
+                        background { color { warning.main } }
+                    }
+
+                }) {
+                    text(i.toString())
+                    type { primary }
+                }.events.map { LocalDate(today.year, combinedData.first.number, i) } handledBy DayListStore.getDay
             }
         }
-
     }
     //--
 
