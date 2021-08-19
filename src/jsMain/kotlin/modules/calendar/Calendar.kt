@@ -7,6 +7,7 @@ import dev.fritz2.components.selectField
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.button
 import dev.fritz2.styling.div
+import dev.fritz2.styling.params.BasicParams
 import dev.fritz2.styling.params.BoxParams
 import dev.fritz2.styling.params.FontWeights.bold
 import dev.fritz2.styling.params.Style
@@ -60,7 +61,6 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
             width { "4rem" }
             height { "4rem" }
             color { primary.mainContrast }
-            background { color { primary.main } }
             display { flex }
             radius { small }
             css("justify-content: center")
@@ -92,14 +92,34 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
             val firstDayInMonth = LocalDate(today.year, month.number, 1)
             val dayOfWeekFirstDay = firstDayInMonth.dayOfWeek.isoDayNumber
             console.log(dayOfWeekFirstDay)
+            console.log("TESTNACHRICHT")
             for (i in 1 until dayOfWeekFirstDay) {
                 div { }
             }
             for (i in 1..daysInMonth) {
-                clickButton {
-                    text(i.toString())
-                    type { primary }
-                }.events.map { LocalDate(today.year, month.number, i) } handledBy DayListStore.getDay
+
+                DayListStore.data.render { daylist ->
+
+                    val day = daylist.filter { day ->
+                        day.day.toLocalDate() == LocalDate(today.year, month.number, i)
+                    }.firstOrNull()
+
+                    clickButton({
+                        if (day != null) {
+                            if (day.availableSubjects < 1) {
+                                background { color { danger.main } }
+                            } else {
+                                background { color { primary.main } }
+                            }
+                        } else {
+                            background { color { warning.main } }
+                        }
+
+                    }) {
+                        text(i.toString())
+                        type { primary }
+                    }.events.map { LocalDate(today.year, month.number, i) } handledBy DayListStore.getDay
+                }
             }
         }
 

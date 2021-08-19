@@ -16,7 +16,7 @@ fun Route.overviewRoutes() {
         try {
             var period = call.parameters["periodInDays"]?.toInt()
             if (period == null) {
-                period = 30
+                period = 365
             }
             val listOfDays = createDayList(period)
 

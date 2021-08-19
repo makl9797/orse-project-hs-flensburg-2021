@@ -19,8 +19,10 @@ object DayListStore : RootStore<List<Day>>(emptyList()) {
     val getDay = handleAndEmit<LocalDate, Day> { model, date ->
         val day = model.filter {
             it.day.toLocalDate() == date
-        }.first()
-        emit(day)
+        }.firstOrNull()
+        if (day != null) {
+            emit(day)
+        }
         model
     }
 
