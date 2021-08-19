@@ -6,11 +6,9 @@ import dev.fritz2.dom.values
 import dev.fritz2.styling.params.FlexParams
 import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.datetime.DatePeriod
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.plus
-import kotlinx.datetime.toLocalDate
+import kotlinx.datetime.*
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
@@ -159,6 +157,9 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
                                 +"Tage buchen: "
                             }
                             inputField {
+                                value(startTimeStore.data.combine(endTimeStore.data) { start, end ->
+                                    start.toLocalDate().daysUntil(end.toLocalDate()) + 1
+                                }.map { it.toString() })
                                 type("number")
                                 placeholder("3")
                                 step("1")
@@ -195,6 +196,7 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
                                 +"Preis in Euro: "
                             }
                             inputField {
+                                value(priceStore.data.map { it.toString() })
                                 type("number")
                                 placeholder("Euro")
                                 events {

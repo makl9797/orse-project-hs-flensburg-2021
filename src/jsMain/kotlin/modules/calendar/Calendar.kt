@@ -29,7 +29,7 @@ class Calendar {
         startY = 1
     )
     private val card = ModuleCard(
-        moduleName = "Calendar",
+        moduleName = "Kalender",
         moduleDescription = "Dieses modul repräsentiert einen Kalender",
         exampleImageSrc = "https://via.placeholder.com/150?text=Module+Example+PicPlaceholder"
     )
@@ -104,11 +104,13 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
                     if (day != null) {
                         if (day.availableSubjects < 1) {
                             background { color { danger.main } }
+                        } else if (day.availableSubjects in 1..3) {
+                            background { color { secondary.main } }
                         } else {
                             background { color { primary.main } }
                         }
                     } else {
-                        background { color { warning.main } }
+                        background { color { gray700 } }
                     }
 
                 }) {
