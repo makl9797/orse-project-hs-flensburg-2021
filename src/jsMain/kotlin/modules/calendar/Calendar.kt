@@ -1,20 +1,23 @@
 package modules.calendar
 
-import dev.fritz2.components.dataTable
+import dev.fritz2.binding.storeOf
+import dev.fritz2.components.clickButton
+import dev.fritz2.components.gridBox
+import dev.fritz2.components.selectField
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.lenses.asString
+import dev.fritz2.styling.button
 import dev.fritz2.styling.div
-import dev.fritz2.styling.params.BasicParams
 import dev.fritz2.styling.params.BoxParams
+import dev.fritz2.styling.params.FontWeights.bold
 import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.Day
-import models.L
+import kotlinx.coroutines.flow.map
+import kotlinx.datetime.*
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
 import stores.DayListStore
-import stores.SelectedDayStore
+
 
 class Calendar {
     private var count = -1
@@ -40,7 +43,73 @@ class Calendar {
 
 @ExperimentalCoroutinesApi
 fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
-    val notAvailableStyle: Style<BasicParams> = {
+    val today = Clock.System.todayAt(TimeZone.currentSystemDefault())
+    val monthsList = Month.values().toList()
+    val selectedMonth = storeOf(today.month)
+
+    div({
+        //this or child style
+    }) {
+        selectField(items = monthsList, value = selectedMonth) { }
+    }
+
+    gridBox({
+        columns { repeat(7) { "1fr" } }
+
+        children("button") {
+            width { "4rem" }
+            height { "4rem" }
+            color { primary.mainContrast }
+            background { color { primary.main } }
+            display { flex }
+            radius { small }
+            css("justify-content: center")
+            css("align-items: center")
+        }
+        children("div") {
+            width { "4rem" }
+            height { "4rem" }
+            color { tertiary.mainContrast }
+            background { color { primary.mainContrast } }
+            display { flex }
+            radius { small }
+            fontStyle { bold }
+            css("justify-content: center")
+            css("align-items: center")
+        }
+
+    }) {
+        div { +"Mo" }
+        div { +"Di" }
+        div { +"Mi" }
+        div { +"Do" }
+        div { +"Fr" }
+        div { +"Sa" }
+        div { +"So" }
+
+        selectedMonth.data.render { month ->
+            val daysInMonth = daysInMonth(month.number, false)
+            val firstDayInMonth = LocalDate(today.year, month.number, 1)
+            val dayOfWeekFirstDay = firstDayInMonth.dayOfWeek.isoDayNumber
+            console.log(dayOfWeekFirstDay)
+            for (i in 1 until dayOfWeekFirstDay) {
+                div { }
+            }
+            for (i in 1..daysInMonth) {
+                clickButton {
+                    text(i.toString())
+                    type { primary }
+                }.events.map { LocalDate(today.year, month.number, i) } handledBy DayListStore.getDay
+            }
+        }
+
+    }
+    //--
+
+}
+/*
+*
+*  val notAvailableStyle: Style<BasicParams> = {
         color { danger.main }
     }
     div({
@@ -64,5 +133,6 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
             }
         }
     }
-}
+*
+* */
 
