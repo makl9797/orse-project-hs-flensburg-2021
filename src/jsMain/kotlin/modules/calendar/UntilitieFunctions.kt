@@ -6,9 +6,9 @@ fun daysInMonth(month: Int, leapYear: Boolean): Int {
         daysInMonth = 30
     } else if (month == 2) {
         if (leapYear) {
-         daysInMonth=   28
+         daysInMonth=   29
         } else {
-          daysInMonth=  29
+          daysInMonth=  28
         }
     } else {
         daysInMonth = 31
