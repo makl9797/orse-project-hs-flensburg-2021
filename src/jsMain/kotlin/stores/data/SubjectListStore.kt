@@ -23,8 +23,10 @@ object SubjectListStore : RootStore<List<Subject>>(listOf()) {
         emit(Unit)
         temp
     }
-    val remove = handle { subjects, id: String ->
-        repo.delete(subjects, id)
+    val remove = handleAndEmit<String, Unit> { subjects, id: String ->
+        val temp = repo.delete(subjects, id)
+        emit(Unit)
+        temp
     }
 
     init {
@@ -38,6 +40,17 @@ object SubjectListStore : RootStore<List<Subject>>(listOf()) {
                 alert {
                     severity { success }
                     title("Neues Objekt angelegt!")
+                }
+            }
+        }
+        remove handledBy toast {
+            placement { top }
+            background { danger.main }
+            hasCloseButton(false)
+            content {
+                alert {
+                    severity { success }
+                    title("Objekt entfernt")
                 }
             }
         }
