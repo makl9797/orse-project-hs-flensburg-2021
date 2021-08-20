@@ -34,7 +34,7 @@ fun RenderContext.moduleTitleBar(
             }
         }
         background { color { gray50 } }
-    }, id = id + "Title") {
+    }, id = id + "ModuleTitle") {
         +title
         when (mode) {
             EDIT -> {

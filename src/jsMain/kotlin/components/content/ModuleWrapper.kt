@@ -44,7 +44,7 @@ fun RenderContext.moduleWrapper(
             }
         }
     }, id = "${id}Module") {
-        moduleTitleBar("${id}Module", subStore.current.card.moduleName, mode, settingsStore)
+        moduleTitleBar(id, subStore.current.card.moduleName, mode, settingsStore)
         div({
             overflow { auto }
             width { "auto" }

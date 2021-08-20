@@ -27,8 +27,8 @@ class InfoBox {
     private val type = Module.Type.INFOBOX
 
     private val defaultSettings = ModuleSettings(
-        width = 60,
-        height = 40,
+        width = 100,
+        height = 30,
         startX = 1,
         startY = 1
     )
