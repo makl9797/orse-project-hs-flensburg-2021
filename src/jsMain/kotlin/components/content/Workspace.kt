@@ -8,6 +8,12 @@ import models.app.AppState
 @ExperimentalCoroutinesApi
 fun RenderContext.workspace(id: String, mode: AppState.Mode) {
     gridBox({
+        grid {
+            row {
+                start { "2" }
+                end { "3" }
+            }
+        }
         columns { repeat(autoFill) { "1rem" } }
         rows { repeat(autoFill) { "1rem" } }
         height { "100%" }

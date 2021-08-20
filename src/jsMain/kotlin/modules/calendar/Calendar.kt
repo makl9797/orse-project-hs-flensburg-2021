@@ -54,24 +54,24 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
     }
 
     gridBox({
-        columns { repeat(7) { "1fr" } }
-
+        columns { repeat(7) { "3.5rem" } }
+        css("justify-items: center")
         children("button") {
-            width { "4rem" }
-            height { "4rem" }
+            width { "3.5rem" }
+            height { "3.5rem" }
             color { primary.mainContrast }
             display { flex }
-            radius { small }
+            radius { none }
             css("justify-content: center")
             css("align-items: center")
         }
         children("div") {
-            width { "4rem" }
-            height { "4rem" }
+            width { "3.5rem" }
+            height { "3.5rem" }
             color { tertiary.mainContrast }
             background { color { primary.mainContrast } }
             display { flex }
-            radius { small }
+            radius { none }
             fontStyle { bold }
             css("justify-content: center")
             css("align-items: center")

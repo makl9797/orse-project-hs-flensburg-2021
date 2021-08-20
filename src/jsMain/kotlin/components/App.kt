@@ -2,7 +2,7 @@ package components
 
 import components.content.workspace
 import components.navigation.navigation
-import dev.fritz2.components.flexBox
+import dev.fritz2.components.gridBox
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.browser.document
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,9 +13,9 @@ import stores.app.AppStateStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.app() {
-    flexBox({
+    gridBox({
         height { "100vh" }
-        direction { column }
+        rows { "4.5rem auto" }
     }, id = "app") {
         AppStateStore.data.render { state ->
             navigation("navigation", state.mode, moduleCatalog)
