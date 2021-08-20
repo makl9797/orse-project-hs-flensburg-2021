@@ -127,32 +127,19 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
     //--
 
 }
-/*
-*
-*  val notAvailableStyle: Style<BasicParams> = {
-        color { danger.main }
-    }
-    div({
-        style()
-    }, id = id) {
-        dataTable(rows = DayListStore, rowIdProvider = Day::day, selection = SelectedDayStore) {
-            header { fixedHeader(true) }
-            columns({ (_, state) ->
-                if (state.item.availableSubjects < 1) {
-                    notAvailableStyle()
-                }
-            }) {
-                column(title = "Tag") {
-                    lens(L.Day.day)
-                    width { minmax("150px") }
-                }
-                column(title = "Verfügbar") {
-                    lens(L.Day.availableSubjects.asString())
-                    width { minmax("1fr") }
-                }
-            }
+
+fun daysInMonth(month: Int, leapYear: Boolean): Int {
+    val daysInMonth: Int = if (month == 4 || month == 6 || month == 9 || month == 11) {
+        30
+    } else if (month == 2) {
+        if (leapYear) {
+            29
+        } else {
+            28
         }
+    } else {
+        31
     }
-*
-* */
+    return daysInMonth
+}
 
