@@ -12,7 +12,7 @@ import models.app.ModuleSettings
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleMoveController(
     id: String,
-    settingsStore: SubStore<List<Module>, Module, ModuleSettings>
+    settingsStore: SubStore<Module, Module, ModuleSettings>
 ) {
     val increaseHeight = settingsStore.handle { model ->
         ModuleSettings(model.width, model.height + 1, model.startX, model.startY)
@@ -95,6 +95,9 @@ fun RenderContext.moduleMoveController(
             grid {
                 area { grid.INCREASETOP }
             }
+            hover {
+                color { primary.highlight }
+            }
         }) {
             fromTheme { circleRemove }
             events {
@@ -104,6 +107,9 @@ fun RenderContext.moduleMoveController(
         icon({
             grid {
                 area { grid.INCREASERIGHT }
+            }
+            hover {
+                color { primary.highlight }
             }
         }) {
             fromTheme { circleAdd }
@@ -115,6 +121,9 @@ fun RenderContext.moduleMoveController(
             grid {
                 area { grid.INCREASEBOTTOM }
             }
+            hover {
+                color { primary.highlight }
+            }
         }) {
             fromTheme { circleAdd }
             events {
@@ -124,6 +133,9 @@ fun RenderContext.moduleMoveController(
         icon({
             grid {
                 area { grid.INCREASELEFT }
+            }
+            hover {
+                color { primary.highlight }
             }
         }) {
             fromTheme { circleRemove }
@@ -135,6 +147,9 @@ fun RenderContext.moduleMoveController(
             grid {
                 area { grid.MOVETOPLEFT }
             }
+            hover {
+                color { primary.highlight }
+            }
         }) {
             fromTheme { arrowLeftUp }
             events {
@@ -144,6 +159,9 @@ fun RenderContext.moduleMoveController(
         icon({
             grid {
                 area { grid.MOVETOP }
+            }
+            hover {
+                color { primary.highlight }
             }
         }) {
             fromTheme { arrowUp }
@@ -155,6 +173,9 @@ fun RenderContext.moduleMoveController(
             grid {
                 area { grid.MOVETOPRIGHT }
             }
+            hover {
+                color { primary.highlight }
+            }
         }) {
             fromTheme { arrowRightUp }
             events {
@@ -164,6 +185,9 @@ fun RenderContext.moduleMoveController(
         icon({
             grid {
                 area { grid.MOVELEFT }
+            }
+            hover {
+                color { primary.highlight }
             }
         }) {
             fromTheme { arrowLeft }
@@ -175,6 +199,9 @@ fun RenderContext.moduleMoveController(
             grid {
                 area { grid.MOVERIGHT }
             }
+            hover {
+                color { primary.highlight }
+            }
         }) {
             fromTheme { arrowRight }
             events {
@@ -184,6 +211,9 @@ fun RenderContext.moduleMoveController(
         icon({
             grid {
                 area { grid.MOVEBOTTOMLEFT }
+            }
+            hover {
+                color { primary.highlight }
             }
         }) {
             fromTheme { arrowLeftDown }
@@ -195,6 +225,9 @@ fun RenderContext.moduleMoveController(
             grid {
                 area { grid.MOVEBOTTOM }
             }
+            hover {
+                color { primary.highlight }
+            }
         }) {
             fromTheme { arrowDown }
             events {
@@ -204,6 +237,9 @@ fun RenderContext.moduleMoveController(
         icon({
             grid {
                 area { grid.MOVEBOTTOMRIGHT }
+            }
+            hover {
+                color { primary.highlight }
             }
         }) {
             fromTheme { arrowRightDown }
