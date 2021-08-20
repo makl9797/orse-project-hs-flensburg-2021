@@ -6,9 +6,9 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.params.FlexParams
 import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.store.L
-import models.store.Module
-import models.store.ModuleSettings
+import models.app.L
+import models.app.Module
+import models.app.ModuleSettings
 
 
 @ExperimentalCoroutinesApi

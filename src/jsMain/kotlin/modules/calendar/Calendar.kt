@@ -13,9 +13,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.*
-import models.store.Module
-import models.store.ModuleCard
-import models.store.ModuleSettings
+import models.app.Module
+import models.app.ModuleCard
+import models.app.ModuleSettings
 import stores.data.DayListStore
 
 

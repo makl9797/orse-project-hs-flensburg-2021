@@ -9,8 +9,8 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.params.AreaName
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
-import models.store.L
-import models.store.Module
+import models.app.L
+import models.app.Module
 import stores.app.ModuleStore
 
 @ExperimentalCoroutinesApi

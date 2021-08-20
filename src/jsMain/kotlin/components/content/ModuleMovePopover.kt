@@ -6,8 +6,8 @@ import dev.fritz2.components.icon
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.params.AreaName
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.store.Module
-import models.store.ModuleSettings
+import models.app.Module
+import models.app.ModuleSettings
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleMoveController(

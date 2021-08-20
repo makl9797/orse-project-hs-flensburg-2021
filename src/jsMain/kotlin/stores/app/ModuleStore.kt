@@ -2,9 +2,9 @@ package stores.app
 
 import dev.fritz2.binding.RootStore
 import kotlinx.browser.document
-import models.store.AppState
-import models.store.Module
-import models.store.ModuleSettings
+import models.app.AppState
+import models.app.Module
+import models.app.ModuleSettings
 import modules.moduleCatalog
 
 val moduleList =

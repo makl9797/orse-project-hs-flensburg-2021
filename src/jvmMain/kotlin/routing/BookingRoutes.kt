@@ -6,7 +6,7 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import models.Booking
+import models.data.Booking
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOneById
 import org.litote.kmongo.save

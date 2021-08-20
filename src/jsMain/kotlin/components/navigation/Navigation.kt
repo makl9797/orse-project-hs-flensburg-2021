@@ -4,7 +4,7 @@ import dev.fritz2.components.navBar
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.store.AppState
+import models.app.AppState
 import modules.ModuleCatalog
 
 @ExperimentalCoroutinesApi

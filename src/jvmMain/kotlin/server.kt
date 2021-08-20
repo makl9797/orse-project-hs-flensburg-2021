@@ -8,8 +8,8 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import models.Address
-import models.Customer
+import models.data.Address
+import models.data.Customer
 import routing.bookingRoutes
 import routing.customerRoute
 import routing.overviewRoutes

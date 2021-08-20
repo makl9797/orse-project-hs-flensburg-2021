@@ -1,8 +1,8 @@
 package stores.app
 
 import dev.fritz2.binding.RootStore
-import models.store.AppState
-import models.store.AppState.Mode
+import models.app.AppState
+import models.app.AppState.Mode
 
 object AppStateStore : RootStore<AppState>(AppState(Mode.WORK)) {
     val save = handleAndEmit<String, Mode> { model, layout ->

@@ -1,9 +1,9 @@
 package stores.data
 
 import dev.fritz2.binding.RootStore
-import models.Booking
-import models.Day
-import models.Subject
+import models.data.Booking
+import models.data.Day
+import models.data.Subject
 
 val testList = listOf(
     Subject("1", "Name1", "Beschreibung1", "Typ1"),

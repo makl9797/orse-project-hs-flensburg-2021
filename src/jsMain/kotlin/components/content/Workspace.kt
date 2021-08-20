@@ -3,7 +3,7 @@ package components.content
 import dev.fritz2.components.gridBox
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.store.AppState
+import models.app.AppState
 
 @ExperimentalCoroutinesApi
 fun RenderContext.workspace(id: String, mode: AppState.Mode) {

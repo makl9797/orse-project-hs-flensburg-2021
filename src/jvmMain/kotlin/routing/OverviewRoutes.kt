@@ -6,9 +6,9 @@ import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.datetime.*
-import models.Booking
-import models.Day
-import models.Subject
+import models.data.Booking
+import models.data.Day
+import models.data.Subject
 
 
 fun Route.overviewRoutes() {

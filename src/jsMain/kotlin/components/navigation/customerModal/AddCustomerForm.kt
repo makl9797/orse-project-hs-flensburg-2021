@@ -8,9 +8,9 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.values
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
-import models.Address
-import models.Customer
-import models.L
+import models.data.Address
+import models.data.Customer
+import models.data.L
 import stores.data.CustomerListStore
 
 

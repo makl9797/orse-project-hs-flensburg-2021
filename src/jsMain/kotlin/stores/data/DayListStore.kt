@@ -5,8 +5,8 @@ import dev.fritz2.identification.uniqueId
 import dev.fritz2.repositories.rest.restQuery
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.toLocalDate
-import models.Day
-import models.DayResource
+import models.data.Day
+import models.data.DayResource
 
 
 object DayListStore : RootStore<List<Day>>(emptyList()) {

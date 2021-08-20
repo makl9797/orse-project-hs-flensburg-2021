@@ -9,8 +9,8 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.values
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
-import models.L
-import models.Subject
+import models.data.L
+import models.data.Subject
 import stores.data.SubjectListStore
 
 

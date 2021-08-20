@@ -5,7 +5,7 @@ import dev.fritz2.binding.SimpleHandler
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.store.Module
+import models.app.Module
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleCollection(id: String, moduleExamples: List<Module>, modalClose: SimpleHandler<Unit>) {

@@ -8,9 +8,9 @@ import dev.fritz2.styling.params.BoxParams
 import dev.fritz2.styling.params.FlexParams
 import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.store.AppState
-import models.store.L
-import models.store.Module
+import models.app.AppState
+import models.app.L
+import models.app.Module
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleWrapper(

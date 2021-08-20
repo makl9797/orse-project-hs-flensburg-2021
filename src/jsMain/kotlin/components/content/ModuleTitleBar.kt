@@ -7,10 +7,10 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
-import models.store.AppState
-import models.store.AppState.Mode.*
-import models.store.Module
-import models.store.ModuleSettings
+import models.app.AppState
+import models.app.AppState.Mode.*
+import models.app.Module
+import models.app.ModuleSettings
 import stores.app.ModuleStateStore
 import stores.app.ModuleStore
 

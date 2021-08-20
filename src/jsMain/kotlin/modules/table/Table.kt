@@ -7,11 +7,11 @@ import dev.fritz2.styling.div
 import dev.fritz2.styling.params.BoxParams
 import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.L
-import models.Subject
-import models.store.Module
-import models.store.ModuleCard
-import models.store.ModuleSettings
+import models.app.Module
+import models.app.ModuleCard
+import models.app.ModuleSettings
+import models.data.L
+import models.data.Subject
 import stores.data.SelectedDayStore
 import stores.data.SelectedSubjectStore
 

@@ -1,8 +1,8 @@
 package modules
 
-import models.store.Module
-import models.store.ModuleCard
-import models.store.ModuleSettings
+import models.app.Module
+import models.app.ModuleCard
+import models.app.ModuleSettings
 import modules.calendar.Calendar
 import modules.info.InfoBox
 import modules.table.Table

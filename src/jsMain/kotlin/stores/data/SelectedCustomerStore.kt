@@ -1,7 +1,7 @@
 package stores.data
 
 import dev.fritz2.binding.RootStore
-import models.Customer
+import models.data.Customer
 
 object SelectedCustomerStore : RootStore<Customer?>(null) {
     init {

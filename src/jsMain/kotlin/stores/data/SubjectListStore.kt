@@ -4,8 +4,8 @@ import dev.fritz2.binding.RootStore
 import dev.fritz2.components.alert
 import dev.fritz2.components.toast
 import dev.fritz2.repositories.rest.restQuery
-import models.Subject
-import models.SubjectResource
+import models.data.Subject
+import models.data.SubjectResource
 
 
 object SubjectListStore : RootStore<List<Subject>>(listOf()) {

@@ -3,10 +3,10 @@ package services
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.client.MongoCollection
-import models.Address
-import models.Booking
-import models.Customer
-import models.Subject
+import models.data.Address
+import models.data.Booking
+import models.data.Customer
+import models.data.Subject
 import org.litote.kmongo.KMongo
 import org.litote.kmongo.getCollection
 

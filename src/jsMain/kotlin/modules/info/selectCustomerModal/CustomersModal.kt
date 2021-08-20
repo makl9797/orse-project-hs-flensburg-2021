@@ -7,8 +7,8 @@ import dev.fritz2.components.flexBox
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.Customer
-import models.L
+import models.data.Customer
+import models.data.L
 import stores.data.CustomerListStore
 import stores.data.SelectedCustomerStore
 

@@ -2,8 +2,8 @@ package components.content
 
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import models.store.AppState
-import models.store.Module
+import models.app.AppState
+import models.app.Module
 import modules.calendar.calendar
 import modules.info.infoBox
 import modules.table.table

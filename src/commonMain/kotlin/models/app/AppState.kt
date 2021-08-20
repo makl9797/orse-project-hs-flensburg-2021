@@ -1,4 +1,4 @@
-package models.store
+package models.app
 
 import dev.fritz2.lenses.Lenses
 

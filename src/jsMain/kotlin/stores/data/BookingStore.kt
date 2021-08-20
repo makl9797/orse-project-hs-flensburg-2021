@@ -3,6 +3,7 @@ package stores.data
 import dev.fritz2.binding.RootStore
 import kotlinx.coroutines.flow.map
 import models.*
+import models.data.*
 
 
 object BookingStore : RootStore<Booking>(

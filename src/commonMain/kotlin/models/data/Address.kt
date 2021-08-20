@@ -1,4 +1,4 @@
-package models
+package models.data
 
 import dev.fritz2.identification.uniqueId
 import dev.fritz2.lenses.Lenses

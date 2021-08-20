@@ -5,8 +5,8 @@ import dev.fritz2.components.alert
 import dev.fritz2.components.toast
 import dev.fritz2.identification.uniqueId
 import dev.fritz2.repositories.rest.restQuery
-import models.Booking
-import models.BookingResource
+import models.data.Booking
+import models.data.BookingResource
 
 
 object BookingListStore : RootStore<List<Booking>>(emptyList()) {

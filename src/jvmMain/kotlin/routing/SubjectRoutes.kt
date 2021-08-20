@@ -8,8 +8,8 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.toLocalDate
-import models.Booking
-import models.Subject
+import models.data.Booking
+import models.data.Subject
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOneById
 import org.litote.kmongo.save

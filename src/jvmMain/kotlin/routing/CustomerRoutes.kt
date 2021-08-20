@@ -8,7 +8,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import models.Customer
+import models.data.Customer
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import org.litote.kmongo.save
