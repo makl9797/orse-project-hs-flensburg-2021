@@ -11,7 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import models.L
 import models.Subject
-import stores.SubjectListStore
+import stores.data.SubjectListStore
 
 
 @ExperimentalCoroutinesApi

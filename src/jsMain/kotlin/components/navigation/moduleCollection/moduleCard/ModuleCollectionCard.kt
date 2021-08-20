@@ -11,7 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import models.store.L
 import models.store.Module
-import stores.ModuleStore
+import stores.app.ModuleStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleCollectionCard(

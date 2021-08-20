@@ -1,4 +1,4 @@
-package stores
+package stores.data
 
 import dev.fritz2.binding.RootStore
 import dev.fritz2.components.alert
@@ -37,5 +37,6 @@ object BookingListStore : RootStore<List<Booking>>(emptyList()) {
                 }
             }
         }
+        save handledBy BookingStore.reset
     }
 }

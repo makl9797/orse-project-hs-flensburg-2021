@@ -9,8 +9,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import models.store.AppState.Mode
 import modules.ModuleCatalog
-import stores.AppStateStore
-import stores.ModuleStore
+import stores.app.AppStateStore
+import stores.app.ModuleStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.navigationEditMenu(id: String, moduleCatalog: ModuleCatalog) {

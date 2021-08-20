@@ -7,7 +7,7 @@ import models.store.Module
 import modules.calendar.calendar
 import modules.info.infoBox
 import modules.table.table
-import stores.ModuleStore
+import stores.app.ModuleStore
 
 
 @ExperimentalCoroutinesApi

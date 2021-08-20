@@ -16,7 +16,7 @@ import kotlinx.datetime.*
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
-import stores.DayListStore
+import stores.data.DayListStore
 
 
 class Calendar {
@@ -110,11 +110,15 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
                             background { color { primary.main } }
                         }
                     } else {
-                        background { color { gray700 } }
+                        background { color { primary.main } }
                     }
-
                 }) {
                     text(i.toString())
+                    if (day != null) {
+                        disabled(false)
+                    } else {
+                        disabled(true)
+                    }
                     type { primary }
                 }.events.map { LocalDate(today.year, combinedData.first.number, i) } handledBy DayListStore.getDay
             }

@@ -1,6 +1,7 @@
-package stores
+package stores.data
 
 import dev.fritz2.binding.RootStore
+import kotlinx.coroutines.flow.map
 import models.*
 
 
@@ -44,4 +45,36 @@ object BookingStore : RootStore<Booking>(
         new ?: Subject(name = "", description = "", type = "")
     }
 
+    val reset = handleAndEmit<Booking> { model ->
+        val temp =
+            Booking(
+                price = 0.0,
+                customer = Customer(
+                    _id = "empty",
+                    address = Address(
+                        _id = "empty",
+                        street = "",
+                        city = "",
+                        zip = 0
+                    ),
+                    firstname = "",
+                    lastname = ""
+                ),
+                startTime = model.startTime,
+                endTime = "",
+                subject = Subject(
+                    _id = "empty",
+                    name = "",
+                    description = "",
+                    type = ""
+                )
+            )
+        emit(temp)
+        temp
+    }
+
+    init {
+        reset.map { null } handledBy SelectedSubjectStore.update
+        reset.map { null } handledBy SelectedCustomerStore.update
+    }
 }

@@ -1,4 +1,4 @@
-package stores
+package stores.app
 
 import dev.fritz2.binding.RootStore
 import kotlinx.browser.document

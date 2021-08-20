@@ -12,8 +12,8 @@ import models.Subject
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
-import stores.SelectedDayStore
-import stores.SelectedSubjectStore
+import stores.data.SelectedDayStore
+import stores.data.SelectedSubjectStore
 
 class Table {
     private var count = -1

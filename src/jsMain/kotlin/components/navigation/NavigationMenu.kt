@@ -11,7 +11,7 @@ import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import models.store.AppState.Mode
-import stores.AppStateStore
+import stores.app.AppStateStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.navigationMenu(id: String) {

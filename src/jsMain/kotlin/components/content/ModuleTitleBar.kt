@@ -11,8 +11,8 @@ import models.store.AppState
 import models.store.AppState.Mode.*
 import models.store.Module
 import models.store.ModuleSettings
-import stores.ModuleStateStore
-import stores.ModuleStore
+import stores.app.ModuleStateStore
+import stores.app.ModuleStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleTitleBar(

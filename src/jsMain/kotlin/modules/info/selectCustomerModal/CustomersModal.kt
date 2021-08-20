@@ -9,8 +9,8 @@ import dev.fritz2.styling.div
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.Customer
 import models.L
-import stores.CustomerListStore
-import stores.SelectedCustomerStore
+import stores.data.CustomerListStore
+import stores.data.SelectedCustomerStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.selectCustomerModal(id: String, close: SimpleHandler<Unit>) {

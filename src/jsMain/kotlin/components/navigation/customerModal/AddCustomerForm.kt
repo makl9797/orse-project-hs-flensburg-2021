@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 import models.Address
 import models.Customer
 import models.L
-import stores.CustomerListStore
+import stores.data.CustomerListStore
 
 
 @ExperimentalCoroutinesApi

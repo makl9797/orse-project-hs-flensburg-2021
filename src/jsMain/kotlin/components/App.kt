@@ -9,7 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import modules.moduleCatalog
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.get
-import stores.AppStateStore
+import stores.app.AppStateStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.app() {

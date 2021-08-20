@@ -9,15 +9,15 @@ object OrseTheme : DefaultTheme() {
 
     override val colors: Colors = object : Colors by super.colors {
         override val primary: ColorScheme = ColorScheme(
-            main = "#8ECEFF",
-            mainContrast = "#E6F4F1",
-            highlight = "#00A0FF",
-            highlightContrast = "#FCFCD4"
+            main = "#093F75",
+            mainContrast = "#5DA9F5",
+            highlight = "#5EAAF7",
+            highlightContrast = "#2E5378"
         )
 
         override val secondary: ColorScheme = ColorScheme(
-            main = "#324757",
-            mainContrast = "#F1F1E6",
+            main = "#00a5cf",
+            mainContrast = "#142F36",
             highlight = "#00BCFF",
             highlightContrast = "#FFF7D6"
         )

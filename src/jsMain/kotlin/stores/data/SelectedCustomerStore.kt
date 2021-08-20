@@ -1,4 +1,4 @@
-package stores
+package stores.data
 
 import dev.fritz2.binding.RootStore
 import models.Customer

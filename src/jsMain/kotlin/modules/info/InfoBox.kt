@@ -8,15 +8,18 @@ import dev.fritz2.styling.params.Style
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.datetime.*
+import kotlinx.datetime.DatePeriod
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.plus
+import kotlinx.datetime.toLocalDate
 import models.store.Module
 import models.store.ModuleCard
 import models.store.ModuleSettings
 import modules.info.selectCustomerModal.selectCustomerModal
-import stores.*
-import stores.BookingStore.endTimeStore
-import stores.BookingStore.priceStore
-import stores.BookingStore.startTimeStore
+import stores.data.*
+import stores.data.BookingStore.endTimeStore
+import stores.data.BookingStore.priceStore
+import stores.data.BookingStore.startTimeStore
 
 class InfoBox {
     private var count = -1
@@ -45,7 +48,19 @@ class InfoBox {
 
 @ExperimentalCoroutinesApi
 fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
-    SelectedSubjectStore.data.render { subject ->
+
+    SelectedSubjectStore.data.combine(SelectedDayStore.data.combine(SelectedCustomerStore.data) { day, customer ->
+        object {
+            val day = day
+            val customer = customer
+        }
+    }) { subject, dayAndCustomer ->
+        object {
+            val day = dayAndCustomer.day
+            val customer = dayAndCustomer.customer
+            val subject = subject
+        }
+    }.render { selectedData ->
         lineUp({
             style()
             alignItems { stretch }
@@ -60,7 +75,7 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
                                 +"Objektname: "
                             }
                             a {
-                                +(subject?.name ?: "Kein Objekt ausgewählt")
+                                +(selectedData.subject?.name ?: "Kein Objekt ausgewählt")
                             }
                         }
                     }
@@ -72,7 +87,7 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
                                 +"Objektbeschreibung: "
                             }
                             a {
-                                +(subject?.description ?: "Kein Objekt ausgewählt")
+                                +(selectedData.subject?.description ?: "Kein Objekt ausgewählt")
                             }
                         }
                     }
@@ -84,43 +99,40 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
                                 +"Objekttyp: "
                             }
                             a {
-                                +(subject?.type ?: "Kein Objekt ausgewählt")
+                                +(selectedData.subject?.type ?: "Kein Objekt ausgewählt")
                             }
                         }
                     }
                 }
                 infoBoxArea("customerBox", "Kunde") {
-                    SelectedCustomerStore.data.render { customer ->
-                        if (customer != null) {
-                            lineUp({
-                                alignItems { center }
-                            }) {
-                                items {
-                                    h4 {
-                                        +"Name: "
-                                    }
-                                    a {
-                                        +"${customer.firstname} ${customer.lastname}"
-                                    }
+                    if (selectedData.customer != null) {
+                        lineUp({
+                            alignItems { center }
+                        }) {
+                            items {
+                                h4 {
+                                    +"Name: "
+                                }
+                                a {
+                                    +"${selectedData.customer.firstname} ${selectedData.customer.lastname}"
                                 }
                             }
-                            stackUp({
+                        }
+                        stackUp({
 
-                            }) {
-                                items {
-                                    h4 {
-                                        +"Adresse: "
-                                    }
-                                    a {
-                                        +customer.address.street
-                                    }
-                                    a {
-                                        +"${customer.address.zip} ${customer.address.city}"
-                                    }
-
+                        }) {
+                            items {
+                                h4 {
+                                    +"Adresse: "
                                 }
-                            }
+                                a {
+                                    +selectedData.customer.address.street
+                                }
+                                a {
+                                    +"${selectedData.customer.address.zip} ${selectedData.customer.address.city}"
+                                }
 
+                            }
                         }
                     }
                     box {
@@ -145,7 +157,7 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
                                 +"Ausgewählter Tag: "
                             }
                             a {
-                                +(SelectedDayStore.current?.day ?: "Kein Tag ausgewählt")
+                                +(selectedData.day?.day ?: "Kein Tag ausgewählt")
                             }
                         }
                     }
@@ -157,9 +169,7 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
                                 +"Tage buchen: "
                             }
                             inputField {
-                                value(startTimeStore.data.combine(endTimeStore.data) { start, end ->
-                                    start.toLocalDate().daysUntil(end.toLocalDate()) + 1
-                                }.map { it.toString() })
+                                value("0")
                                 type("number")
                                 placeholder("3")
                                 step("1")
@@ -230,6 +240,7 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
         }
     }
 }
+
 
 fun daysToEndDate(startDate: LocalDate, daysUntilEnd: Int): String {
     return startDate.plus(DatePeriod(days = daysUntilEnd - 1)).toString()
