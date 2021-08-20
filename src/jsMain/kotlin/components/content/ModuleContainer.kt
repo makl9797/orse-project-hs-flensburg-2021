@@ -12,26 +12,23 @@ import stores.app.ModuleStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleContainer(mode: AppState.Mode) {
-    ModuleStore.renderEach { module ->
+    ModuleStore.data.renderEach { module ->
         moduleWrapper(
             style = {},
-            id = module.current.id,
+            id = module.id,
             mode = mode,
-            subStore = module
+            module = module
         ) { style ->
-            when (module.current.type) {
+            when (module.type) {
                 Module.Type.INFOBOX -> {
-                    infoBox(module.current.id, style)
+                    infoBox(module.id, style)
                 }
                 Module.Type.TABLE -> {
-                    table(module.current.id, style)
+                    table(module.id, style)
                 }
                 Module.Type.CALENDAR -> {
-                    calendar(module.current.id, style)
+                    calendar(module.id, style)
                 }
-//                else -> {
-//
-//                }
             }
         }
     }

@@ -13,10 +13,10 @@ val moduleList =
             ModuleSettings(75, 30, 1, 1)
         ),
         moduleCatalog.calendar.createModule(
-            ModuleSettings(30, 30, 75, 1)
+            ModuleSettings(26, 30, 75, 1)
         ),
         moduleCatalog.infoBox.createModule(
-            ModuleSettings(103, 30, 1, 30)
+            ModuleSettings(100, 30, 1, 30)
         )
 
     )
@@ -24,6 +24,16 @@ val moduleList =
 
 object ModuleStore : RootStore<List<Module>>(moduleList) {
     var temp: List<Module> = listOf()
+
+    val updateModule = handle { model, module: Module ->
+        model.map {
+            if (it.id == module.id) {
+                module
+            } else {
+                it
+            }
+        }.toList()
+    }
 
     val addModule = handle { model, newModule: Module ->
         model + moduleCatalog.newModule(newModule.type, newModule.settings, newModule.card)

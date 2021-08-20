@@ -63,7 +63,8 @@ fun RenderContext.moduleCollectionCard(
                 }
             },
             module.id,
-            module.card.exampleImageSrc
+            module.card.exampleImageSrc,
+            "${module.card.moduleName}_Pic"
         )
         moduleCardName(
             {

@@ -9,14 +9,17 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 @ExperimentalCoroutinesApi
-fun RenderContext.moduleCardImage(style: Style<FlexParams>, id: String, src: String) {
+fun RenderContext.moduleCardImage(style: Style<FlexParams>, id: String, src: String, alt: String) {
     flexBox({
         width { "9.25rem" }
         style()
     }, id = "${id}Image") {
         img({
             radius { "0.75rem" }
-        }) { src(src) }
+        }) {
+            src(src)
+            alt(alt)
+        }
     }
 
 }

@@ -1,6 +1,6 @@
 package components.content
 
-import dev.fritz2.binding.SubStore
+import dev.fritz2.binding.RootStore
 import dev.fritz2.dom.html.Div
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
@@ -11,15 +11,22 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.app.AppState
 import models.app.L
 import models.app.Module
+import stores.app.ModuleStore
 
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleWrapper(
     style: Style<BoxParams>,
     id: String,
     mode: AppState.Mode,
-    subStore: SubStore<List<Module>, List<Module>, Module>,
+    module: Module,
     content: RenderContext.(style: Style<FlexParams>) -> Unit
 ): Div {
+    val subStore = object : RootStore<Module>(module) {
+        init {
+            syncBy(ModuleStore.updateModule)
+        }
+    }
+
     val settingsStore = subStore.sub(L.Module.settings)
     return div({
         border {
@@ -44,7 +51,7 @@ fun RenderContext.moduleWrapper(
             }
         }
     }, id = "${id}Module") {
-        moduleTitleBar("${id}Module", subStore.current.card.moduleName, mode, settingsStore)
+        moduleTitleBar(id, subStore.current.card.moduleName, mode, settingsStore)
         div({
             overflow { auto }
             width { "auto" }

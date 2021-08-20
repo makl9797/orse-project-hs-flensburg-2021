@@ -11,6 +11,12 @@ import modules.ModuleCatalog
 fun RenderContext.navigation(id: String, mode: AppState.Mode, moduleCatalog: ModuleCatalog) {
     div({
         height { "5rem" }
+        grid {
+            row {
+                start { "1" }
+                end { "2" }
+            }
+        }
     }, id = id) {
         navBar({
             border { width { "0" } }

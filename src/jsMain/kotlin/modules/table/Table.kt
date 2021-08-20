@@ -21,8 +21,8 @@ class Table {
     private val type = Module.Type.TABLE
 
     private val defaultSettings = ModuleSettings(
-        width = 60,
-        height = 40,
+        width = 75,
+        height = 30,
         startX = 1,
         startY = 1
     )

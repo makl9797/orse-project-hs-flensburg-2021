@@ -23,8 +23,8 @@ class Calendar {
     private var count = -1
     private val type = Module.Type.CALENDAR
     private val defaultSettings = ModuleSettings(
-        width = 60,
-        height = 40,
+        width = 26,
+        height = 30,
         startX = 1,
         startY = 1
     )
@@ -46,86 +46,84 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
     val today = Clock.System.todayAt(TimeZone.currentSystemDefault())
     val monthsList = Month.values().toList()
     val selectedMonth = storeOf(today.month)
-
-    div({
-        //this or child style
-    }) {
-        selectField(items = monthsList, value = selectedMonth) { }
-    }
-
-    gridBox({
-        columns { repeat(7) { "1fr" } }
-
-        children("button") {
-            width { "4rem" }
-            height { "4rem" }
-            color { primary.mainContrast }
-            display { flex }
-            radius { small }
-            css("justify-content: center")
-            css("align-items: center")
-        }
-        children("div") {
-            width { "4rem" }
-            height { "4rem" }
-            color { tertiary.mainContrast }
-            background { color { primary.mainContrast } }
-            display { flex }
-            radius { small }
-            fontStyle { bold }
-            css("justify-content: center")
-            css("align-items: center")
+    div({ style() }, id = "${id}Box") {
+        div({
+        }, id = "${id}MonthSelector") {
+            selectField(items = monthsList, value = selectedMonth) { }
         }
 
-    }) {
-        div { +"Mo" }
-        div { +"Di" }
-        div { +"Mi" }
-        div { +"Do" }
-        div { +"Fr" }
-        div { +"Sa" }
-        div { +"So" }
-
-        selectedMonth.data.combine(DayListStore.data) { month, dayList ->
-            Pair(month, dayList)
-        }.render { combinedData ->
-            val daysInMonth = daysInMonth(combinedData.first.number, false)
-            val firstDayInMonth = LocalDate(today.year, combinedData.first.number, 1)
-            val dayOfWeekFirstDay = firstDayInMonth.dayOfWeek.isoDayNumber
-            for (i in 1 until dayOfWeekFirstDay) {
-                div { }
+        gridBox({
+            columns { repeat(7) { "3.5rem" } }
+            css("justify-items: center")
+            children("button") {
+                width { "3.5rem" }
+                height { "3.5rem" }
+                color { primary.mainContrast }
+                display { flex }
+                radius { none }
+                css("justify-content: center")
+                css("align-items: center")
             }
-            for (i in 1..daysInMonth) {
+            children("div") {
+                width { "3.5rem" }
+                height { "3.5rem" }
+                color { tertiary.mainContrast }
+                background { color { primary.mainContrast } }
+                display { flex }
+                radius { none }
+                fontStyle { bold }
+                css("justify-content: center")
+                css("align-items: center")
+            }
 
-                val day = combinedData.second.firstOrNull { day ->
-                    day.day.toLocalDate() == LocalDate(today.year, combinedData.first.number, i)
+        }, id = "${id}DaySelector") {
+            div { +"Mo" }
+            div { +"Di" }
+            div { +"Mi" }
+            div { +"Do" }
+            div { +"Fr" }
+            div { +"Sa" }
+            div { +"So" }
+
+            selectedMonth.data.combine(DayListStore.data) { month, dayList ->
+                Pair(month, dayList)
+            }.render { combinedData ->
+                val daysInMonth = daysInMonth(combinedData.first.number, false)
+                val firstDayInMonth = LocalDate(today.year, combinedData.first.number, 1)
+                val dayOfWeekFirstDay = firstDayInMonth.dayOfWeek.isoDayNumber
+                for (i in 1 until dayOfWeekFirstDay) {
+                    div { }
                 }
-                clickButton({
-                    if (day != null) {
-                        if (day.availableSubjects < 1) {
-                            background { color { danger.main } }
-                        } else if (day.availableSubjects in 1..3) {
-                            background { color { secondary.main } }
+                for (i in 1..daysInMonth) {
+
+                    val day = combinedData.second.firstOrNull { day ->
+                        day.day.toLocalDate() == LocalDate(today.year, combinedData.first.number, i)
+                    }
+                    clickButton({
+                        if (day != null) {
+                            if (day.availableSubjects < 1) {
+                                background { color { danger.main } }
+                            } else if (day.availableSubjects in 1..3) {
+                                background { color { secondary.main } }
+                            } else {
+                                background { color { primary.main } }
+                            }
                         } else {
                             background { color { primary.main } }
                         }
-                    } else {
-                        background { color { primary.main } }
-                    }
-                }) {
-                    text(i.toString())
-                    if (day != null) {
-                        disabled(false)
-                    } else {
-                        disabled(true)
-                    }
-                    type { primary }
-                }.events.map { LocalDate(today.year, combinedData.first.number, i) } handledBy DayListStore.getDay
+                    }) {
+                        text(i.toString())
+                        if (day != null) {
+                            disabled(false)
+                        } else {
+                            disabled(true)
+                        }
+                        type { primary }
+                    }.events.map { LocalDate(today.year, combinedData.first.number, i) } handledBy DayListStore.getDay
+                }
             }
         }
     }
-    //--
-
 }
 
 fun daysInMonth(month: Int, leapYear: Boolean): Int {
