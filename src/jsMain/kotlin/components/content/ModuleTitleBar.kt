@@ -2,8 +2,10 @@ package components.content
 
 import dev.fritz2.binding.SubStore
 import dev.fritz2.components.clickButton
+import dev.fritz2.components.popover
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.div
+import dev.fritz2.styling.params.FlexBasisValues.content
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import models.app.AppState
@@ -39,7 +41,7 @@ fun RenderContext.moduleTitleBar(
         when (mode) {
             EDIT -> {
                 div {
-                    /*popover({
+                    popover({
                         width { "auto" }
                     }) {
                         toggle {
@@ -55,8 +57,7 @@ fun RenderContext.moduleTitleBar(
                         content {
                             moduleMoveController(id, settingsStore)
                         }
-                    }*/
-                    moduleMoveController(id, settingsStore)
+                    }
                     clickButton {
                         icon { close }
                         type { danger }
