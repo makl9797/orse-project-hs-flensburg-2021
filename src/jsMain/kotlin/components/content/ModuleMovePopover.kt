@@ -9,6 +9,15 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.app.Module
 import models.app.ModuleSettings
 
+/**
+ * ModuleMovePopover-Component
+ *
+ * Popover-Window which contains button to adjust the size and position of the module.
+ *
+ * @param id defines the id of the popover element
+ * @param settingsStore Store of the current module-settings
+ * @return Returns a popover element
+ */
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleMoveController(
     id: String,

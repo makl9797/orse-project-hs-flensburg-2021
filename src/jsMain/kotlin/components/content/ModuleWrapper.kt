@@ -13,6 +13,18 @@ import models.app.L
 import models.app.Module
 import stores.app.ModuleStore
 
+/**
+ * ModulWrapper-Component
+ *
+ * Wraps the module with a border and a title bar.
+ *
+ * @param style applies to the wrapper if given
+ * @param id defines the id of the wrapper
+ * @param mode defines the Mode between Work & Edit
+ * @param module contains the module settings and data
+ * @param content contains other components if given
+ * @return Returns a module as html-element
+ */
 @ExperimentalCoroutinesApi
 fun RenderContext.moduleWrapper(
     style: Style<BoxParams>,
@@ -61,16 +73,6 @@ fun RenderContext.moduleWrapper(
             content {
                 width { "inherit" }
                 height { "inherit" }
-            }
-            when (mode) {
-                AppState.Mode.WORK -> {
-
-                }
-                AppState.Mode.EDIT -> {
-                }
-                else -> {
-
-                }
             }
 
         }
