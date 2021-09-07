@@ -20,7 +20,10 @@ import stores.data.*
 import stores.data.BookingStore.endTimeStore
 import stores.data.BookingStore.priceStore
 import stores.data.BookingStore.startTimeStore
-
+/**
+ * A Class of *InfoBox*.
+ * This class has a useful logic; it s defining the InfoBox and set default Settings for the box *Informationen* .
+ */
 class InfoBox {
     private var count = -1
 
@@ -38,7 +41,10 @@ class InfoBox {
         exampleImageSrc = "https://via.placeholder.com/150?text=Module+Example+PicPlaceholder"
     )
 
-
+    /**
+     * Create Module for the Information Box.
+     * @return a module Information Box.
+     */
     fun createModule(settings: ModuleSettings = defaultSettings, card: ModuleCard = this.card): Module {
         count++
         val id = "infoBox${count}"
@@ -46,9 +52,12 @@ class InfoBox {
     }
 }
 
+/**
+ * this function is used to render and sets the information box for the html display
+ */
 @ExperimentalCoroutinesApi
 fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
-
+    /* this function is used to render and sets the information box for the html display */
     SelectedSubjectStore.data.combine(SelectedDayStore.data.combine(SelectedCustomerStore.data) { day, customer ->
         object {
             val day = day
@@ -241,7 +250,10 @@ fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
     }
 }
 
-
+/**
+ * Function calculate number of days until the last day.
+ * @return a number of days beetwen the start day and last day.
+ */
 fun daysToEndDate(startDate: LocalDate, daysUntilEnd: Int): String {
     return startDate.plus(DatePeriod(days = daysUntilEnd - 1)).toString()
 }

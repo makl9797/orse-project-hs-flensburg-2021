@@ -4,7 +4,9 @@ import dev.fritz2.components.stackUp
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.h3
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-
+/**
+ * this function is used to render area of the Infobox with the corresponding styles for the display
+ */
 @ExperimentalCoroutinesApi
 fun RenderContext.infoBoxArea(id: String, title: String, content: RenderContext.() -> Unit) {
     stackUp({

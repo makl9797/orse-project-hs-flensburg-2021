@@ -11,7 +11,9 @@ import models.data.Customer
 import models.data.L
 import stores.data.CustomerListStore
 import stores.data.SelectedCustomerStore
-
+/**
+ * this function is used to render the selection of a customer from the customers list
+ */
 @ExperimentalCoroutinesApi
 fun RenderContext.selectCustomerModal(id: String, close: SimpleHandler<Unit>) {
 
