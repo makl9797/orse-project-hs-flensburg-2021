@@ -6,7 +6,9 @@ import dev.fritz2.resource.Resource
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
-
+/**
+ * This data class acts as Day, every Day has a unique id
+ */
 @Lenses
 @Serializable
 data class Day(
@@ -15,7 +17,9 @@ data class Day(
     val subjects: MutableList<Subject>,
     val availableSubjects: Int
 )
-
+/**
+ * DayResource is used to serialize and deserialize a Day or a List of Days
+ */
 object DayResource : Resource<Day, String> {
     override val idProvider: IdProvider<Day, String> = Day::day
 
