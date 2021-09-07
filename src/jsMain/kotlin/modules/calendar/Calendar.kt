@@ -122,10 +122,7 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
                 }
             }
         }
-
     }
-    //--
-
 }
 /*
 *
