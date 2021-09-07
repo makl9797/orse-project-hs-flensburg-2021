@@ -12,7 +12,7 @@ import org.litote.kmongo.findOneById
 import org.litote.kmongo.save
 // Here is the implementation of the Routes of Booking
 fun Route.bookingRoutes() {
-    // returns every booking
+    // delivers every booking
     get("/bookings") {
         try {
             val col = databaseService.getCollectionOfBooking()
@@ -27,7 +27,7 @@ fun Route.bookingRoutes() {
             call.respondText("Error_ $e")
         }
     }
-    // returns
+    // delivers
     get("/bookings/{id}") {
         try {
             val col = databaseService.getCollectionOfBooking()
