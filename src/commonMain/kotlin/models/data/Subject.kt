@@ -8,6 +8,9 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
+/**
+ * This data class acts as Subject, every Subject has a unique id
+ */
 @Lenses
 @Serializable
 data class Subject(
@@ -16,7 +19,9 @@ data class Subject(
     val description: String,
     val type: String
 )
-
+/**
+ * SubjectResource is used to serialize and deserialize a Subject or a List of Subjects
+ */
 object SubjectResource : Resource<Subject, String> {
     override val idProvider: IdProvider<Subject, String> = Subject::_id
 
