@@ -8,6 +8,9 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
+/**
+ * This data class acts as Booking, every Booking has a unique id
+ */
 @Serializable
 @Lenses
 data class Booking(
@@ -19,6 +22,9 @@ data class Booking(
     val subject: Subject
 )
 
+/**
+ * BookingResource is used to serialize and deserialize a Booking or a List of Bookings
+ */
 object BookingResource : Resource<Booking, String> {
     override val idProvider: IdProvider<Booking, String> = Booking::_id
 
