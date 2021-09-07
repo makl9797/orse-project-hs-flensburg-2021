@@ -91,7 +91,7 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
             val daysInMonth = daysInMonth(month.number, false)
             val firstDayInMonth = LocalDate(today.year, month.number, 1)
             val dayOfWeekFirstDay = firstDayInMonth.dayOfWeek.isoDayNumber
-            console.log(dayOfWeekFirstDay)
+
             for (i in 1 until dayOfWeekFirstDay) {
                 div { }
             }
