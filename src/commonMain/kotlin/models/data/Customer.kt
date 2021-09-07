@@ -8,7 +8,9 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
-
+/**
+ * This data class acts as Customer, every Customer has a unique id
+ */
 @Lenses
 @Serializable
 data class Customer(
@@ -17,8 +19,9 @@ data class Customer(
     val firstname: String,
     val lastname: String
 )
-
-
+/**
+ * CustomerResource is used to serialize and deserialize a Customer or a List of Customers
+ */
 object CustomerResource : Resource<Customer, String> {
     override val idProvider: IdProvider<Customer, String> = Customer::_id
 
