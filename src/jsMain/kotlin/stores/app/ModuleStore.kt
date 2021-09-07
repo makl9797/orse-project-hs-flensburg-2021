@@ -7,6 +7,12 @@ import models.app.Module
 import models.app.ModuleSettings
 import modules.moduleCatalog
 
+/**
+ * moduleList
+ *
+ * Contains all modules as Module-Type
+ */
+
 val moduleList =
     listOf(
         moduleCatalog.table.createModule(
@@ -21,6 +27,11 @@ val moduleList =
 
     )
 
+/**
+ * ModuleStore
+ *
+ * Contains a list of modules which are current displayed
+ */
 
 object ModuleStore : RootStore<List<Module>>(moduleList) {
     var temp: List<Module> = listOf()

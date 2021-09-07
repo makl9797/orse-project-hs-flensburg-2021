@@ -5,6 +5,12 @@ import kotlinx.browser.document
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.MouseEvent
 
+/**
+ * ModuleStateStore
+ *
+ * Contains the state of a single module.
+ */
+
 object ModuleStateStore : RootStore<HTMLElement>(document.body!!) {
     private val offset = mutableListOf(0, 0)
     var isDown = false

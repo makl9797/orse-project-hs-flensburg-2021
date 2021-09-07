@@ -4,7 +4,11 @@ import dev.fritz2.binding.RootStore
 import kotlinx.coroutines.flow.map
 import models.data.*
 
-
+/**
+ * BookingStore
+ *
+ * Contains the current booking data.
+ */
 object BookingStore : RootStore<Booking>(
     Booking(
         price = 0.0,

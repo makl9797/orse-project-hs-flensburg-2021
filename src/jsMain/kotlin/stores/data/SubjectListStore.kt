@@ -7,6 +7,11 @@ import dev.fritz2.repositories.rest.restQuery
 import models.data.Subject
 import models.data.SubjectResource
 
+/**
+ * SubjectListStore
+ *
+ * Communicates with the database via the endpoint /subjects
+ */
 
 object SubjectListStore : RootStore<List<Subject>>(listOf()) {
     private const val SUBJECT_ENDPOINT = "/subjects"

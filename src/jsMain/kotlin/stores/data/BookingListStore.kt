@@ -8,6 +8,11 @@ import dev.fritz2.repositories.rest.restQuery
 import models.data.Booking
 import models.data.BookingResource
 
+/**
+ * BookingListStore
+ *
+ * Communicates with the database via the endpoint /bookings
+ */
 
 object BookingListStore : RootStore<List<Booking>>(emptyList()) {
     private const val BOOKING_ENDPOINT = "/bookings"

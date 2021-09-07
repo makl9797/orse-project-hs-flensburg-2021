@@ -8,6 +8,11 @@ import kotlinx.datetime.toLocalDate
 import models.data.Day
 import models.data.DayResource
 
+/**
+ * DayListStore
+ *
+ * Communicates with the database via the endpoint /overview
+ */
 
 object DayListStore : RootStore<List<Day>>(emptyList()) {
     private const val DAY_ENDPOINT = "/overview"

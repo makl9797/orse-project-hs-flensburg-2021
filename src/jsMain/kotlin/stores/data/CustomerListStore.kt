@@ -8,6 +8,12 @@ import dev.fritz2.repositories.rest.restQuery
 import models.data.Customer
 import models.data.CustomerResource
 
+/**
+ * CustomerListStore
+ *
+ * Communicates with the database via the endpoint /customers
+ */
+
 object CustomerListStore : RootStore<List<Customer>>(emptyList()) {
     private const val CUSTOMER_ENDPOINT = "/customers"
     private val repo = restQuery<Customer, String, Unit>(CustomerResource, CUSTOMER_ENDPOINT, uniqueId())
