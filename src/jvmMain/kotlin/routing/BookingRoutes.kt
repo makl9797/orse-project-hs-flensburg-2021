@@ -12,11 +12,11 @@ import org.litote.kmongo.findOneById
 import org.litote.kmongo.save
 // Here is the implementation of the Routes of Booking
 fun Route.bookingRoutes() {
-    // delivers every booking
+    // delivers every booking on a specific day
     get("/bookings") {
         try {
-            val col = databaseService.getCollectionOfBooking()
-            val day = call.request.queryParameters["day"]
+            val col = databaseService.getCollectionOfBooking()  // get collection of Booking
+            val day = call.request.queryParameters["day"]       // extract day by parameters
             var bookings = col.find().toList()
             if (day != null) {
                 bookings = col.find(Booking::startTime eq day).toList()
@@ -27,7 +27,7 @@ fun Route.bookingRoutes() {
             call.respondText("Error_ $e")
         }
     }
-    // delivers
+    // delivers a booking by id
     get("/bookings/{id}") {
         try {
             val col = databaseService.getCollectionOfBooking()
@@ -43,6 +43,7 @@ fun Route.bookingRoutes() {
             call.respondText("Error_ $e")
         }
     }
+    // create or update a booking by id
     put("/bookings/{id}") {
         try {
             val booking = call.receive<Booking>()
@@ -58,6 +59,7 @@ fun Route.bookingRoutes() {
             call.respondText("Error_ $e")
         }
     }
+    // delete a booking by id
     delete("/bookings/{id}") {
         try {
             val col = databaseService.getCollectionOfBooking()
