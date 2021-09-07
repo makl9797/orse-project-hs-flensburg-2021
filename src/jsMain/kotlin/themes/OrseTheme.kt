@@ -4,6 +4,12 @@ import dev.fritz2.styling.theme.ColorScheme
 import dev.fritz2.styling.theme.Colors
 import dev.fritz2.styling.theme.DefaultTheme
 
+/**
+ * Orse-Themes
+ *
+ * Describes the theme for the application.
+ * Has no current use, but can be applied with UseTheme()
+ */
 object OrseTheme : DefaultTheme() {
     override val name = "Orse-Main-Theme"
 
