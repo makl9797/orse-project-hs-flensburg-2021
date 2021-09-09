@@ -21,6 +21,12 @@ import stores.data.BookingStore.endTimeStore
 import stores.data.BookingStore.priceStore
 import stores.data.BookingStore.startTimeStore
 
+/**
+ * Infobox
+ *
+ * Contains a Description of all data for the Infobox Module.
+ * Default values are also defined here.
+ */
 class InfoBox {
     private var count = -1
 
@@ -46,6 +52,9 @@ class InfoBox {
     }
 }
 
+/**
+ * Render function for the infobox. Describes the view of the infobox.
+ */
 @ExperimentalCoroutinesApi
 fun RenderContext.infoBox(id: String, style: Style<FlexParams>) {
 

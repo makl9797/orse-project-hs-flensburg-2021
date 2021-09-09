@@ -12,6 +12,11 @@ import models.data.L
 import stores.data.CustomerListStore
 import stores.data.SelectedCustomerStore
 
+/**
+ * SelectCustomerModal
+ *
+ * Opens up a modal with a table of all customers which can be selected for the booking in the infobox.
+ */
 @ExperimentalCoroutinesApi
 fun RenderContext.selectCustomerModal(id: String, close: SimpleHandler<Unit>) {
 

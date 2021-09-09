@@ -5,6 +5,10 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.styling.h3
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+/**
+ * InfoBoxArea
+ * Component-Container for every section in the infobox
+ */
 @ExperimentalCoroutinesApi
 fun RenderContext.infoBoxArea(id: String, title: String, content: RenderContext.() -> Unit) {
     stackUp({
