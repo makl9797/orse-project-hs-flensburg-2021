@@ -111,7 +111,7 @@ fun getAvailableSubjectsOfDay(
     val subjectsBooked = mutableListOf<Subject>()
     val availableSubjects = mutableListOf<Subject>()
 
-    bookingsOfDay.forEach { item -> subjectsBooked.add(item.subject!!) }
+    bookingsOfDay.forEach { item -> subjectsBooked.add(item.subject) }
 
     subjects.forEach { item ->
         subjectsBooked.forEach { subjectBooked ->

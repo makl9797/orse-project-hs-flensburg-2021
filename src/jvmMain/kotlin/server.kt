@@ -16,6 +16,11 @@ import routing.overviewRoutes
 import routing.subjectRoutes
 import services.DatabaseService
 
+/**
+ *This is the jvm Server.
+ * Here we defined the Global settings for the Backend of this Application
+ * Like Port, Host and Routing
+ */
 
 val databaseService = DatabaseService()
 
@@ -40,7 +45,9 @@ fun main() {
                 resources("")
             }
         }
-
+        /**
+         * Here we installed the routes of this API
+         */
         routing {
             subjectRoutes()
             overviewRoutes()
