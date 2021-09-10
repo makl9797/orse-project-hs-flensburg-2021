@@ -14,8 +14,13 @@ import org.litote.kmongo.eq
 import org.litote.kmongo.findOneById
 import org.litote.kmongo.save
 
-
+/**
+ * Here is the implementation of the Routes of Subjects
+ */
 fun Route.subjectRoutes() {
+    /**
+     * get(/subjects/{id}) delivers a subject based on an Id
+     */
     get("/subjects/{id}") {
         try {
             val subjects = databaseService.getCollectionOfSubject()
@@ -31,6 +36,9 @@ fun Route.subjectRoutes() {
             call.respondText("Error_ $e")
         }
     }
+    /**
+     * get(/subjects) delivers every subjects on a specific Date
+     * */
     get("/subjects") {
         try {
             val onlyAvailable: Boolean = call.parameters["onlyAvailable"].toBoolean()
@@ -57,6 +65,9 @@ fun Route.subjectRoutes() {
             call.respondText("Error_ $e")
         }
     }
+    /**
+     * put(subjects/id) create or update a subject by id
+     */
     put("/subjects/{id}") {
         try {
             val subjects = databaseService.getCollectionOfSubject()
@@ -72,7 +83,9 @@ fun Route.subjectRoutes() {
             call.respondText("Error_ $e")
         }
     }
-
+    /**
+     * delete(subjects/id) delete a subject by id
+     */
     delete("subjects/{id}") {
         try {
             val subjects = databaseService.getCollectionOfSubject()
@@ -85,18 +98,23 @@ fun Route.subjectRoutes() {
     }
 
 }
-
+/**
+ * Get Subjects in a Time frame.
+ * @return a list of subjects in a Time frame.
+ */
 fun getSubjectsInTimeframe(
-    start: LocalDate,
-    end: LocalDate,
-    subjects: List<Subject>,
-    bookings: List<Booking>,
-    onlyAvailable: Boolean
+    start: LocalDate, // define a start date
+    end: LocalDate, // define an end date
+    subjects: List<Subject>, // define a list of empty subjects
+    bookings: List<Booking>, // define a list of empty bookings
+    onlyAvailable: Boolean // define a boolean variable of only available subjects
 ): MutableList<Subject> {
-    val notAvailableSubjectIds = mutableListOf<String>()
-    val notAvailableSubjects = mutableListOf<Subject>()
-    val availableSubjects = mutableListOf<Subject>()
+    val notAvailableSubjectIds = mutableListOf<String>() // get collection of non available Subjects Ids
+    val notAvailableSubjects = mutableListOf<Subject>() // get collection of non available Subjects
+    val availableSubjects = mutableListOf<Subject>() // get collection of available Subjects
     for (booking: Booking in bookings) {
+        // See if each booking is in the timestamp(start-end), then it will be saved as unavailable
+        // Otherwise this booking is available and will be saved as available
         if (booking.startTime.toLocalDate() in start..end || booking.endTime.toLocalDate() in start..end) {
             notAvailableSubjectIds.add(booking.subject._id)
         }

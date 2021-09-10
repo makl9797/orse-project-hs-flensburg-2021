@@ -13,8 +13,9 @@ import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import org.litote.kmongo.save
 
-
+// Here is the implementation of the Routes of Customer
 fun Route.customerRoute() {
+    // update a customer based on a given ID, or create a new one
     put("/customers/{id}") {
         try {
             val customers = databaseService.getCollectionOfCustomer()
@@ -31,6 +32,7 @@ fun Route.customerRoute() {
             call.respondText("Error_ $e")
         }
     }
+    // Delete a customer based on a given ID or return an Error 400
     delete("/customers/{id}") {
         try {
             val customers = databaseService.getCollectionOfCustomer()
@@ -41,6 +43,7 @@ fun Route.customerRoute() {
             call.respondText("Error_ $e")
         }
     }
+    // Get a customer based on a given ID or return an Error 400
     get("/customers/{id}") {
         try {
             val customerId = call.parameters["id"]
@@ -60,6 +63,7 @@ fun Route.customerRoute() {
             call.respondText("Error_ $e")
         }
     }
+    // Get all customers from table customers
     get("/customers") {
         try {
             val customers = databaseService.getCollectionOfCustomer()
