@@ -18,12 +18,20 @@ import models.app.ModuleCard
 import models.app.ModuleSettings
 import stores.data.DayListStore
 
+/**
+ * Calendar
+ *
+ * Contains a Description of all data for the Calendar Module.
+ * Default values are also defined here.
+ */
 
 class Calendar {
     // count is used for id generation if we had more than one calendar modules
     private var count = -1
+
     // define the type of the current module
     private val type = Module.Type.CALENDAR
+
     // define the default module settings
     private val defaultSettings = ModuleSettings(
         width = 26,
@@ -31,12 +39,14 @@ class Calendar {
         startX = 1,
         startY = 1
     )
+
     // define the ModuleCard
     private val card = ModuleCard(
         moduleName = "Kalender",
         moduleDescription = "Dieses modul repräsentiert einen Kalender",
         exampleImageSrc = "https://via.placeholder.com/150?text=Module+Example+PicPlaceholder"
     )
+
     // create the module with settings and card
     fun createModule(settings: ModuleSettings = defaultSettings, card: ModuleCard = this.card): Module {
         count++
@@ -45,17 +55,21 @@ class Calendar {
     }
 }
 
+/**
+ * Render function for the calendar. Describes the view of the calendar.
+ */
 @ExperimentalCoroutinesApi
 fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
     val today = Clock.System.todayAt(TimeZone.currentSystemDefault())   // get the current day
     val monthsList = Month.values().toList()                            // create a list with all months
-    val selectedMonth = storeOf(today.month)                            // the default-selected month is the current month
+    val selectedMonth =
+        storeOf(today.month)                            // the default-selected month is the current month
     div({ style() }, id = "${id}Box") {                                 // create the calendar-module as a div
         div({
         }, id = "${id}MonthSelector") {
             selectField(items = monthsList, value = selectedMonth) { }  // create month selector
         }
-                                                                        // style the calendar module
+        // style the calendar module
         gridBox({
             columns { repeat(7) { "3.5rem" } }
             css("justify-items: center")
@@ -93,9 +107,14 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
             selectedMonth.data.combine(DayListStore.data) { month, dayList ->
                 Pair(month, dayList)
             }.render { combinedData ->
-                val daysInMonth = daysInMonth(combinedData.first.number, false)                  // get count of days in selected month
-                val firstDayInMonth = LocalDate(today.year, combinedData.first.number, 1)     // get the first day in selected month
-                val dayOfWeekFirstDay = firstDayInMonth.dayOfWeek.isoDayNumber                           // get the day of week, of the first day in selected month
+                val daysInMonth = daysInMonth(
+                    combinedData.first.number,
+                    false
+                )                  // get count of days in selected month
+                val firstDayInMonth =
+                    LocalDate(today.year, combinedData.first.number, 1)     // get the first day in selected month
+                val dayOfWeekFirstDay =
+                    firstDayInMonth.dayOfWeek.isoDayNumber                           // get the day of week, of the first day in selected month
                 // fill up, to the first day in month, the calendar
                 for (i in 1 until dayOfWeekFirstDay) {
                     div { }
@@ -128,7 +147,7 @@ fun RenderContext.calendar(id: String, style: Style<BoxParams>) {
                             disabled(true)
                         }
                         type { primary }
-                     // see DayListStore
+                        // see DayListStore
                     }.events.map { LocalDate(today.year, combinedData.first.number, i) } handledBy DayListStore.getDay
                 }
             }

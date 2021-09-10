@@ -7,6 +7,12 @@ import modules.calendar.Calendar
 import modules.info.InfoBox
 import modules.table.Table
 
+
+/**
+ * ModuleCatalog
+ *
+ * Contains every Module-Type
+ */
 class ModuleCatalog {
     val infoBox: InfoBox = InfoBox()
     val table: Table = Table()
@@ -18,6 +24,9 @@ class ModuleCatalog {
         calendar.createModule()
     )
 
+    /**
+     * Creates a new Module
+     */
     fun newModule(type: Module.Type, settings: ModuleSettings, card: ModuleCard): Module {
         return when (type) {
             Module.Type.INFOBOX -> {
